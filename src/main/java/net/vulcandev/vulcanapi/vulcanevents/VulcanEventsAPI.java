@@ -27,6 +27,14 @@ public class VulcanEventsAPI {
     public static VulcanEventsAPI getInstance() {return instance;}
 
     /**
+     * Check if VulcanEvents is available and loaded
+     * @return true if VulcanEvents is available, false otherwise
+     */
+    public static boolean isAvailable() {
+        return instance != null && instance.plugin.isEnabled();
+    }
+
+    /**
      * Checks if there is currently an active event
      * @return true if an event is running, false otherwise
      */

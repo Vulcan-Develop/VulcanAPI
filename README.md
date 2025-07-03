@@ -2,7 +2,9 @@
 
 API for VulcanEvents, VulcanStaff, and VulcanTools.
 
-## Features
+> **⚠️ Critical**: Always wrap VulcanAPI initialization in try-catch blocks to prevent plugin failures when VulcanAPI is not present on the server. See [Best Practices](#best-practices-for-api-integration) section for details.
+
+## Current API Features
 
 - **VulcanEventsAPI**: Manage server events, competitions, and player participation
 - **VulcanStaffAPI**: Staff management tools including vanish, staff mode, and freeze functionality
@@ -10,16 +12,32 @@ API for VulcanEvents, VulcanStaff, and VulcanTools.
 
 ## API Usage
 
+**⚠️ Important**: All VulcanAPI integrations require proper error handling to prevent plugin failures when the APIs are not available on the server. (e.g. When a server opts out of using the API)
+
 ### 1. VulcanEventsAPI
 
 Manage server events and player participation.
+
+#### Plugin Integration (Required)
+```java
+// In your plugin's onEnable() method
+try {
+    net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.initialize(vulcanEventsPlugin);
+    getLogger().info("VulcanEventsAPI integration enabled successfully.");
+} catch (NoClassDefFoundError e) {
+    getLogger().warning("Failed to initialize VulcanEventsAPI: " + e.getMessage());
+    getLogger().warning("Disabling Events API integration...");
+    // Optionally disable API features in your config
+}
+```
 
 #### Basic Usage
 ```java
 import net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI;
 
-// Get the API instance
-VulcanEventsAPI eventsAPI = VulcanEventsAPI.getInstance();
+// Always check if the API is available before using it
+if (VulcanEventsAPI.isAvailable()) {
+    VulcanEventsAPI eventsAPI = VulcanEventsAPI.getInstance();
 
 // Check if an event is currently active
 if (eventsAPI.hasActiveEvent()) {
@@ -76,22 +94,40 @@ public void onEventStart(EventStartEvent event) {
 
 Manage staff features including vanish, staff mode, and player freezing.
 
+#### Plugin Integration (Required)
+**Important**: Always wrap VulcanAPI initialization in a try-catch block to prevent your plugin from failing if VulcanAPI is not present on the server.
+
+```java
+// In your plugin's onEnable() method
+try {
+    net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.initialize(this);
+    getLogger().info("VulcanAPI integration enabled successfully.");
+} catch (NoClassDefFoundError e) {
+    getLogger().warning("Failed to initialize VulcanAPI: " + e.getMessage());
+    getLogger().warning("Disabling API integration...");
+    // Optionally disable API features in your config
+    // getConfig().set("use-vulcan-api", false);
+}
+```
+
 #### Basic Usage
 ```java
 import net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI;
 
-// Get the API instance
-VulcanStaffAPI staffAPI = VulcanStaffAPI.getInstance();
-
-// Check if VulcanStaff is available
+// Always check if the API is available before using it
 if (VulcanStaffAPI.isAvailable()) {
+    VulcanStaffAPI staffAPI = VulcanStaffAPI.getInstance();
+
     // Vanish a player
     Player player = Bukkit.getPlayer("PlayerName");
     boolean success = staffAPI.setVanished(player, true);
-    
+
     if (success) {
         player.sendMessage("§aYou are now vanished!");
     }
+} else {
+    // Handle case where VulcanStaff is not available
+    getLogger().warning("VulcanStaff is not available - API features disabled");
 }
 ```
 
@@ -119,13 +155,18 @@ boolean setFrozen(Player target, Player staff, boolean frozen)
 @EventHandler
 public void onPlayerJoin(PlayerJoinEvent event) {
     Player player = event.getPlayer();
-    
+
     // Auto-vanish staff members on join
     if (player.hasPermission("staff.autovanish")) {
-        VulcanStaffAPI staffAPI = VulcanStaffAPI.getInstance();
-        if (staffAPI != null) {
-            staffAPI.setVanished(player, true);
-            player.sendMessage("§7You have been automatically vanished.");
+        // Always check if VulcanStaff is available
+        if (VulcanStaffAPI.isAvailable()) {
+            VulcanStaffAPI staffAPI = VulcanStaffAPI.getInstance();
+            if (staffAPI.setVanished(player, true)) {
+                player.sendMessage("§7You have been automatically vanished.");
+            }
+        } else {
+            // Fallback behavior when VulcanStaff is not available
+            player.sendMessage("§cStaff features are currently unavailable.");
         }
     }
 }
@@ -134,7 +175,7 @@ public void onPlayerJoin(PlayerJoinEvent event) {
 public void onStaffVanish(StaffVanishEvent event) {
     Player player = event.getPlayer();
     boolean vanishing = event.isVanishing();
-    
+
     if (vanishing) {
         player.sendMessage("§7You are now invisible to other players.");
     } else {
@@ -147,24 +188,39 @@ public void onStaffVanish(StaffVanishEvent event) {
 
 Manage currencies, boosters, and tool events.
 
+#### Plugin Integration (Required)
+```java
+// In your plugin's onEnable() method
+try {
+    net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.initialize(vulcanToolsPlugin);
+    getLogger().info("VulcanToolsAPI integration enabled successfully.");
+} catch (NoClassDefFoundError e) {
+    getLogger().warning("Failed to initialize VulcanToolsAPI: " + e.getMessage());
+    getLogger().warning("Disabling Tools API integration...");
+    // Optionally disable API features in your config
+}
+```
+
 #### Basic Usage
 ```java
 import net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
 
-// Get the API instance
-VulcanToolsAPI toolsAPI = VulcanToolsAPI.getInstance();
-
+// Always check if the API is available before using it
 if (VulcanToolsAPI.isAvailable()) {
+    VulcanToolsAPI toolsAPI = VulcanToolsAPI.getInstance();
     ICurrencyManager currencyManager = toolsAPI.getCurrencyManager();
-    
+
     // Give currency to a player
     Player player = Bukkit.getPlayer("PlayerName");
     currencyManager.giveCurrency(player, "coins", 1000);
-    
+
     // Check player's balance
     long balance = currencyManager.getBalance(player, "coins");
     player.sendMessage("§aYour balance: " + balance + " coins");
+} else {
+    // Handle case where VulcanTools is not available
+    getLogger().warning("VulcanTools is not available - currency features disabled");
 }
 ```
 
@@ -279,6 +335,66 @@ VulcanAPI provides numerous events that you can listen to:
 - `LumberHarvestEvent` - When wood is harvested
 - `FishCatchEvent` - When fish is caught
 - `MobKillEvent` - When a mob is killed with tools
+
+### 1. Use Try-Catch for Initialization
+Server may opt out of using the VulcanAPI, in which case it is best to not fully depend on it. If you do, your plugin will end up throwing an error if the API does not exist on the server
+```java
+@Override
+public void onEnable() {
+    // Initialize VulcanAPI integrations with proper error handling
+    initializeVulcanAPIs();
+}
+
+private void initializeVulcanAPIs() {
+    // VulcanStaff API
+    try {
+        net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.initialize(this);
+        getLogger().info("VulcanStaff API integration enabled.");
+    } catch (NoClassDefFoundError e) {
+        getLogger().warning("VulcanStaff API not found - staff features disabled.");
+    }
+
+    // VulcanTools API
+    try {
+        net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.initialize(vulcanToolsPlugin);
+        getLogger().info("VulcanTools API integration enabled.");
+    } catch (NoClassDefFoundError e) {
+        getLogger().warning("VulcanTools API not found - tool features disabled.");
+    }
+
+    // VulcanEvents API
+    try {
+        net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.initialize(vulcanEventsPlugin);
+        getLogger().info("VulcanEvents API integration enabled.");
+    } catch (NoClassDefFoundError e) {
+        getLogger().warning("VulcanEvents API not found - event features disabled.");
+    }
+}
+```
+
+### 2. Handle Plugin Dependencies in plugin.yml
+```yaml
+name: YourPlugin
+main: com.yourplugin.Main
+version: 1.0.0
+softdepend: [VulcanAPI, VulcanStaff, VulcanTools, VulcanEvents]
+```
+
+Using `softdepend` ensures your plugin loads after VulcanAPI if it's present, but won't fail if it's missing.
+
+## Installation
+
+1. Download the VulcanAPI jar file
+2. Place it in your server's `plugins` folder
+3. Restart your server
+4. The API will automatically detect and integrate with VulcanEvents, VulcanStaff, and VulcanTools if they are present
+
+## Dependencies
+
+- Spigot/Paper 1.20+
+- VulcanEvents (optional)
+- VulcanStaff (optional)
+- VulcanTools (optional)
 
 ## Support
 
