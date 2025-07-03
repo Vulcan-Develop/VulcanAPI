@@ -2,7 +2,7 @@
 
 API for VulcanEvents, VulcanStaff, and VulcanTools.
 
-> **⚠️ Critical**: Always wrap VulcanAPI initialization in try-catch blocks to prevent plugin failures when VulcanAPI is not present on the server. See [Best Practices](#best-practices-for-api-integration) section for details.
+> **⚠️ Critical**: Always wrap VulcanAPI initialization in try-catch blocks to prevent plugin failures when VulcanAPI is not present on the server.
 
 ## Current API Features
 
