@@ -168,7 +168,18 @@ public class VulcanStaffAPI {
         return true;
     }
 
-    public static void initialize(VulcanStaff plugin) {
-        instance = new VulcanStaffAPI(plugin);
+    public static void initialize(org.bukkit.plugin.Plugin plugin) {
+        cleanup();
+        if (plugin.getClass().getName().equals("net.vulcandev.staff.VulcanStaff")) {
+            VulcanStaff vulcanStaffPlugin = (VulcanStaff) plugin;
+            instance = new VulcanStaffAPI(vulcanStaffPlugin);
+        }
+    }
+
+    /**
+     * Clean up the API instance
+     */
+    public static void cleanup() {
+        instance = null;
     }
 }

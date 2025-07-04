@@ -1,8 +1,10 @@
 package net.vulcandev.vulcanapi.vulcantools;
 
+import net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
+import net.vulcandev.vulcanevents.VulcanEvents;
 import net.vulcandev.vulcantools.VulcanTools;
 import net.vulcandev.vulcantools.enums.ToolType;
 import net.vulcandev.vulcantools.managers.BoosterManager;
@@ -272,7 +274,18 @@ public class VulcanToolsAPI {
         }
     }
 
-    public static void initialize(VulcanTools plugin) {
-        instance = new VulcanToolsAPI(plugin);
+    public static void initialize(org.bukkit.plugin.Plugin plugin) {
+        cleanup();
+        if (plugin.getClass().getName().equals("net.vulcandev.vulcantools.VulcanTools")) {
+            VulcanTools vulcanTools = (VulcanTools) plugin;
+            instance = new VulcanToolsAPI(vulcanTools);
+        }
+    }
+
+    /**
+     * Clean up the API instance
+     */
+    public static void cleanup() {
+        instance = null;
     }
 }

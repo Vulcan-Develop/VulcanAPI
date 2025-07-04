@@ -209,7 +209,18 @@ public class VulcanEventsAPI {
         return plugin;
     }
 
-    public static void initialize(VulcanEvents plugin) {
-        instance = new VulcanEventsAPI(plugin);
+    public static void initialize(org.bukkit.plugin.Plugin plugin) {
+        cleanup();
+        if (plugin.getClass().getName().equals("net.vulcandev.vulcanevents.VulcanEvents")) {
+            VulcanEvents vulcanEvents = (VulcanEvents) plugin;
+            instance = new VulcanEventsAPI(vulcanEvents);
+        }
+    }
+
+    /**
+     * Clean up the API instance
+     */
+    public static void cleanup() {
+        instance = null;
     }
 }
