@@ -446,7 +446,6 @@ Using `softdepend` ensures your plugin loads after VulcanAPI if it's present, bu
 
 ## Dependencies
 
-- Spigot/Paper 1.20+
 - VulcanEvents (optional)
 - VulcanStaff (optional)
 - VulcanTools (optional)
@@ -455,8 +454,7 @@ Using `softdepend` ensures your plugin loads after VulcanAPI if it's present, bu
 
 For support and questions, please contact the development team:
 - **Authors**: Xanthard, OfficialGaming
-- **Version**: 1.0
-- **Minecraft Version**: 1.20.1
+- **Minecraft Version**: 1.7 - Latest
 
 ## License
 
