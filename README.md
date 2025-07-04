@@ -20,14 +20,17 @@ Manage server events and player participation.
 
 #### Plugin Integration (Required)
 ```java
-// In your plugin's onEnable() method
+// In your plugin's onEnable() method - Make sure not to import the class 
+// into the top of your main class file as if you do it may throw a NoClassDefFoundError. 
 try {
-    net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.initialize(vulcanEventsPlugin);
-    getLogger().info("VulcanEventsAPI integration enabled successfully.");
+    if (net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.isAvailable()) {
+        getLogger().info("VulcanEventsAPI integration enabled successfully.");
+        // Initialize integration here
+    } else {
+        getLogger().warning("Failed to initialize VulcanEventsAPI");
+    }
 } catch (NoClassDefFoundError e) {
-    getLogger().warning("Failed to initialize VulcanEventsAPI: " + e.getMessage());
-    getLogger().warning("Disabling Events API integration...");
-    // Optionally disable API features in your config
+    getLogger().warning("Failed to initialize VulcanEventsAPI as it does not exist in the server.");
 }
 ```
 
@@ -106,18 +109,18 @@ public void onEventStart(EventStartEvent event) {
 Manage staff features including vanish, staff mode, and player freezing.
 
 #### Plugin Integration (Required)
-**Important**: Always wrap VulcanAPI initialization in a try-catch block to prevent your plugin from failing if VulcanAPI is not present on the server.
-
 ```java
-// In your plugin's onEnable() method
+// In your plugin's onEnable() method - Make sure not to import the class
+// into the top of your main class file as if you do it may throw a NoClassDefFoundError.
 try {
-    net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.initialize(this);
-    getLogger().info("VulcanAPI integration enabled successfully.");
+    if (net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.isAvailable()) {
+        getLogger().info("VulcanStaffAPI integration enabled successfully.");
+        // Initialize integration here
+    } else {
+        getLogger().warning("Failed to initialize VulcanStaffAPI");
+    }
 } catch (NoClassDefFoundError e) {
-    getLogger().warning("Failed to initialize VulcanAPI: " + e.getMessage());
-    getLogger().warning("Disabling API integration...");
-    // Optionally disable API features in your config
-    // getConfig().set("use-vulcan-api", false);
+    getLogger().warning("Failed to initialize VulcanStaffAPI as it does not exist in the server.");
 }
 ```
 
@@ -212,14 +215,17 @@ Manage currencies, boosters, and tool events.
 
 #### Plugin Integration (Required)
 ```java
-// In your plugin's onEnable() method
+// In your plugin's onEnable() method - Make sure not to import the class
+// into the top of your main class file as if you do it may throw a NoClassDefFoundError.
 try {
-    net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.initialize(vulcanToolsPlugin);
-    getLogger().info("VulcanToolsAPI integration enabled successfully.");
+    if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
+        getLogger().info("VulcanToolsAPI integration enabled successfully.");
+        // Initialize integration here
+    } else {
+        getLogger().warning("Failed to initialize VulcanToolsAPI");
+    }
 } catch (NoClassDefFoundError e) {
-    getLogger().warning("Failed to initialize VulcanToolsAPI: " + e.getMessage());
-    getLogger().warning("Disabling Tools API integration...");
-    // Optionally disable API features in your config
+    getLogger().warning("Failed to initialize VulcanToolsAPI as it does not exist in the server.");
 }
 ```
 
@@ -380,28 +386,43 @@ public void onEnable() {
 }
 
 private void initializeVulcanAPIs() {
-    // VulcanStaff API
+    // VulcanStaff API - Make sure not to import the class
+    // into the top of your main class file as if you do it may throw a NoClassDefFoundError.
     try {
-        net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.initialize(this);
-        getLogger().info("VulcanStaff API integration enabled.");
+        if (net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.isAvailable()) {
+            getLogger().info("VulcanStaffAPI integration enabled successfully.");
+            // Initialize integration here
+        } else {
+            getLogger().warning("Failed to initialize VulcanStaffAPI");
+        }
     } catch (NoClassDefFoundError e) {
-        getLogger().warning("VulcanStaff API not found - staff features disabled.");
+        getLogger().warning("Failed to initialize VulcanStaffAPI as it does not exist in the server.");
     }
 
-    // VulcanTools API
+    // VulcanTools API - Make sure not to import the class
+    // into the top of your main class file as if you do it may throw a NoClassDefFoundError.
     try {
-        net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.initialize(vulcanToolsPlugin);
-        getLogger().info("VulcanTools API integration enabled.");
+        if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
+            getLogger().info("VulcanToolsAPI integration enabled successfully.");
+            // Initialize integration here
+        } else {
+            getLogger().warning("Failed to initialize VulcanToolsAPI");
+        }
     } catch (NoClassDefFoundError e) {
-        getLogger().warning("VulcanTools API not found - tool features disabled.");
+        getLogger().warning("Failed to initialize VulcanToolsAPI as it does not exist in the server.");
     }
 
-    // VulcanEvents API
+    // VulcanEvents API - Make sure not to import the class
+    // into the top of your main class file as if you do it may throw a NoClassDefFoundError.
     try {
-        net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.initialize(vulcanEventsPlugin);
-        getLogger().info("VulcanEvents API integration enabled.");
+        if (net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.isAvailable()) {
+            getLogger().info("VulcanEventsAPI integration enabled successfully.");
+            // Initialize integration here
+        } else {
+            getLogger().warning("Failed to initialize VulcanEventsAPI");
+        }
     } catch (NoClassDefFoundError e) {
-        getLogger().warning("VulcanEvents API not found - event features disabled.");
+        getLogger().warning("Failed to initialize VulcanEventsAPI as it does not exist in the server.");
     }
 }
 ```
