@@ -1,9 +1,9 @@
 package net.vulcandev.vulcanapi.vulcantools;
 
+import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
+import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
+import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
 import net.vulcandev.vulcantools.VulcanTools;
-import net.vulcandev.vulcantools.api.interfaces.IBoosterManager;
-import net.vulcandev.vulcantools.api.interfaces.ICurrencyManager;
-import net.vulcandev.vulcantools.api.interfaces.IEventManager;
 import net.vulcandev.vulcantools.enums.ToolType;
 import net.vulcandev.vulcantools.managers.BoosterManager;
 import net.vulcandev.vulcantools.managers.CurrencyManager;
