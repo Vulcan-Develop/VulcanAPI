@@ -31,6 +31,17 @@ try {
 }
 ```
 
+##### Alternative Plugin Integration Method
+You can also use the plugin manager to check for VulcanAPI availability and register event listeners conditionally:
+
+```java
+// Alternative method using plugin manager
+Plugin plugin = getServer().getPluginManager().getPlugin("VulcanAPI");
+if (plugin != null) {
+    getServer().getPluginManager().registerEvents(new VulcanEventsListener(this), this);
+}
+```
+
 #### Basic Usage
 ```java
 import net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI;
@@ -107,6 +118,17 @@ try {
     getLogger().warning("Disabling API integration...");
     // Optionally disable API features in your config
     // getConfig().set("use-vulcan-api", false);
+}
+```
+
+##### Alternative Plugin Integration Method
+You can also use the plugin manager to check for VulcanAPI availability and register event listeners conditionally:
+
+```java
+// Alternative method using plugin manager
+Plugin plugin = getServer().getPluginManager().getPlugin("VulcanAPI");
+if (plugin != null) {
+    getServer().getPluginManager().registerEvents(new VulcanStaffListener(this), this);
 }
 ```
 
@@ -198,6 +220,17 @@ try {
     getLogger().warning("Failed to initialize VulcanToolsAPI: " + e.getMessage());
     getLogger().warning("Disabling Tools API integration...");
     // Optionally disable API features in your config
+}
+```
+
+##### Alternative Plugin Integration Method
+You can also use the plugin manager to check for VulcanAPI availability and register event listeners conditionally:
+
+```java
+// Alternative method using plugin manager
+Plugin plugin = getServer().getPluginManager().getPlugin("VulcanAPI");
+if (plugin != null) {
+    getServer().getPluginManager().registerEvents(new VulcanToolsListener(this), this);
 }
 ```
 
