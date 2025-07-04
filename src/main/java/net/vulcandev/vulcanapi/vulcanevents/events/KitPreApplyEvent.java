@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Called when a kit is applied to a player in a VulcanEvent
+ * Called before a kit is applied to a player in a VulcanEvent
  * This event is cancellable - if cancelled, the kit will not be applied
  */
-public class KitApplyEvent extends Event implements Cancellable {
+public class KitPreApplyEvent extends Event implements Cancellable {
     
     private static final HandlerList handlers = new HandlerList();
     
@@ -27,8 +27,8 @@ public class KitApplyEvent extends Event implements Cancellable {
     private final String eventName;
     private boolean cancelled = false;
     
-    public KitApplyEvent(@NotNull Player player, @NotNull EventPlayer eventPlayer,
-                         @Nullable Kit kit, @NotNull IEvent event) {
+    public KitPreApplyEvent(@NotNull Player player, @NotNull EventPlayer eventPlayer,
+                            @Nullable Kit kit, @NotNull IEvent event) {
         this.player = player;
         this.eventPlayer = eventPlayer;
         this.kit = kit;
