@@ -315,7 +315,8 @@ VulcanAPI provides numerous events that you can listen to:
 - `PlayerLeaveEventEvent` - When a player leaves an event
 - `PlayerEliminateEvent` - When a player is eliminated
 - `PlayerSpectateEventEvent` - When a player starts spectating
-- `KitApplyEvent` - When a kit is applied to a player
+- `KitPreApplyEvent` - Before a kit is applied to a player
+- `KitPostApplyEvent` - After a kit is applied to a player
 
 ### VulcanStaff Events
 - `StaffVanishEvent` - When staff vanish state changes
