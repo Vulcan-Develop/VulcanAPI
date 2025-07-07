@@ -10,40 +10,93 @@ API for VulcanEvents, VulcanStaff, and VulcanTools.
 - **VulcanStaffAPI**: Staff management tools including vanish, staff mode, and freeze functionality
 - **VulcanToolsAPI**: Advanced tool system with currency management, boosters, and tool events
 
-## API Usage
+## Integration Guide
 
 **⚠️ Important**: All VulcanAPI integrations require proper error handling to prevent plugin failures when the APIs are not available on the server. (e.g. When a server opts out of using the API)
 
-### 1. VulcanEventsAPI
+### Method 1: Try-Catch Initialization (Recommended)
 
-Manage server events and player participation.
+Use this method in your plugin's `onEnable()` method. **Important**: Do not import the API classes at the top of your main class file as this may throw a `NoClassDefFoundError`.
 
-#### Plugin Integration (Required)
 ```java
-// In your plugin's onEnable() method - Make sure not to import the class 
-// into the top of your main class file as if you do it may throw a NoClassDefFoundError. 
-try {
-    if (net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.isAvailable()) {
-        getLogger().info("VulcanEventsAPI integration enabled successfully.");
-        // Initialize integration here
-    } else {
-        getLogger().warning("Failed to initialize VulcanEventsAPI");
+@Override
+public void onEnable() {
+    // Initialize VulcanAPI integrations with proper error handling
+    initializeVulcanAPIs();
+}
+
+private void initializeVulcanAPIs() {
+    // VulcanEvents API
+    try {
+        if (net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.isAvailable()) {
+            getLogger().info("VulcanEventsAPI integration enabled successfully.");
+            // Initialize VulcanEvents integration here
+        } else {
+            getLogger().warning("Failed to initialize VulcanEventsAPI");
+        }
+    } catch (NoClassDefFoundError e) {
+        getLogger().warning("Failed to initialize VulcanEventsAPI as it does not exist in the server.");
     }
-} catch (NoClassDefFoundError e) {
-    getLogger().warning("Failed to initialize VulcanEventsAPI as it does not exist in the server.");
+
+    // VulcanStaff API
+    try {
+        if (net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.isAvailable()) {
+            getLogger().info("VulcanStaffAPI integration enabled successfully.");
+            // Initialize VulcanStaff integration here
+        } else {
+            getLogger().warning("Failed to initialize VulcanStaffAPI");
+        }
+    } catch (NoClassDefFoundError e) {
+        getLogger().warning("Failed to initialize VulcanStaffAPI as it does not exist in the server.");
+    }
+
+    // VulcanTools API
+    try {
+        if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
+            getLogger().info("VulcanToolsAPI integration enabled successfully.");
+            // Initialize VulcanTools integration here
+        } else {
+            getLogger().warning("Failed to initialize VulcanToolsAPI");
+        }
+    } catch (NoClassDefFoundError e) {
+        getLogger().warning("Failed to initialize VulcanToolsAPI as it does not exist in the server.");
+    }
 }
 ```
 
-##### Alternative Plugin Integration Method
+### Method 2: Plugin Manager Check
+
 You can also use the plugin manager to check for VulcanAPI availability and register event listeners conditionally:
 
 ```java
 // Alternative method using plugin manager
 Plugin plugin = getServer().getPluginManager().getPlugin("VulcanAPI");
 if (plugin != null) {
+    // Register your event listeners here
     getServer().getPluginManager().registerEvents(new VulcanEventsListener(this), this);
+    getServer().getPluginManager().registerEvents(new VulcanStaffListener(this), this);
+    getServer().getPluginManager().registerEvents(new VulcanToolsListener(this), this);
 }
 ```
+
+### Plugin Dependencies in plugin.yml
+
+Configure your plugin.yml to handle VulcanAPI as a soft dependency:
+
+```yaml
+name: YourPlugin
+main: com.yourplugin.Main
+version: 1.0.0
+softdepend: [VulcanAPI, VulcanStaff, VulcanTools, VulcanEvents]
+```
+
+Using `softdepend` ensures your plugin loads after VulcanAPI if it's present, but won't fail if it's missing.
+
+## API Usage
+
+### 1. VulcanEventsAPI
+
+Manage server events and player participation.
 
 #### Basic Usage
 ```java
@@ -107,33 +160,6 @@ public void onEventStart(EventStartEvent event) {
 ### 2. VulcanStaffAPI
 
 Manage staff features including vanish, staff mode, and player freezing.
-
-#### Plugin Integration (Required)
-```java
-// In your plugin's onEnable() method - Make sure not to import the class
-// into the top of your main class file as if you do it may throw a NoClassDefFoundError.
-try {
-    if (net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.isAvailable()) {
-        getLogger().info("VulcanStaffAPI integration enabled successfully.");
-        // Initialize integration here
-    } else {
-        getLogger().warning("Failed to initialize VulcanStaffAPI");
-    }
-} catch (NoClassDefFoundError e) {
-    getLogger().warning("Failed to initialize VulcanStaffAPI as it does not exist in the server.");
-}
-```
-
-##### Alternative Plugin Integration Method
-You can also use the plugin manager to check for VulcanAPI availability and register event listeners conditionally:
-
-```java
-// Alternative method using plugin manager
-Plugin plugin = getServer().getPluginManager().getPlugin("VulcanAPI");
-if (plugin != null) {
-    getServer().getPluginManager().registerEvents(new VulcanStaffListener(this), this);
-}
-```
 
 #### Basic Usage
 ```java
@@ -212,33 +238,6 @@ public void onStaffVanish(StaffVanishEvent event) {
 ### 3. VulcanToolsAPI
 
 Manage currencies, boosters, and tool events.
-
-#### Plugin Integration (Required)
-```java
-// In your plugin's onEnable() method - Make sure not to import the class
-// into the top of your main class file as if you do it may throw a NoClassDefFoundError.
-try {
-    if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
-        getLogger().info("VulcanToolsAPI integration enabled successfully.");
-        // Initialize integration here
-    } else {
-        getLogger().warning("Failed to initialize VulcanToolsAPI");
-    }
-} catch (NoClassDefFoundError e) {
-    getLogger().warning("Failed to initialize VulcanToolsAPI as it does not exist in the server.");
-}
-```
-
-##### Alternative Plugin Integration Method
-You can also use the plugin manager to check for VulcanAPI availability and register event listeners conditionally:
-
-```java
-// Alternative method using plugin manager
-Plugin plugin = getServer().getPluginManager().getPlugin("VulcanAPI");
-if (plugin != null) {
-    getServer().getPluginManager().registerEvents(new VulcanToolsListener(this), this);
-}
-```
 
 #### Basic Usage
 ```java
@@ -371,71 +370,10 @@ VulcanAPI provides numerous events that you can listen to:
 - `ToolUpgradeEvent` - When a tool is upgraded
 - `BoosterApplyEvent` - When a booster is applied
 - `CurrencyGrindEvent` - When currency is earned through grinding
-- `CaneHarvestEvent` - When sugar cane is harvested
+- `CaneHarvestBatchAsyncEvent` - When sugar cane is harvested (batched, async)
 - `LumberHarvestEvent` - When wood is harvested
 - `FishCatchEvent` - When fish is caught
-- `MobKillEvent` - When a mob is killed with tools
-
-### 1. Use Try-Catch for Initialization
-Server may opt out of using the VulcanAPI, in which case it is best to not fully depend on it. If you do, your plugin will end up throwing an error if the API does not exist on the server
-```java
-@Override
-public void onEnable() {
-    // Initialize VulcanAPI integrations with proper error handling
-    initializeVulcanAPIs();
-}
-
-private void initializeVulcanAPIs() {
-    // VulcanStaff API - Make sure not to import the class
-    // into the top of your main class file as if you do it may throw a NoClassDefFoundError.
-    try {
-        if (net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.isAvailable()) {
-            getLogger().info("VulcanStaffAPI integration enabled successfully.");
-            // Initialize integration here
-        } else {
-            getLogger().warning("Failed to initialize VulcanStaffAPI");
-        }
-    } catch (NoClassDefFoundError e) {
-        getLogger().warning("Failed to initialize VulcanStaffAPI as it does not exist in the server.");
-    }
-
-    // VulcanTools API - Make sure not to import the class
-    // into the top of your main class file as if you do it may throw a NoClassDefFoundError.
-    try {
-        if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
-            getLogger().info("VulcanToolsAPI integration enabled successfully.");
-            // Initialize integration here
-        } else {
-            getLogger().warning("Failed to initialize VulcanToolsAPI");
-        }
-    } catch (NoClassDefFoundError e) {
-        getLogger().warning("Failed to initialize VulcanToolsAPI as it does not exist in the server.");
-    }
-
-    // VulcanEvents API - Make sure not to import the class
-    // into the top of your main class file as if you do it may throw a NoClassDefFoundError.
-    try {
-        if (net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.isAvailable()) {
-            getLogger().info("VulcanEventsAPI integration enabled successfully.");
-            // Initialize integration here
-        } else {
-            getLogger().warning("Failed to initialize VulcanEventsAPI");
-        }
-    } catch (NoClassDefFoundError e) {
-        getLogger().warning("Failed to initialize VulcanEventsAPI as it does not exist in the server.");
-    }
-}
-```
-
-### 2. Handle Plugin Dependencies in plugin.yml
-```yaml
-name: YourPlugin
-main: com.yourplugin.Main
-version: 1.0.0
-softdepend: [VulcanAPI, VulcanStaff, VulcanTools, VulcanEvents]
-```
-
-Using `softdepend` ensures your plugin loads after VulcanAPI if it's present, but won't fail if it's missing.
+- `MobKillBatchAsyncEvent` - When mobs are killed with tools (batched, async)
 
 ## Installation
 
