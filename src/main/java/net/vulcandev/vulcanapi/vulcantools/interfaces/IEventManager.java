@@ -1,6 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.interfaces;
 
-import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
+import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 
 import java.util.LinkedHashMap;
 import java.util.List;

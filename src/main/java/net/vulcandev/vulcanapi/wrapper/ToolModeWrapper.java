@@ -1,4 +1,4 @@
-package net.vulcandev.vulcanapi.vulcantools.wrapper;
+package net.vulcandev.vulcanapi.wrapper;
 
 import net.vulcandev.vulcantools.enums.ToolMode;
 import org.jetbrains.annotations.NotNull;
@@ -12,26 +12,13 @@ public class ToolModeWrapper {
     public enum Mode {
         COLLECT,
         SELL,
-        DEPOSIT,
-        CUSTOM
+        DEPOSIT
     }
     
     private final Mode mode;
-    private final String customName;
     
     public ToolModeWrapper(@NotNull Mode mode) {
         this.mode = mode;
-        this.customName = null;
-    }
-    
-    public ToolModeWrapper(@NotNull String customName) {
-        this.mode = Mode.CUSTOM;
-        this.customName = customName;
-    }
-    
-    private ToolModeWrapper(@NotNull Mode mode, @Nullable String customName) {
-        this.mode = mode;
-        this.customName = customName;
     }
     
     /**
@@ -41,23 +28,6 @@ public class ToolModeWrapper {
     @NotNull
     public Mode getMode() {
         return mode;
-    }
-    
-    /**
-     * Gets the custom name if this is a custom tool mode
-     * @return the custom name or null if not a custom mode
-     */
-    @Nullable
-    public String getCustomName() {
-        return customName;
-    }
-    
-    /**
-     * Checks if this is a custom tool mode
-     * @return true if custom, false otherwise
-     */
-    public boolean isCustom() {
-        return mode == Mode.CUSTOM;
     }
     
     /**
@@ -81,33 +51,26 @@ public class ToolModeWrapper {
     /**
      * Creates a ToolModeWrapper from a VulcanTools ToolMode enum
      * @param toolMode the VulcanTools ToolMode enum
-     * @return ToolModeWrapper instance
+     * @return ToolModeWrapper instance or null if no matching mode exists
      */
-    @NotNull
+    @Nullable
     public static ToolModeWrapper fromVulcanToolMode(@NotNull ToolMode toolMode) {
         try {
             String name = toolMode.name();
             Mode wrapperMode = Mode.valueOf(name);
             return new ToolModeWrapper(wrapperMode);
         } catch (IllegalArgumentException e) {
-            // If the ToolMode doesn't match our enum, treat it as custom
-            return new ToolModeWrapper(toolMode.name());
+            return null;
         }
     }
     
     /**
-     * Creates a ToolModeWrapper from a string
-     * @param modeName the tool mode name
-     * @return ToolModeWrapper instance
+     * Converts this wrapper back to the original VulcanTools ToolMode enum
+     * @return the VulcanTools ToolMode enum
      */
     @NotNull
-    public static ToolModeWrapper fromString(@NotNull String modeName) {
-        try {
-            Mode mode = Mode.valueOf(modeName.toUpperCase());
-            return new ToolModeWrapper(mode);
-        } catch (IllegalArgumentException e) {
-            return new ToolModeWrapper(modeName);
-        }
+    public ToolMode toVulcanToolMode() {
+        return ToolMode.valueOf(mode.name());
     }
     
     @Override
@@ -117,19 +80,16 @@ public class ToolModeWrapper {
         
         ToolModeWrapper that = (ToolModeWrapper) obj;
         
-        if (mode != that.mode) return false;
-        return customName != null ? customName.equals(that.customName) : that.customName == null;
+        return mode == that.mode;
     }
     
     @Override
     public int hashCode() {
-        int result = mode.hashCode();
-        result = 31 * result + (customName != null ? customName.hashCode() : 0);
-        return result;
+        return mode.hashCode();
     }
     
     @Override
     public String toString() {
-        return customName != null ? customName : mode.name();
+        return mode.name();
     }
 }

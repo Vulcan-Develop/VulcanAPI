@@ -1,6 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
-import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
+import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;

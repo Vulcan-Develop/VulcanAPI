@@ -1,7 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanstaff.events;
 
 import net.vulcandev.staff.enums.Chats;
-import net.vulcandev.vulcanapi.vulcanstaff.wrapper.ChatsWrapper;
+import net.vulcandev.vulcanapi.wrapper.ChatsWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

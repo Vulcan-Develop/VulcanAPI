@@ -1,7 +1,8 @@
-package net.vulcandev.vulcanapi.vulcantools.wrapper;
+package net.vulcandev.vulcanapi.wrapper;
 
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Wrapper for VulcanTools ToolType to provide a clean API without exposing internal types
@@ -12,8 +13,7 @@ public class ToolTypeWrapper {
         FISHINGROD("Fishing Rod"),
         MOBSWORD("Mob Sword"),
         HARVESTERHOE("Harvester Hoe"),
-        LUMBERAXE("Lumber Axe"),
-        CUSTOM("Custom");
+        LUMBERAXE("Lumber Axe");
         
         private final String niceName;
         
@@ -42,8 +42,9 @@ public class ToolTypeWrapper {
     /**
      * Creates a ToolTypeWrapper from a VulcanTools ToolType enum
      * @param toolType the VulcanTools ToolType enum
-     * @return ToolTypeWrapper instance
+     * @return ToolTypeWrapper instance or null if no matching type exists
      */
+    @Nullable
     public static ToolTypeWrapper fromVulcanToolType(@NotNull ToolType toolType) {
         try {
             String name = toolType.name();
@@ -52,6 +53,15 @@ public class ToolTypeWrapper {
         } catch (IllegalArgumentException e) {
             return null;
         }
+    }
+    
+    /**
+     * Converts this wrapper back to the original VulcanTools ToolType enum
+     * @return the VulcanTools ToolType enum
+     */
+    @NotNull
+    public ToolType toVulcanToolType() {
+        return ToolType.valueOf(type.name());
     }
     
     @Override

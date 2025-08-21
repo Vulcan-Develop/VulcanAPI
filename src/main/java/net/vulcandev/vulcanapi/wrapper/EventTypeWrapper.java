@@ -1,4 +1,4 @@
-package net.vulcandev.vulcanapi.vulcanevents.types;
+package net.vulcandev.vulcanapi.wrapper;
 
 import net.vulcandev.vulcanevents.enums.EventType;
 import org.jetbrains.annotations.NotNull;
@@ -17,26 +17,13 @@ public class EventTypeWrapper {
         PARKOUR,
         TOWER_WARS,
         ONE_IN_THE_CHAMBER,
-        SKILLED_RACES,
-        CUSTOM
+        SKILLED_RACES
     }
     
     private final Type type;
-    private final String customName;
     
     public EventTypeWrapper(@NotNull Type type) {
         this.type = type;
-        this.customName = null;
-    }
-    
-    public EventTypeWrapper(@NotNull String customName) {
-        this.type = Type.CUSTOM;
-        this.customName = customName;
-    }
-    
-    private EventTypeWrapper(@NotNull Type type, @Nullable String customName) {
-        this.type = type;
-        this.customName = customName;
     }
     
     /**
@@ -48,54 +35,44 @@ public class EventTypeWrapper {
         return type;
     }
     
-    
-    /**
-     * Gets the custom name if this is a custom event type
-     * @return the custom name or null if not a custom type
-     */
-    @Nullable
-    public String getCustomName() {
-        return customName;
-    }
-    
-    /**
-     * Checks if this is a custom event type
-     * @return true if custom, false otherwise
-     */
-    public boolean isCustom() {
-        return type == Type.CUSTOM;
-    }
-    
     /**
      * Creates an EventTypeWrapper from a VulcanEvents EventType
      * @param eventType the VulcanEvents EventType
-     * @return EventTypeWrapper instance
+     * @return EventTypeWrapper instance or null if no matching type exists
      */
-    @NotNull
+    @Nullable
     public static EventTypeWrapper fromVulcanEventType(@NotNull EventType eventType) {
         try {
             String name = eventType.name();
             Type wrapperType = Type.valueOf(name);
             return new EventTypeWrapper(wrapperType);
         } catch (IllegalArgumentException e) {
-            // If the EventType doesn't match our enum, treat it as custom
-            return new EventTypeWrapper(eventType.name());
+            return null;
         }
     }
     
     /**
      * Creates an EventTypeWrapper from a string
      * @param typeName the event type name
-     * @return EventTypeWrapper instance
+     * @return EventTypeWrapper instance or null if no matching type exists
      */
-    @NotNull
+    @Nullable
     public static EventTypeWrapper fromString(@NotNull String typeName) {
         try {
             Type type = Type.valueOf(typeName.toUpperCase());
             return new EventTypeWrapper(type);
         } catch (IllegalArgumentException e) {
-            return new EventTypeWrapper(typeName);
+            return null;
         }
+    }
+    
+    /**
+     * Converts this wrapper back to the original VulcanEvents EventType enum
+     * @return the VulcanEvents EventType enum
+     */
+    @NotNull
+    public EventType toVulcanEventType() {
+        return EventType.valueOf(type.name());
     }
     
     @Override
@@ -105,19 +82,16 @@ public class EventTypeWrapper {
         
         EventTypeWrapper that = (EventTypeWrapper) obj;
         
-        if (type != that.type) return false;
-        return customName != null ? customName.equals(that.customName) : that.customName == null;
+        return type == that.type;
     }
     
     @Override
     public int hashCode() {
-        int result = type.hashCode();
-        result = 31 * result + (customName != null ? customName.hashCode() : 0);
-        return result;
+        return type.hashCode();
     }
     
     @Override
     public String toString() {
-        return customName != null ? customName : type.name();
+        return type.name();
     }
 }

@@ -1,6 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
-import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolModeWrapper;
+import net.vulcandev.vulcanapi.wrapper.ToolModeWrapper;
 import net.vulcandev.vulcantools.enums.ToolMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

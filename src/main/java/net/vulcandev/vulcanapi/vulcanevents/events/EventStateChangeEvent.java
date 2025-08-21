@@ -1,9 +1,8 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
+import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
+import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import net.vulcandev.vulcanevents.enums.EventState;
-import net.vulcandev.vulcanevents.enums.EventType;
-import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
-import net.vulcandev.vulcanapi.vulcanevents.types.EventStateWrapper;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

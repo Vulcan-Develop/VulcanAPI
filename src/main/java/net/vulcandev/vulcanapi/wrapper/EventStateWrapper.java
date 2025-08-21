@@ -1,4 +1,4 @@
-package net.vulcandev.vulcanapi.vulcanevents.types;
+package net.vulcandev.vulcanapi.wrapper;
 
 import net.vulcandev.vulcanevents.enums.EventState;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +34,9 @@ public class EventStateWrapper {
     /**
      * Creates an EventStateWrapper from a VulcanEvents EventState
      * @param eventState the VulcanEvents EventState
-     * @return EventStateWrapper instance
+     * @return EventStateWrapper instance or null if no matching state exists
      */
+    @Nullable
     public static EventStateWrapper fromVulcanEventState(@NotNull EventState eventState) {
         try {
             String name = eventState.name();
@@ -44,6 +45,15 @@ public class EventStateWrapper {
         } catch (IllegalArgumentException e) {
             return null;
         }
+    }
+    
+    /**
+     * Converts this wrapper back to the original VulcanEvents EventState enum
+     * @return the VulcanEvents EventState enum
+     */
+    @NotNull
+    public EventState toVulcanEventState() {
+        return EventState.valueOf(state.name());
     }
 
     @Override

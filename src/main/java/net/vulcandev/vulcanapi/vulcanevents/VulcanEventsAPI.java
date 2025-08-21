@@ -1,11 +1,11 @@
 package net.vulcandev.vulcanapi.vulcanevents;
 
+import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
+import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import net.vulcandev.vulcanevents.VulcanEvents;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import net.vulcandev.vulcanevents.objects.EventPlayer;
 import net.vulcandev.vulcanevents.utils.EventPlayerBan;
-import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
-import net.vulcandev.vulcanapi.vulcanevents.types.EventStateWrapper;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

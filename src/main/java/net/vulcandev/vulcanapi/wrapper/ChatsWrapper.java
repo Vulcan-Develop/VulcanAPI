@@ -1,4 +1,4 @@
-package net.vulcandev.vulcanapi.vulcanstaff.wrapper;
+package net.vulcandev.vulcanapi.wrapper;
 
 import net.vulcandev.staff.enums.Chats;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +33,9 @@ public class ChatsWrapper {
     /**
      * Creates a ChatsWrapper from a VulcanStaff Chats enum
      * @param chats the VulcanStaff Chats enum
-     * @return ChatsWrapper instance
+     * @return ChatsWrapper instance or null if no matching chat exists
      */
+    @Nullable
     public static ChatsWrapper fromVulcanChats(@NotNull Chats chats) {
         try {
             String name = chats.name();
@@ -46,17 +47,12 @@ public class ChatsWrapper {
     }
     
     /**
-     * Creates a ChatsWrapper from a string
-     * @param chatName the chat type name
-     * @return ChatsWrapper instance
+     * Converts this wrapper back to the original VulcanStaff Chats enum
+     * @return the VulcanStaff Chats enum
      */
-    public static ChatsWrapper fromString(@NotNull String chatName) {
-        try {
-            Chat chat = Chat.valueOf(chatName.toUpperCase());
-            return new ChatsWrapper(chat);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
+    @NotNull
+    public Chats toVulcanChats() {
+        return Chats.valueOf(chat.name());
     }
     
     @Override
