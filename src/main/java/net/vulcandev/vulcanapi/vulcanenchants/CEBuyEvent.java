@@ -12,20 +12,16 @@ public class CEBuyEvent extends Event implements Cancellable {
     
     private final Player player;
     private final String enchantName;
-    private final int level;
-    private final ItemStack targetItem;
+    private final ItemStack bookItem;
     private double cost;
-    private final String currency;
     private boolean cancelled = false;
     
-    public CEBuyEvent(@NotNull Player player, @NotNull String enchantName, int level, 
-                     @NotNull ItemStack targetItem, double cost, @NotNull String currency) {
+    public CEBuyEvent(@NotNull Player player, @NotNull String enchantName,
+                     @NotNull ItemStack bookItem, double cost) {
         this.player = player;
         this.enchantName = enchantName;
-        this.level = level;
-        this.targetItem = targetItem.clone();
+        this.bookItem = bookItem.clone();
         this.cost = cost;
-        this.currency = currency;
     }
     
     @NotNull
@@ -38,13 +34,9 @@ public class CEBuyEvent extends Event implements Cancellable {
         return enchantName;
     }
     
-    public int getLevel() {
-        return level;
-    }
-    
     @NotNull
-    public ItemStack getTargetItem() {
-        return targetItem.clone();
+    public ItemStack getBookItem() {
+        return bookItem.clone();
     }
     
     public double getCost() {
@@ -54,12 +46,7 @@ public class CEBuyEvent extends Event implements Cancellable {
     public void setCost(double cost) {
         this.cost = cost;
     }
-    
-    @NotNull
-    public String getCurrency() {
-        return currency;
-    }
-    
+
     @Override
     public boolean isCancelled() {
         return cancelled;

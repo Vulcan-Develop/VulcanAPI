@@ -5,6 +5,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 public class CEApplyEvent extends Event implements Cancellable {
@@ -12,18 +13,20 @@ public class CEApplyEvent extends Event implements Cancellable {
     
     private final Player player;
     private final String enchantName;
-    private final int level;
+    private final int amp;
     private final ItemStack targetItem;
-    private final ItemStack resultItem;
+    private final ItemStack bookItem;
+    private final PotionEffectType potionEffectType;
     private boolean cancelled = false;
     
-    public CEApplyEvent(@NotNull Player player, @NotNull String enchantName, int level, 
-                       @NotNull ItemStack targetItem, @NotNull ItemStack resultItem) {
+    public CEApplyEvent(@NotNull Player player, @NotNull String enchantName, int amp, PotionEffectType potionEffectType,
+                       @NotNull ItemStack targetItem, @NotNull ItemStack bookItem) {
         this.player = player;
         this.enchantName = enchantName;
-        this.level = level;
+        this.amp = amp;
+        this.potionEffectType = potionEffectType;
         this.targetItem = targetItem.clone();
-        this.resultItem = resultItem.clone();
+        this.bookItem = bookItem.clone();
     }
     
     @NotNull
@@ -36,9 +39,11 @@ public class CEApplyEvent extends Event implements Cancellable {
         return enchantName;
     }
     
-    public int getLevel() {
-        return level;
+    public int getAmp() {
+        return amp;
     }
+
+    public PotionEffectType getPotionEffectType() { return potionEffectType; }
     
     @NotNull
     public ItemStack getTargetItem() {
@@ -46,8 +51,8 @@ public class CEApplyEvent extends Event implements Cancellable {
     }
     
     @NotNull
-    public ItemStack getResultItem() {
-        return resultItem.clone();
+    public ItemStack getBookItem() {
+        return bookItem.clone();
     }
     
     @Override
