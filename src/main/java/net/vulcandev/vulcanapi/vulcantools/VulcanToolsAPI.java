@@ -12,7 +12,6 @@ import net.vulcandev.vulcantools.managers.EventManager;
 import net.vulcandev.vulcantools.objects.Booster;
 import net.vulcandev.vulcantools.objects.Currency;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,18 +55,7 @@ public class VulcanToolsAPI {
      *
      * @return true if VulcanTools is available, false otherwise
      */
-    public static boolean isAvailable() {
-        return instance != null && instance.plugin.isEnabled();
-    }
-    
-    /**
-     * Gets the VulcanTools plugin instance.
-     *
-     * @return the VulcanTools plugin instance
-     */
-    public Plugin getPlugin() {
-        return plugin;
-    }
+    public static boolean isAvailable() {return instance != null && instance.plugin != null && instance.plugin.isEnabled();}
 
     /**
      * Gets the currency manager interface.
@@ -94,15 +82,6 @@ public class VulcanToolsAPI {
      */
     public IBoosterManager getBoosterManager() {
         return boosterManager;
-    }
-
-    /**
-     * Gets the VulcanTools version.
-     *
-     * @return the plugin version
-     */
-    public String getVersion() {
-        return plugin.getDescription().getVersion();
     }
     
     // Wrapper classes to implement the interfaces

@@ -35,9 +35,7 @@ public class VulcanStaffAPI {
      * Check if VulcanStaff is available and loaded
      * @return true if VulcanStaff is available, false otherwise
      */
-    public static boolean isAvailable() {
-        return instance != null && instance.plugin.isEnabled();
-    }
+    public static boolean isAvailable() {return instance != null && instance.plugin != null && instance.plugin.isEnabled();}
 
     // ===== VANISH API =====
 
@@ -56,8 +54,7 @@ public class VulcanStaffAPI {
      * @return True if the player is vanished
      */
     public boolean isVanished(UUID uuid) {
-        VanishFeature vanishFeature = VanishFeature.getInstance();
-        return vanishFeature != null && vanishFeature.getVanish().isVanished(uuid);
+        return isAvailable() && VanishFeature.getInstance().getVanish().isVanished(uuid);
     }
 
     /**
@@ -67,14 +64,14 @@ public class VulcanStaffAPI {
      * @return True if the operation was successful
      */
     public boolean setVanished(Player player, boolean vanished) {
-        VanishFeature vanishFeature = VanishFeature.getInstance();
-        if (vanishFeature == null) return false;
+        if (!isAvailable()) return false;
 
         // Fire event
         StaffVanishEvent event = new StaffVanishEvent(player, vanished, StaffVanishEvent.VanishReason.API);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
 
+        VanishFeature vanishFeature = VanishFeature.getInstance();
         if (vanished) {
             vanishFeature.getVanish().vanish(player);
         } else {
@@ -89,8 +86,7 @@ public class VulcanStaffAPI {
      * @return True if the player can see vanished players
      */
     public boolean canSeeVanished(Player player) {
-        VanishFeature vanishFeature = VanishFeature.getInstance();
-        return vanishFeature != null && vanishFeature.canSeeVanished(player);
+        return isAvailable() && VanishFeature.getInstance().canSeeVanished(player);
     }
 
     /**
@@ -98,8 +94,7 @@ public class VulcanStaffAPI {
      * @return Set of UUIDs of vanished players
      */
     public Set<UUID> getVanishedPlayers() {
-        VanishFeature vanishFeature = VanishFeature.getInstance();
-        return vanishFeature != null ? vanishFeature.getVanish().getVanishedPlayers() : Collections.emptySet();
+        return isAvailable() ? VanishFeature.getInstance().getVanish().getVanishedPlayers() : Collections.emptySet();
     }
 
     // ===== STAFF MODE API =====
@@ -119,8 +114,7 @@ public class VulcanStaffAPI {
      * @return True if the player is in staff mode
      */
     public boolean isInStaffMode(UUID uuid) {
-        StaffModeFeature staffModeFeature = StaffModeFeature.getInstance();
-        return staffModeFeature != null && staffModeFeature.getStaffModeList().containsKey(uuid);
+        return isAvailable() && StaffModeFeature.getInstance().getStaffModeList().containsKey(uuid);
     }
 
     // ===== FREEZE API =====
@@ -140,8 +134,7 @@ public class VulcanStaffAPI {
      * @return True if the player is frozen
      */
     public boolean isFrozen(UUID uuid) {
-        FreezeFeature freezeFeature = FreezeFeature.getInstance();
-        return freezeFeature != null && freezeFeature.getFrozenPlayers().contains(uuid);
+        return isAvailable() && FreezeFeature.getInstance().getFrozenPlayers().contains(uuid);
     }
 
     /**
@@ -152,14 +145,14 @@ public class VulcanStaffAPI {
      * @return True if the operation was successful
      */
     public boolean setFrozen(Player target, Player staff, boolean frozen) {
-        FreezeFeature freezeFeature = FreezeFeature.getInstance();
-        if (freezeFeature == null) return false;
+        if (!isAvailable()) return false;
 
         // Fire event
         PlayerFreezeEvent event = new PlayerFreezeEvent(target, staff, frozen, PlayerFreezeEvent.FreezeReason.API);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
 
+        FreezeFeature freezeFeature = FreezeFeature.getInstance();
         if (frozen) {
             freezeFeature.addFrozenPlayer(target.getUniqueId());
         } else {

@@ -31,9 +31,7 @@ public class VulcanEventsAPI {
      * Check if VulcanEvents is available and loaded
      * @return true if VulcanEvents is available, false otherwise
      */
-    public static boolean isAvailable() {
-        return instance != null && instance.plugin.isEnabled();
-    }
+    public static boolean isAvailable() {return instance != null && instance.plugin != null && instance.plugin.isEnabled();}
 
     /**
      * Checks if there is currently an active event
@@ -50,10 +48,9 @@ public class VulcanEventsAPI {
      */
     @Nullable
     public EventTypeWrapper getCurrentEventType() {
+        if (!isAvailable()) return null;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return null;
-        }
+        if (currentEvent == null) return null;
         return EventTypeWrapper.fromVulcanEventType(currentEvent.getEventType());
     }
 
@@ -63,10 +60,9 @@ public class VulcanEventsAPI {
      */
     @Nullable
     public String getCurrentEventName() {
+        if (!isAvailable()) return null;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return null;
-        }
+        if (currentEvent == null) return null;
         return currentEvent.getName();
     }
 
@@ -76,10 +72,9 @@ public class VulcanEventsAPI {
      */
     @Nullable
     public EventStateWrapper getCurrentEventState() {
+        if (!isAvailable()) return null;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return null;
-        }
+        if (currentEvent == null) return null;
         return EventStateWrapper.fromVulcanEventState(currentEvent.getState());
     }
 
@@ -88,10 +83,9 @@ public class VulcanEventsAPI {
      * @return seconds remaining or -1 if no event is active
      */
     public int getTimeRemaining() {
+        if (!isAvailable()) return -1;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return -1;
-        }
+        if (currentEvent == null) return -1;
         return currentEvent.getSecondsLeft();
     }
 
@@ -101,10 +95,9 @@ public class VulcanEventsAPI {
      * @return true if the player is participating, false otherwise
      */
     public boolean isPlayerInEvent(@NotNull Player player) {
+        if (!isAvailable()) return false;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return false;
-        }
+        if (currentEvent == null) return false;
         return currentEvent.isParticipating(player.getUniqueId());
     }
 
@@ -114,10 +107,9 @@ public class VulcanEventsAPI {
      * @return true if the player is spectating, false otherwise
      */
     public boolean isPlayerSpectating(@NotNull Player player) {
+        if (!isAvailable()) return false;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return false;
-        }
+        if (currentEvent == null) return false;
         return currentEvent.getSpectators().containsKey(player.getUniqueId());
     }
 
@@ -126,10 +118,9 @@ public class VulcanEventsAPI {
      * @return number of participants or 0 if no event is active
      */
     public int getParticipantCount() {
+        if (!isAvailable()) return 0;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return 0;
-        }
+        if (currentEvent == null) return 0;
         return currentEvent.getPlayers().size();
     }
 
@@ -138,10 +129,9 @@ public class VulcanEventsAPI {
      * @return number of spectators or 0 if no event is active
      */
     public int getSpectatorCount() {
+        if (!isAvailable()) return 0;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return 0;
-        }
+        if (currentEvent == null) return 0;
         return currentEvent.getSpectators().size();
     }
 
@@ -152,6 +142,7 @@ public class VulcanEventsAPI {
      */
     @NotNull
     public Map<UUID, Player> getParticipants() {
+        if (!isAvailable()) return Collections.emptyMap();
         IEvent currentEvent = plugin.getCurrentIEvent();
         if (currentEvent == null) return Collections.emptyMap();
 
@@ -172,6 +163,7 @@ public class VulcanEventsAPI {
      */
     @NotNull
     public Map<UUID, Player> getSpectators() {
+        if (!isAvailable()) return Collections.emptyMap();
         IEvent currentEvent = plugin.getCurrentIEvent();
         if (currentEvent == null) return Collections.emptyMap();
 
@@ -192,6 +184,7 @@ public class VulcanEventsAPI {
      * @return true if the player is banned, false otherwise
      */
     public boolean isPlayerBanned(@NotNull Player player) {
+        if (!isAvailable()) return false;
         EventPlayerBan ban = plugin.getBanned(player.getUniqueId());
         return ban != null && ban.isStillBanned();
     }
@@ -201,19 +194,11 @@ public class VulcanEventsAPI {
      * @return true if there is space, false otherwise or if no event is active
      */
     public boolean hasSpace() {
+        if (!isAvailable()) return false;
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return false;
-        }
+        if (currentEvent == null) return false;
         return currentEvent.isSpace();
     }
-
-    /**
-     * Gets the VulcanEvents plugin instance
-     * @return VulcanEvents plugin instance
-     */
-    @NotNull
-    public VulcanEvents getPlugin() {return plugin;}
 
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
