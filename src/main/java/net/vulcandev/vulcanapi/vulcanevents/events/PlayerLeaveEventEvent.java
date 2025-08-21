@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanevents.enums.EventType;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -15,18 +16,15 @@ public class PlayerLeaveEventEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     
     private final Player player;
-    private final IEvent event;
-    private final EventType eventType;
+    private final EventTypeWrapper eventType;
     private final String eventName;
     private final boolean wasParticipant;
     private final boolean wasSpectator;
     private final boolean sendMessage;
     
-    public PlayerLeaveEventEvent(@NotNull Player player, @NotNull IEvent event, 
-                                boolean wasParticipant, boolean wasSpectator, boolean sendMessage) {
+    public PlayerLeaveEventEvent(@NotNull Player player, @NotNull IEvent event, boolean wasParticipant, boolean wasSpectator, boolean sendMessage) {
         this.player = player;
-        this.event = event;
-        this.eventType = event.getEventType();
+        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
         this.eventName = event.getName();
         this.wasParticipant = wasParticipant;
         this.wasSpectator = wasSpectator;
@@ -42,21 +40,13 @@ public class PlayerLeaveEventEvent extends Event {
         return player;
     }
     
-    /**
-     * Gets the event the player is leaving
-     * @return the IEvent instance
-     */
-    @NotNull
-    public IEvent getEvent() {
-        return event;
-    }
     
     /**
      * Gets the type of event the player is leaving
-     * @return the EventType
+     * @return the EventTypeWrapper
      */
     @NotNull
-    public EventType getEventType() {
+    public EventTypeWrapper getEventType() {
         return eventType;
     }
     

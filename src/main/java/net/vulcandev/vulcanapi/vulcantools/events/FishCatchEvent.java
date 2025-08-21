@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolModeWrapper;
 import net.vulcandev.vulcantools.enums.ToolMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -16,7 +17,7 @@ public class FishCatchEvent extends Event implements Cancellable {
 
     private final Player player;
     private final PlayerFishEvent originalEvent;
-    private final ToolMode toolMode;
+    private final ToolModeWrapper toolMode;
     private int fishAmount;
     private boolean cancelled;
     
@@ -31,7 +32,7 @@ public class FishCatchEvent extends Event implements Cancellable {
     public FishCatchEvent(Player player, PlayerFishEvent originalEvent, ToolMode toolMode, int fishAmount) {
         this.player = player;
         this.originalEvent = originalEvent;
-        this.toolMode = toolMode;
+        this.toolMode = ToolModeWrapper.fromVulcanToolMode(toolMode);
         this.fishAmount = fishAmount;
         this.cancelled = false;
     }
@@ -59,7 +60,7 @@ public class FishCatchEvent extends Event implements Cancellable {
      *
      * @return the tool mode of the fishing rod
      */
-    public ToolMode getToolMode() {
+    public ToolModeWrapper getToolMode() {
         return toolMode;
     }
 

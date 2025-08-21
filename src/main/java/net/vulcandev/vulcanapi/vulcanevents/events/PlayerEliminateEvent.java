@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanevents.enums.EventType;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -17,17 +18,14 @@ public class PlayerEliminateEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     
     private final Player player;
-    private final IEvent event;
-    private final EventType eventType;
+    private final EventTypeWrapper eventType;
     private final String eventName;
     private final String reason;
     private final Player killer;
     
-    public PlayerEliminateEvent(@NotNull Player player, @NotNull IEvent event, 
-                               @Nullable String reason, @Nullable Player killer) {
+    public PlayerEliminateEvent(@NotNull Player player, @NotNull IEvent event, @Nullable String reason, @Nullable Player killer) {
         this.player = player;
-        this.event = event;
-        this.eventType = event.getEventType();
+        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
         this.eventName = event.getName();
         this.reason = reason;
         this.killer = killer;
@@ -42,21 +40,13 @@ public class PlayerEliminateEvent extends Event {
         return player;
     }
     
-    /**
-     * Gets the event the player was eliminated from
-     * @return the IEvent instance
-     */
-    @NotNull
-    public IEvent getEvent() {
-        return event;
-    }
     
     /**
      * Gets the type of event the player was eliminated from
-     * @return the EventType
+     * @return the EventTypeWrapper
      */
     @NotNull
-    public EventType getEventType() {
+    public EventTypeWrapper getEventType() {
         return eventType;
     }
     

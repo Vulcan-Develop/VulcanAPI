@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanstaff.events;
 
 import net.vulcandev.staff.enums.Chats;
+import net.vulcandev.vulcanapi.vulcanstaff.wrapper.ChatsWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -16,7 +17,7 @@ public class StaffChatEvent extends Event implements Cancellable {
     
     private final Player player;
     private final String message;
-    private final Chats chatType;
+    private final ChatsWrapper chatType;
     
     /**
      * Constructs a new StaffChatEvent.
@@ -27,7 +28,7 @@ public class StaffChatEvent extends Event implements Cancellable {
     public StaffChatEvent(Player player, String message, Chats chatType) {
         this.player = player;
         this.message = message;
-        this.chatType = chatType;
+        this.chatType = ChatsWrapper.fromVulcanChats(chatType);
     }
     
     /**
@@ -50,7 +51,7 @@ public class StaffChatEvent extends Event implements Cancellable {
      * Gets the type of staff chat.
      * @return The chat type
      */
-    public Chats getChatType() {
+    public ChatsWrapper getChatType() {
         return chatType;
     }
     

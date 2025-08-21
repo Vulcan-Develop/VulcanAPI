@@ -2,6 +2,8 @@ package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanevents.enums.EventState;
 import net.vulcandev.vulcanevents.enums.EventType;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventStateWrapper;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -14,35 +16,25 @@ public class EventStateChangeEvent extends Event {
     
     private static final HandlerList handlers = new HandlerList();
     
-    private final IEvent event;
-    private final EventType eventType;
+    private final EventTypeWrapper eventType;
     private final String eventName;
-    private final EventState previousState;
-    private final EventState newState;
+    private final EventStateWrapper previousState;
+    private final EventStateWrapper newState;
     
     public EventStateChangeEvent(@NotNull IEvent event, @NotNull EventState previousState, @NotNull EventState newState) {
-        this.event = event;
-        this.eventType = event.getEventType();
+        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
         this.eventName = event.getName();
-        this.previousState = previousState;
-        this.newState = newState;
+        this.previousState = EventStateWrapper.fromVulcanEventState(previousState);
+        this.newState = EventStateWrapper.fromVulcanEventState(newState);
     }
     
-    /**
-     * Gets the event that changed state
-     * @return the IEvent instance
-     */
-    @NotNull
-    public IEvent getEvent() {
-        return event;
-    }
     
     /**
      * Gets the type of event that changed state
-     * @return the EventType
+     * @return the EventTypeWrapper
      */
     @NotNull
-    public EventType getEventType() {
+    public EventTypeWrapper getEventType() {
         return eventType;
     }
     
@@ -57,19 +49,19 @@ public class EventStateChangeEvent extends Event {
     
     /**
      * Gets the previous state of the event
-     * @return the previous EventState
+     * @return the previous EventStateWrapper
      */
     @NotNull
-    public EventState getPreviousState() {
+    public EventStateWrapper getPreviousState() {
         return previousState;
     }
     
     /**
      * Gets the new state of the event
-     * @return the new EventState
+     * @return the new EventStateWrapper
      */
     @NotNull
-    public EventState getNewState() {
+    public EventStateWrapper getNewState() {
         return newState;
     }
     

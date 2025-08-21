@@ -3,6 +3,8 @@ package net.vulcandev.vulcanapi.vulcantools.interfaces;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Set;
+
 /**
  * Interface for managing currencies in VulcanTools.
  * This interface provides access to currency operations for external plugins.
@@ -70,7 +72,7 @@ public interface ICurrencyManager {
      *
      * @return a set of all currency identifiers
      */
-    java.util.Set<String> getAllCurrencyIds();
+    Set<String> getAllCurrencyIds();
 
     /**
      * Checks if a currency exists.

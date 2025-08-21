@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Cancellable;
@@ -13,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class ToolEventStartEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
-    private final ToolType toolType;
+    private final ToolTypeWrapper toolType;
     private int durationSeconds;
     private final CommandSender startedBy;
     private boolean cancelled;
@@ -26,7 +27,7 @@ public class ToolEventStartEvent extends Event implements Cancellable {
      * @param startedBy the command sender who started the event
      */
     public ToolEventStartEvent(ToolType toolType, int durationSeconds, CommandSender startedBy) {
-        this.toolType = toolType;
+        this.toolType = ToolTypeWrapper.fromVulcanToolType(toolType);
         this.durationSeconds = durationSeconds;
         this.startedBy = startedBy;
         this.cancelled = false;
@@ -37,7 +38,7 @@ public class ToolEventStartEvent extends Event implements Cancellable {
      *
      * @return the tool event type
      */
-    public ToolType getToolType() {
+    public ToolTypeWrapper getToolType() {
         return toolType;
     }
 
@@ -83,7 +84,7 @@ public class ToolEventStartEvent extends Event implements Cancellable {
      * @return a string describing the event
      */
     public String getEventDescription() {
-        return toolType.niceName() + " event for " + getDurationMinutes() + " minutes";
+        return toolType.getNiceName() + " event for " + getDurationMinutes() + " minutes";
     }
     
     @Override

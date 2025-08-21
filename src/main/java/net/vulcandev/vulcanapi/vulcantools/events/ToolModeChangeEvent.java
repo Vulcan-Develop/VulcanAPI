@@ -2,6 +2,8 @@ package net.vulcandev.vulcanapi.vulcantools.events;
 
 import net.vulcandev.vulcantools.enums.ToolMode;
 import net.vulcandev.vulcantools.enums.ToolType;
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolModeWrapper;
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -14,12 +16,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ToolModeChangeEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-
     private final Player player;
     private final ItemStack tool;
-    private final ToolType toolType;
-    private final ToolMode oldMode;
-    private ToolMode newMode;
+    private final ToolTypeWrapper toolType;
+    private final ToolModeWrapper oldMode;
+    private ToolModeWrapper newMode;
     private boolean cancelled;
     
     /**
@@ -34,9 +35,9 @@ public class ToolModeChangeEvent extends Event implements Cancellable {
     public ToolModeChangeEvent(Player player, ItemStack tool, ToolType toolType, ToolMode oldMode, ToolMode newMode) {
         this.player = player;
         this.tool = tool;
-        this.toolType = toolType;
-        this.oldMode = oldMode;
-        this.newMode = newMode;
+        this.toolType = ToolTypeWrapper.fromVulcanToolType(toolType);
+        this.oldMode = ToolModeWrapper.fromVulcanToolMode(oldMode);
+        this.newMode = ToolModeWrapper.fromVulcanToolMode(newMode);
         this.cancelled = false;
     }
 
@@ -63,7 +64,7 @@ public class ToolModeChangeEvent extends Event implements Cancellable {
      *
      * @return the tool type
      */
-    public ToolType getToolType() {
+    public ToolTypeWrapper getToolType() {
         return toolType;
     }
 
@@ -72,7 +73,7 @@ public class ToolModeChangeEvent extends Event implements Cancellable {
      *
      * @return the old tool mode
      */
-    public ToolMode getOldMode() {
+    public ToolModeWrapper getOldMode() {
         return oldMode;
     }
 
@@ -81,7 +82,7 @@ public class ToolModeChangeEvent extends Event implements Cancellable {
      *
      * @return the new tool mode
      */
-    public ToolMode getNewMode() {
+    public ToolModeWrapper getNewMode() {
         return newMode;
     }
 
@@ -90,7 +91,7 @@ public class ToolModeChangeEvent extends Event implements Cancellable {
      *
      * @param newMode the new tool mode
      */
-    public void setNewMode(ToolMode newMode) {
+    public void setNewMode(ToolModeWrapper newMode) {
         this.newMode = newMode;
     }
 
@@ -101,15 +102,6 @@ public class ToolModeChangeEvent extends Event implements Cancellable {
      */
     public boolean isModeChanging() {
         return oldMode != newMode;
-    }
-
-    /**
-     * Gets a description of the mode change.
-     *
-     * @return a string describing the change
-     */
-    public String getModeChangeDescription() {
-        return oldMode.niceName() + " -> " + newMode.niceName();
     }
     
     @Override

@@ -1,8 +1,9 @@
 package net.vulcandev.vulcanapi.vulcantools.interfaces;
 
-import net.vulcandev.vulcantools.enums.ToolType;
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,7 +18,7 @@ public interface IEventManager {
      * @param eventType the type of tool event to start
      * @param durationSeconds the duration of the event in seconds
      */
-    void startEvent(ToolType eventType, int durationSeconds);
+    void startEvent(ToolTypeWrapper eventType, int durationSeconds);
 
     /**
      * Ends the current active event.
@@ -36,7 +37,7 @@ public interface IEventManager {
      *
      * @return the current event type, or null if no event is active
      */
-    ToolType getEventType();
+    ToolTypeWrapper getEventType();
 
     /**
      * Adds harvest amount for a player during an event.
@@ -45,7 +46,7 @@ public interface IEventManager {
      * @param amount the amount to add
      * @param toolType the tool type used
      */
-    void addHarvest(UUID playerUUID, int amount, ToolType toolType);
+    void addHarvest(UUID playerUUID, int amount, ToolTypeWrapper toolType);
 
     /**
      * Gets the harvest amount for a specific player.
@@ -68,5 +69,5 @@ public interface IEventManager {
      * @param limit the maximum number of players to return
      * @return a list of player names and their harvest amounts
      */
-    java.util.List<String> getTopPlayers(int limit);
+    List<String> getTopPlayers(int limit);
 }

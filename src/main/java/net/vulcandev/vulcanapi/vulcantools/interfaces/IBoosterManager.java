@@ -2,6 +2,8 @@ package net.vulcandev.vulcanapi.vulcantools.interfaces;
 
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 /**
  * Interface for managing boosters in VulcanTools.
  * This interface provides access to booster operations for external plugins.
@@ -54,5 +56,5 @@ public interface IBoosterManager {
      * @param player the player to check
      * @return a list of active booster descriptions
      */
-    java.util.List<String> getActiveBoosterDescriptions(Player player);
+    List<String> getActiveBoosterDescriptions(Player player);
 }

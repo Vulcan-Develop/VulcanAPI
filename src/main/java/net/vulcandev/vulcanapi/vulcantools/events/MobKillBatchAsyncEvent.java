@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolModeWrapper;
 import net.vulcandev.vulcantools.enums.ToolMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -17,7 +18,7 @@ public class MobKillBatchAsyncEvent extends Event {
     private final Player player;
     private final Entity killedEntity;
     private final EntityDeathEvent originalEvent;
-    private final ToolMode toolMode;
+    private final ToolModeWrapper toolMode;
     private final int amountKilled;
 
     public MobKillBatchAsyncEvent(Player player, Entity killedEntity, EntityDeathEvent originalEvent, ToolMode toolMode, int amountKilled) {
@@ -25,7 +26,7 @@ public class MobKillBatchAsyncEvent extends Event {
         this.player = player;
         this.killedEntity = killedEntity;
         this.originalEvent = originalEvent;
-        this.toolMode = toolMode;
+        this.toolMode = ToolModeWrapper.fromVulcanToolMode(toolMode);
         this.amountKilled = amountKilled;
     }
 
@@ -54,7 +55,7 @@ public class MobKillBatchAsyncEvent extends Event {
         return player;
     }
 
-    public ToolMode getToolMode() {
+    public ToolModeWrapper getToolMode() {
         return toolMode;
     }
 }

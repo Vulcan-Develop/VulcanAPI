@@ -1,13 +1,17 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanevents.enums.EventType;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import net.vulcandev.vulcanevents.objects.EventPlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Called when a VulcanEvent ends
@@ -16,40 +20,45 @@ public class EventEndEvent extends Event {
     
     private static final HandlerList handlers = new HandlerList();
     
-    private final IEvent event;
-    private final EventType eventType;
+    private final EventTypeWrapper eventType;
     private final String eventName;
-    private final Map<UUID, EventPlayer> finalParticipants;
-    private final Map<UUID, EventPlayer> finalSpectators;
+    private final Map<UUID, Player> finalParticipants;
+    private final Map<UUID, Player> finalSpectators;
     private final boolean wasSilent;
     private final boolean hadRewards;
     
-    public EventEndEvent(@NotNull IEvent event, @NotNull Map<UUID, EventPlayer> finalParticipants,
-                         @NotNull Map<UUID, EventPlayer> finalSpectators, boolean wasSilent, boolean hadRewards) {
-        this.event = event;
-        this.eventType = event.getEventType();
+    public EventEndEvent(@NotNull IEvent event, @NotNull Map<UUID, EventPlayer> finalParticipants, @NotNull Map<UUID, EventPlayer> finalSpectators, boolean wasSilent, boolean hadRewards) {
+        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
         this.eventName = event.getName();
-        this.finalParticipants = new HashMap<>(finalParticipants);
-        this.finalSpectators = new HashMap<>(finalSpectators);
+
+        // Convert from EventPlayer → Player safely
+        this.finalParticipants = new HashMap<>();
+        for (Map.Entry<UUID, EventPlayer> entry : finalParticipants.entrySet()) {
+            Player player = entry.getValue().getPlayer();
+            if (player != null) {
+                this.finalParticipants.put(entry.getKey(), player);
+            }
+        }
+
+        this.finalSpectators = new HashMap<>();
+        for (Map.Entry<UUID, EventPlayer> entry : finalSpectators.entrySet()) {
+            Player player = entry.getValue().getPlayer();
+            if (player != null) {
+                this.finalSpectators.put(entry.getKey(), player);
+            }
+        }
+
         this.wasSilent = wasSilent;
         this.hadRewards = hadRewards;
     }
     
-    /**
-     * Gets the event that ended
-     * @return the IEvent instance
-     */
-    @NotNull
-    public IEvent getEvent() {
-        return event;
-    }
     
     /**
      * Gets the type of event that ended
-     * @return the EventType
+     * @return the EventTypeWrapper
      */
     @NotNull
-    public EventType getEventType() {
+    public EventTypeWrapper getEventType() {
         return eventType;
     }
     
@@ -64,28 +73,28 @@ public class EventEndEvent extends Event {
     
     /**
      * Gets the final participants when the event ended
-     * @return Map of UUID to EventPlayer
+     * @return Map of UUID to Player
      */
     @NotNull
-    public Map<UUID, EventPlayer> getFinalParticipants() {
+    public Map<UUID, Player> getFinalParticipants() {
         return finalParticipants;
     }
     
     /**
      * Gets the final spectators when the event ended
-     * @return Map of UUID to EventPlayer
+     * @return Map of UUID to Player
      */
     @NotNull
-    public Map<UUID, EventPlayer> getFinalSpectators() {
+    public Map<UUID, Player> getFinalSpectators() {
         return finalSpectators;
     }
     
     /**
      * Gets the winners of the event (remaining participants)
-     * @return List of EventPlayer winners
+     * @return List of Player winners
      */
     @NotNull
-    public List<EventPlayer> getWinners() {
+    public List<Player> getWinners() {
         return new ArrayList<>(finalParticipants.values());
     }
     

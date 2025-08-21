@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanevents.enums.EventType;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import net.vulcandev.vulcanevents.interfaces.Kit;
 import net.vulcandev.vulcanevents.objects.EventPlayer;
@@ -8,102 +9,122 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 /**
- * Called before a kit is applied to a player in a VulcanEvent
- * This event is cancellable - if cancelled, the kit will not be applied
+ * Called before a kit is applied to a player in a Vulcan Event.
+ * <p>
+ * This event is {@link Cancellable} – if cancelled, the kit will not be applied
+ * to the player.
  */
 public class KitPreApplyEvent extends Event implements Cancellable {
-    
+
     private static final HandlerList handlers = new HandlerList();
-    
+
     private final Player player;
-    private final EventPlayer eventPlayer;
-    private final Kit kit;
-    private final IEvent event;
-    private final EventType eventType;
+    private final EventTypeWrapper eventType;
     private final String eventName;
     private boolean cancelled = false;
-    
-    public KitPreApplyEvent(@NotNull Player player, @NotNull EventPlayer eventPlayer,
-                            @Nullable Kit kit, @NotNull IEvent event) {
+    private final ItemStack offHand;
+    private final List<ItemStack> armor;
+    private final List<ItemStack> items;
+
+    public KitPreApplyEvent(@NotNull Player player, @NotNull Kit kit, @NotNull IEvent event) {
         this.player = player;
-        this.eventPlayer = eventPlayer;
-        this.kit = kit;
-        this.event = event;
-        this.eventType = event.getEventType();
+        this.offHand = kit.getOffhand();
+        this.armor = kit.getArmor();
+        this.items = kit.getItems();
+        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
         this.eventName = event.getName();
     }
-    
+
     /**
-     * Gets the player receiving the kit
-     * @return the Player
+     * Gets the player that is about to receive the kit.
+     *
+     * @return the {@link Player}
      */
     @NotNull
     public Player getPlayer() {
         return player;
     }
-    
+
     /**
-     * Gets the EventPlayer wrapper for the player
-     * @return the EventPlayer
+     * Gets the type of event where the kit is being applied.
+     *
+     * @return the {@link EventTypeWrapper}
      */
     @NotNull
-    public EventPlayer getEventPlayer() {
-        return eventPlayer;
-    }
-    
-    /**
-     * Gets the kit being applied
-     * @return the Kit or null if no kit is configured
-     */
-    @Nullable
-    public Kit getKit() {
-        return kit;
-    }
-    
-    /**
-     * Gets the event where the kit is being applied
-     * @return the IEvent instance
-     */
-    @NotNull
-    public IEvent getEvent() {
-        return event;
-    }
-    
-    /**
-     * Gets the type of event where the kit is being applied
-     * @return the EventType
-     */
-    @NotNull
-    public EventType getEventType() {
+    public EventTypeWrapper getEventType() {
         return eventType;
     }
-    
+
     /**
-     * Gets the name of the event where the kit is being applied
+     * Gets the name of the event where the kit is being applied.
+     *
      * @return the event name
      */
     @NotNull
     public String getEventName() {
         return eventName;
     }
-    
+
     /**
-     * Checks if a kit is actually configured for this event
-     * @return true if a kit exists, false if null
+     * Gets the full set of armor pieces defined by the kit.
+     * <p>
+     * The list typically contains up to four {@link ItemStack}s in the order:
+     * Helmet, Chestplate, Leggings, Boots. Some positions may be {@code null}
+     * if the kit does not provide that equipment.
+     *
+     * @return a list of armor {@link ItemStack}s, possibly containing nulls
      */
-    public boolean hasKit() {
-        return kit != null;
+    public List<ItemStack> getArmor() {
+        return armor;
     }
-    
+
+    /**
+     * Gets the inventory items defined by the kit.
+     * <p>
+     * This corresponds to the main inventory slots (storage and hotbar)
+     * that will be given to the player if the event is not cancelled.
+     *
+     * @return a list of {@link ItemStack}s representing the kit's items
+     */
+    public List<ItemStack> getItems() {
+        return items;
+    }
+
+    /**
+     * Gets the off-hand item defined by the kit.
+     *
+     * @return the {@link ItemStack} for the off-hand, or {@code null} if none
+     */
+    public ItemStack getOffHand() {
+        return offHand;
+    }
+
+    /**
+     * Checks whether the event has been cancelled.
+     * <p>
+     * If {@code true}, the kit will not be applied to the player.
+     *
+     * @return {@code true} if cancelled, {@code false} otherwise
+     */
     @Override
     public boolean isCancelled() {
         return cancelled;
     }
-    
+
+    /**
+     * Sets whether this event should be cancelled.
+     * <p>
+     * If set to {@code true}, the kit application will be prevented.
+     *
+     * @param cancelled {@code true} to cancel, {@code false} to allow
+     */
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;

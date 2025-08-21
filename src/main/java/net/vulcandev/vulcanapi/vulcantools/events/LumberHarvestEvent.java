@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolModeWrapper;
 import net.vulcandev.vulcantools.enums.ToolMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,7 +23,7 @@ public class LumberHarvestEvent extends Event implements Cancellable {
     private final List<Block> harvestedBlocks;
     private final Material woodType;
     private final BlockBreakEvent originalEvent;
-    private final ToolMode toolMode;
+    private final ToolModeWrapper toolMode;
     private int amount;
     private boolean cancelled;
     
@@ -36,13 +37,12 @@ public class LumberHarvestEvent extends Event implements Cancellable {
      * @param toolMode the tool mode of the lumber axe used
      * @param amount the amount of wood harvested
      */
-    public LumberHarvestEvent(Player player, List<Block> harvestedBlocks, Material woodType,
-                             BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
+        public LumberHarvestEvent(Player player, List<Block> harvestedBlocks, Material woodType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
         this.player = player;
         this.harvestedBlocks = harvestedBlocks;
         this.woodType = woodType;
         this.originalEvent = originalEvent;
-        this.toolMode = toolMode;
+        this.toolMode = ToolModeWrapper.fromVulcanToolMode(toolMode);
         this.amount = amount;
         this.cancelled = false;
     }
@@ -88,7 +88,7 @@ public class LumberHarvestEvent extends Event implements Cancellable {
      *
      * @return the tool mode of the lumber axe
      */
-    public ToolMode getToolMode() {
+    public ToolModeWrapper getToolMode() {
         return toolMode;
     }
 

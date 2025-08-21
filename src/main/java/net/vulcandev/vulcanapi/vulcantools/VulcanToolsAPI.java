@@ -7,6 +7,7 @@ import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
 import net.vulcandev.vulcanevents.VulcanEvents;
 import net.vulcandev.vulcantools.VulcanTools;
 import net.vulcandev.vulcantools.enums.ToolType;
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.managers.BoosterManager;
 import net.vulcandev.vulcantools.managers.CurrencyManager;
 import net.vulcandev.vulcantools.managers.EventManager;
@@ -172,8 +173,15 @@ public class VulcanToolsAPI {
         }
         
         @Override
-        public void startEvent(ToolType eventType, int durationSeconds) {
-            manager.startEvent(eventType, durationSeconds);
+        public void startEvent(ToolTypeWrapper eventType, int durationSeconds) {
+            // Convert wrapper back to VulcanTools ToolType for internal use
+            try {
+                ToolType vulcanToolType = ToolType.valueOf(eventType.getType().name());
+                manager.startEvent(vulcanToolType, durationSeconds);
+            } catch (IllegalArgumentException e) {
+                // Handle custom types - for now, we'll skip since VulcanTools won't recognize them
+                throw new IllegalArgumentException("Unsupported tool type: " + eventType.getType());
+            }
         }
         
         @Override
@@ -187,13 +195,20 @@ public class VulcanToolsAPI {
         }
         
         @Override
-        public ToolType getEventType() {
-            return manager.getEventType();
+        public ToolTypeWrapper getEventType() {
+            ToolType vulcanType = manager.getEventType();
+            return vulcanType != null ? ToolTypeWrapper.fromVulcanToolType(vulcanType) : null;
         }
         
         @Override
-        public void addHarvest(UUID playerUUID, int amount, ToolType toolType) {
-            manager.addHarvest(playerUUID, amount, toolType);
+        public void addHarvest(UUID playerUUID, int amount, ToolTypeWrapper toolType) {
+            try {
+                ToolType vulcanToolType = ToolType.valueOf(toolType.getType().name());
+                manager.addHarvest(playerUUID, amount, vulcanToolType);
+            } catch (IllegalArgumentException e) {
+                // Handle custom types - for now, we'll skip since VulcanTools won't recognize them
+                throw new IllegalArgumentException("Unsupported tool type: " + toolType.getType());
+            }
         }
         
         @Override

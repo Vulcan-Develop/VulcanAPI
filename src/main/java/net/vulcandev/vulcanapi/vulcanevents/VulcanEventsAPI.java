@@ -1,15 +1,16 @@
 package net.vulcandev.vulcanapi.vulcanevents;
 
 import net.vulcandev.vulcanevents.VulcanEvents;
-import net.vulcandev.vulcanevents.enums.EventState;
-import net.vulcandev.vulcanevents.enums.EventType;
 import net.vulcandev.vulcanevents.interfaces.IEvent;
 import net.vulcandev.vulcanevents.objects.EventPlayer;
 import net.vulcandev.vulcanevents.utils.EventPlayerBan;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventTypeWrapper;
+import net.vulcandev.vulcanapi.vulcanevents.types.EventStateWrapper;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,26 +43,18 @@ public class VulcanEventsAPI {
         return plugin.getCurrentIEvent() != null;
     }
 
-    /**
-     * Gets the current active event
-     * @return IEvent instance or null if no event is active
-     */
-    @Nullable
-    public IEvent getCurrentEvent() {
-        return plugin.getCurrentIEvent();
-    }
 
     /**
      * Gets the type of the current event
-     * @return EventType or null if no event is active
+     * @return EventTypeWrapper or null if no event is active
      */
     @Nullable
-    public EventType getCurrentEventType() {
+    public EventTypeWrapper getCurrentEventType() {
         IEvent currentEvent = plugin.getCurrentIEvent();
         if (currentEvent == null) {
             return null;
         }
-        return currentEvent.getEventType();
+        return EventTypeWrapper.fromVulcanEventType(currentEvent.getEventType());
     }
 
     /**
@@ -79,15 +72,15 @@ public class VulcanEventsAPI {
 
     /**
      * Gets the current event state
-     * @return EventState or null if no event is active
+     * @return EventStateWrapper or null if no event is active
      */
     @Nullable
-    public EventState getCurrentEventState() {
+    public EventStateWrapper getCurrentEventState() {
         IEvent currentEvent = plugin.getCurrentIEvent();
         if (currentEvent == null) {
             return null;
         }
-        return currentEvent.getState();
+        return EventStateWrapper.fromVulcanEventState(currentEvent.getState());
     }
 
     /**
@@ -153,30 +146,45 @@ public class VulcanEventsAPI {
     }
 
     /**
-     * Gets all participants in the current event
-     * @return Map of UUID to EventPlayer or empty map if no event is active
+     * Gets all participants in the current event.
+     *
+     * @return a map of UUID to Player, or an empty map if no event is active
      */
     @NotNull
-    public Map<UUID, EventPlayer> getParticipants() {
+    public Map<UUID, Player> getParticipants() {
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return new HashMap<>();
+        if (currentEvent == null) return Collections.emptyMap();
+
+        Map<UUID, Player> players = new HashMap<>();
+        for (Map.Entry<UUID, EventPlayer> entry : currentEvent.getPlayers().entrySet()) {
+            Player player = entry.getValue().getPlayer();
+            if (player != null) {
+                players.put(entry.getKey(), player);
+            }
         }
-        return new HashMap<>(currentEvent.getPlayers());
+        return players;
     }
 
     /**
-     * Gets all spectators in the current event
-     * @return Map of UUID to EventPlayer or empty map if no event is active
+     * Gets all spectators in the current event.
+     *
+     * @return a map of UUID to Player, or an empty map if no event is active
      */
     @NotNull
-    public Map<UUID, EventPlayer> getSpectators() {
+    public Map<UUID, Player> getSpectators() {
         IEvent currentEvent = plugin.getCurrentIEvent();
-        if (currentEvent == null) {
-            return new HashMap<>();
+        if (currentEvent == null) return Collections.emptyMap();
+
+        Map<UUID, Player> spectators = new HashMap<>();
+        for (Map.Entry<UUID, EventPlayer> entry : currentEvent.getSpectators().entrySet()) {
+            Player player = entry.getValue().getPlayer();
+            if (player != null) {
+                spectators.put(entry.getKey(), player);
+            }
         }
-        return new HashMap<>(currentEvent.getSpectators());
+        return spectators;
     }
+
 
     /**
      * Checks if a player is banned from events
@@ -205,9 +213,7 @@ public class VulcanEventsAPI {
      * @return VulcanEvents plugin instance
      */
     @NotNull
-    public VulcanEvents getPlugin() {
-        return plugin;
-    }
+    public VulcanEvents getPlugin() {return plugin;}
 
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();

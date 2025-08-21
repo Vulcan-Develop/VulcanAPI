@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -16,7 +17,7 @@ public class ToolUpgradeEvent extends Event implements Cancellable {
 
     private final Player player;
     private final ItemStack tool;
-    private final ToolType toolType;
+    private final ToolTypeWrapper toolType;
     private final String enchantmentId;
     private final int oldLevel;
     private int newLevel;
@@ -36,11 +37,10 @@ public class ToolUpgradeEvent extends Event implements Cancellable {
      * @param upgradeCost the cost of the upgrade
      * @param currencyType the type of currency used for the upgrade
      */
-    public ToolUpgradeEvent(Player player, ItemStack tool, ToolType toolType, String enchantmentId,
-                           int oldLevel, int newLevel, long upgradeCost, String currencyType) {
+    public ToolUpgradeEvent(Player player, ItemStack tool, ToolType toolType, String enchantmentId, int oldLevel, int newLevel, long upgradeCost, String currencyType) {
         this.player = player;
         this.tool = tool;
-        this.toolType = toolType;
+        this.toolType = ToolTypeWrapper.fromVulcanToolType(toolType);
         this.enchantmentId = enchantmentId;
         this.oldLevel = oldLevel;
         this.newLevel = newLevel;
@@ -72,7 +72,7 @@ public class ToolUpgradeEvent extends Event implements Cancellable {
      *
      * @return the tool type
      */
-    public ToolType getToolType() {
+    public ToolTypeWrapper getToolType() {
         return toolType;
     }
 

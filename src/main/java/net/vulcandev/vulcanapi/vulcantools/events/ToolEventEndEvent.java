@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import net.vulcandev.vulcanapi.vulcantools.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public class ToolEventEndEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
 
-    private final ToolType toolType;
+    private final ToolTypeWrapper toolType;
     private final LinkedHashMap<UUID, Integer> finalLeaderboard;
     private final int totalParticipants;
     private final boolean wasManuallyEnded;
@@ -28,7 +29,7 @@ public class ToolEventEndEvent extends Event {
      * @param wasManuallyEnded whether the event was manually ended or ended naturally
      */
     public ToolEventEndEvent(ToolType toolType, LinkedHashMap<UUID, Integer> finalLeaderboard, boolean wasManuallyEnded) {
-        this.toolType = toolType;
+        this.toolType = ToolTypeWrapper.fromVulcanToolType(toolType);
         this.finalLeaderboard = finalLeaderboard;
         this.totalParticipants = finalLeaderboard.size();
         this.wasManuallyEnded = wasManuallyEnded;
@@ -39,7 +40,7 @@ public class ToolEventEndEvent extends Event {
      *
      * @return the tool event type
      */
-    public ToolType getToolType() {
+    public ToolTypeWrapper getToolType() {
         return toolType;
     }
 
@@ -121,9 +122,9 @@ public class ToolEventEndEvent extends Event {
      */
     public String getResultsDescription() {
         if (totalParticipants == 0) {
-            return toolType.niceName() + " event ended with no participants";
+            return toolType.getNiceName() + " event ended with no participants";
         }
-        return toolType.niceName() + " event ended with " + totalParticipants + " participants. Winner achieved " + getWinningAmount();
+        return toolType.getNiceName() + " event ended with " + totalParticipants + " participants. Winner achieved " + getWinningAmount();
     }
     
     @NotNull
