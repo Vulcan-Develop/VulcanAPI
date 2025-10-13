@@ -6,7 +6,7 @@
 
   <groupId>net.vulcandev.vulcanapi</groupId>
   <artifactId>VulcanAPI</artifactId>
-  <version>1.3</version>
+  <version>1.4</version>
   <packaging>jar</packaging>
 
   <name>VulcanAPI</name>
@@ -92,6 +92,15 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>C:/Development/libs/VulcanStaff.jar</systemPath>
+        </dependency>
+
+        <!-- Vulcan Enchants dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcanenchants</groupId>
+            <artifactId>VulcanEnchants</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanEnchants.jar</systemPath>
         </dependency>
 
         <dependency>

@@ -16,8 +16,7 @@ public class CEBuyEvent extends Event implements Cancellable {
     private double cost;
     private boolean cancelled = false;
     
-    public CEBuyEvent(@NotNull Player player, @NotNull String enchantName,
-                     @NotNull ItemStack bookItem, double cost) {
+    public CEBuyEvent(@NotNull Player player, @NotNull String enchantName, @NotNull ItemStack bookItem, double cost) {
         this.player = player;
         this.enchantName = enchantName;
         this.bookItem = bookItem.clone();
