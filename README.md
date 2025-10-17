@@ -1,6 +1,6 @@
 # VulcanAPI
 
-API for VulcanEvents, VulcanStaff, VulcanTools, and VulcanEnchants.
+API for VulcanEvents, VulcanStaff, VulcanTools, VulcanVoting and VulcanEnchants.
 
 ## Current API Features
 
@@ -232,11 +232,7 @@ boolean canApplyEnchant(ItemStack item, String key)
 
 ## Installation
 
-1. Download the VulcanAPI jar file
-2. Place it in your server's `plugins` folder
-3. Restart your server
-4. The API will automatically detect and integrate with installed Vulcan plugins
-
+This plugin is compiled and available through the Vulcan Loader found in the client panel [Here](https://vulcandev.net/).
 ## Dependencies
 
 - VulcanEvents (optional)
