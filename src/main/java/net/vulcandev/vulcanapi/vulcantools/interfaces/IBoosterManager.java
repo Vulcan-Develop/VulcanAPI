@@ -40,21 +40,4 @@ public interface IBoosterManager {
      * @return true if the player has an active booster, false otherwise
      */
     boolean hasActiveBooster(Player player, String boosterType, String target);
-
-    /**
-     * Removes a booster from a player.
-     *
-     * @param player the player to remove the booster from
-     * @param boosterType the type of booster
-     * @param target the target of the booster
-     */
-    void removeBooster(Player player, String boosterType, String target);
-
-    /**
-     * Gets all active boosters for a player (including team boosters).
-     *
-     * @param player the player to check
-     * @return a list of active booster descriptions
-     */
-    List<String> getActiveBoosterDescriptions(Player player);
 }

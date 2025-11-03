@@ -1,7 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.interfaces.IEvent;
+import net.vulcandev.vulcanevents.events.interfaces.IEvent;
 import net.vulcandev.vulcanevents.objects.EventPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

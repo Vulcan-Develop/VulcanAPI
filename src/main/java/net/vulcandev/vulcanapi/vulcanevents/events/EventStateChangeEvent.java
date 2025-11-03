@@ -3,7 +3,7 @@ package net.vulcandev.vulcanapi.vulcanevents.events;
 import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import net.vulcandev.vulcanevents.enums.EventState;
-import net.vulcandev.vulcanevents.interfaces.IEvent;
+import net.vulcandev.vulcanevents.events.interfaces.IEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
