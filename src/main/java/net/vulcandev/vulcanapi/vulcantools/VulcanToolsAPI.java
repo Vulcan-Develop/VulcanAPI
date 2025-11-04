@@ -121,7 +121,7 @@ package net.vulcandev.vulcanapi.vulcantools;
           public String getCurrencyIdByTool(String toolType) {
               // Convert string to ToolType enum if needed
               try {
-                  net.vulcandev.vulcantools.enums.ToolType type = net.vulcandev.vulcantools.enums.ToolType.valueOf(toolType.toUpperCase());
+                  ToolType type = ToolType.valueOf(toolType.toUpperCase());
                   return manager.getCurrencyIdByTool(type);
               } catch (IllegalArgumentException e) {
                   return null;
