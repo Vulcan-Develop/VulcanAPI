@@ -103,6 +103,24 @@
             <systemPath>C:/Development/libs/VulcanEnchants.jar</systemPath>
         </dependency>
 
+        <!-- Vulcan Voting dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcanvoting</groupId>
+            <artifactId>VulcanVoting</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanVoting.jar</systemPath>
+        </dependency>
+
+      <!-- Vulcan Stats dependency -->
+      <dependency>
+          <groupId>net.vulcandev.vulcanstats</groupId>
+          <artifactId>VulcanStats</artifactId>
+          <version>1.0</version>
+          <scope>system</scope>
+          <systemPath>C:/Development/libs/VulcanStats.jar</systemPath>
+      </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
