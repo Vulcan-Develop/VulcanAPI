@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.vulcantools.events;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Event fired when a player harvests sugar cane using a Harvester Hoe
@@ -15,12 +16,12 @@ public class CaneHarvestBatchAsyncEvent extends Event {
     private final int amount;
 
     public CaneHarvestBatchAsyncEvent(Player player, int amount) {
-        super(true); // Mark as async event
+        super(true);
         this.player = player;
         this.amount = amount;
     }
 
-    @Override
+    @Override @NotNull
     public HandlerList getHandlers() {
         return handlers;
     }

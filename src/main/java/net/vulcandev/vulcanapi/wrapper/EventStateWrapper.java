@@ -1,6 +1,5 @@
 package net.vulcandev.vulcanapi.wrapper;
 
-import net.vulcandev.vulcanevents.enums.EventState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,20 +7,20 @@ import org.jetbrains.annotations.Nullable;
  * Wrapper for VulcanEvents EventState to provide a clean API without exposing internal types
  */
 public class EventStateWrapper {
-    
+
     public enum State {
         WAITING,
         WARMUP,
         RUNNING,
         FINISHED
     }
-    
+
     private final State state;
-    
+
     public EventStateWrapper(@NotNull State state) {
         this.state = state;
     }
-    
+
     /**
      * Gets the event state
      * @return the event state
@@ -30,30 +29,20 @@ public class EventStateWrapper {
     public State getState() {
         return state;
     }
-    
+
     /**
-     * Creates an EventStateWrapper from a VulcanEvents EventState
-     * @param eventState the VulcanEvents EventState
+     * Creates an EventStateWrapper from a string
+     * @param stateName the event state name
      * @return EventStateWrapper instance or null if no matching state exists
      */
     @Nullable
-    public static EventStateWrapper fromVulcanEventState(@NotNull EventState eventState) {
+    public static EventStateWrapper fromString(@NotNull String stateName) {
         try {
-            String name = eventState.name();
-            State wrapperState = State.valueOf(name);
-            return new EventStateWrapper(wrapperState);
+            State state = State.valueOf(stateName.toUpperCase());
+            return new EventStateWrapper(state);
         } catch (IllegalArgumentException e) {
             return null;
         }
-    }
-    
-    /**
-     * Converts this wrapper back to the original VulcanEvents EventState enum
-     * @return the VulcanEvents EventState enum
-     */
-    @NotNull
-    public EventState toVulcanEventState() {
-        return EventState.valueOf(state.name());
     }
 
     @Override

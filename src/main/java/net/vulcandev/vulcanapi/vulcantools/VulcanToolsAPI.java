@@ -1,33 +1,25 @@
 package net.vulcandev.vulcanapi.vulcantools;
 
-  import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
-  import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
-  import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
-  import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
-  import net.vulcandev.vulcantools.VulcanTools;
-  import net.vulcandev.vulcantools.enums.ToolType;
-  import net.vulcandev.vulcantools.managers.BoosterManager;
-  import net.vulcandev.vulcantools.managers.CurrencyManager;
-  import net.vulcandev.vulcantools.managers.EventManager;
-  import net.vulcandev.vulcantools.objects.Booster;
-  import net.vulcandev.vulcantools.objects.Currency;
-  import org.bukkit.entity.Player;
+import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
+import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
+import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
+import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
+import net.vulcandev.vulcantools.VulcanTools;
+import net.vulcandev.vulcantools.enums.ToolType;
+import net.vulcandev.vulcantools.managers.BoosterManager;
+import net.vulcandev.vulcantools.managers.CurrencyManager;
+import net.vulcandev.vulcantools.managers.EventManager;
+import net.vulcandev.vulcantools.objects.Booster;
+import net.vulcandev.vulcantools.objects.Currency;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
-  import java.util.*;
-  import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.Collectors;
 
   /**
    * Main API class for VulcanTools.
    * This class provides a clean interface for external plugins to interact with VulcanTools.
-   *
-   * <p>Usage example:</p>
-   * <pre>{@code
-   * VulcanToolsAPI api = VulcanToolsAPI.getInstance();
-   * if (api != null && VulcanToolsAPI.isAvailable()) {
-   *     ICurrencyManager currencyManager = api.getCurrencyManager();
-   *     // Use the currency manager...
-   * }
-   * }</pre>
    */
   public class VulcanToolsAPI {
       private static VulcanToolsAPI instance;
@@ -93,27 +85,27 @@ package net.vulcandev.vulcanapi.vulcantools;
           }
 
           @Override
-          public long getBalance(org.bukkit.OfflinePlayer player, String currency) {
+          public long getBalance(OfflinePlayer player, String currency) {
               return manager.getBalance(player, currency);
           }
 
           @Override
-          public void giveCurrency(org.bukkit.OfflinePlayer player, String currency, long amount) {
+          public void giveCurrency(OfflinePlayer player, String currency, long amount) {
               manager.giveCurrency(player, currency, amount);
           }
 
           @Override
-          public void removeCurrency(org.bukkit.OfflinePlayer player, String currency, long amount) {
+          public void removeCurrency(OfflinePlayer player, String currency, long amount) {
               manager.removeCurrency(player, currency, amount);
           }
 
           @Override
-          public boolean hasEnough(org.bukkit.OfflinePlayer player, String currency, long amount) {
+          public boolean hasEnough(OfflinePlayer player, String currency, long amount) {
               return manager.hasEnough(player, currency, amount);
           }
 
           @Override
-          public boolean payCurrency(Player sender, org.bukkit.OfflinePlayer receiver, String currency, long amount) {
+          public boolean payCurrency(Player sender, OfflinePlayer receiver, String currency, long amount) {
               return manager.payCurrency(sender, receiver, currency, amount);
           }
 

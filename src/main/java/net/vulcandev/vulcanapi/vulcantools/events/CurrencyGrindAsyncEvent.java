@@ -22,7 +22,7 @@ public class CurrencyGrindAsyncEvent extends Event {
      * @param amount the amount of currency earned
      */
     public CurrencyGrindAsyncEvent(Player player, String currency, long amount) {
-        super(true); // Mark as async event
+        super(true);
         this.player = player;
         this.currency = currency;
         this.amount = amount;

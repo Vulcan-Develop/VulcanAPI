@@ -32,8 +32,7 @@ public class BoosterApplyEvent extends Event implements Cancellable {
      * @param durationSeconds the duration of the booster in seconds
      * @param appliedBy the player who applied the booster
      */
-    public BoosterApplyEvent(Player targetPlayer, String targetTeam, String boosterType, String targetCurrency,
-                            double multiplier, int durationSeconds, Player appliedBy) {
+    public BoosterApplyEvent(Player targetPlayer, String targetTeam, String boosterType, String targetCurrency, double multiplier, int durationSeconds, Player appliedBy) {
         this.targetPlayer = targetPlayer;
         this.targetTeam = targetTeam;
         this.boosterType = boosterType;
@@ -159,20 +158,6 @@ public class BoosterApplyEvent extends Event implements Cancellable {
      */
     public double getDurationMinutes() {
         return durationSeconds / 60.0;
-    }
-
-    /**
-     * Gets a description of the booster target.
-     *
-     * @return a string describing who/what the booster targets
-     */
-    public String getTargetDescription() {
-        if (isPlayerBooster()) {
-            return "Player: " + targetPlayer.getName();
-        } else if (isTeamBooster()) {
-            return "Team: " + targetTeam;
-        }
-        return "Unknown";
     }
     
     @Override

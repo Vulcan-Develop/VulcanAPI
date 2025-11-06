@@ -1,7 +1,6 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.events.interfaces.IEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -10,15 +9,15 @@ import org.jetbrains.annotations.NotNull;
  * Called when a VulcanEvent starts (transitions to WAITING state)
  */
 public class EventStartEvent extends Event {
-    
+
     private static final HandlerList handlers = new HandlerList();
-    
+
     private final EventTypeWrapper eventType;
     private final String eventName;
-    
-    public EventStartEvent(@NotNull IEvent event) {
-        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
-        this.eventName = event.getName();
+
+    public EventStartEvent(@NotNull EventTypeWrapper eventType, @NotNull String eventName) {
+        this.eventType = eventType;
+        this.eventName = eventName;
     }
 
     /**

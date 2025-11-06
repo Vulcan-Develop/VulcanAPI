@@ -2,8 +2,6 @@ package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.enums.EventState;
-import net.vulcandev.vulcanevents.events.interfaces.IEvent;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -12,19 +10,19 @@ import org.jetbrains.annotations.NotNull;
  * Called when a VulcanEvent changes state (WAITING → WARMUP → RUNNING → FINISHED)
  */
 public class EventStateChangeEvent extends Event {
-    
+
     private static final HandlerList handlers = new HandlerList();
-    
+
     private final EventTypeWrapper eventType;
     private final String eventName;
     private final EventStateWrapper previousState;
     private final EventStateWrapper newState;
-    
-    public EventStateChangeEvent(@NotNull IEvent event, @NotNull EventState previousState, @NotNull EventState newState) {
-        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
-        this.eventName = event.getName();
-        this.previousState = EventStateWrapper.fromVulcanEventState(previousState);
-        this.newState = EventStateWrapper.fromVulcanEventState(newState);
+
+    public EventStateChangeEvent(@NotNull EventTypeWrapper eventType, @NotNull String eventName, @NotNull EventStateWrapper previousState, @NotNull EventStateWrapper newState) {
+        this.eventType = eventType;
+        this.eventName = eventName;
+        this.previousState = previousState;
+        this.newState = newState;
     }
     
     

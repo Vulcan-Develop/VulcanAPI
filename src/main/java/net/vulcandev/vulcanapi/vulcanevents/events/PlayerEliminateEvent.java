@@ -1,7 +1,6 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.events.interfaces.IEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -13,19 +12,19 @@ import org.jetbrains.annotations.Nullable;
  * This is fired when a player is removed from participants and moved to spectators
  */
 public class PlayerEliminateEvent extends Event {
-    
+
     private static final HandlerList handlers = new HandlerList();
-    
+
     private final Player player;
     private final EventTypeWrapper eventType;
     private final String eventName;
     private final String reason;
     private final Player killer;
-    
-    public PlayerEliminateEvent(@NotNull Player player, @NotNull IEvent event, @Nullable String reason, @Nullable Player killer) {
+
+    public PlayerEliminateEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName, @Nullable String reason, @Nullable Player killer) {
         this.player = player;
-        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
-        this.eventName = event.getName();
+        this.eventType = eventType;
+        this.eventName = eventName;
         this.reason = reason;
         this.killer = killer;
     }

@@ -1,8 +1,6 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.events.interfaces.IEvent;
-import net.vulcandev.vulcanevents.events.interfaces.Kit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -24,13 +22,13 @@ public class KitPostApplyEvent extends Event {
     private final List<ItemStack> armor;
     private final List<ItemStack> items;
 
-    public KitPostApplyEvent(@NotNull Player player, @NotNull Kit kit, @NotNull IEvent event) {
+    public KitPostApplyEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName, ItemStack offHand, @NotNull List<ItemStack> armor, @NotNull List<ItemStack> items) {
         this.player = player;
-        this.offHand = kit.getOffhand();
-        this.armor = kit.getArmor();
-        this.items = kit.getItems();
-        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
-        this.eventName = event.getName();
+        this.eventType = eventType;
+        this.eventName = eventName;
+        this.offHand = offHand;
+        this.armor = armor;
+        this.items = items;
     }
 
     /**

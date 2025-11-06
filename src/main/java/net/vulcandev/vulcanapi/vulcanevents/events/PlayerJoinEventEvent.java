@@ -1,7 +1,6 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.events.interfaces.IEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -13,18 +12,18 @@ import org.jetbrains.annotations.NotNull;
  * This event is cancellable - if cancelled, the player will not join the event
  */
 public class PlayerJoinEventEvent extends Event implements Cancellable {
-    
+
     private static final HandlerList handlers = new HandlerList();
-    
+
     private final Player player;
     private final EventTypeWrapper eventType;
     private final String eventName;
     private boolean cancelled = false;
-    
-    public PlayerJoinEventEvent(@NotNull Player player, @NotNull IEvent event) {
+
+    public PlayerJoinEventEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName) {
         this.player = player;
-        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
-        this.eventName = event.getName();
+        this.eventType = eventType;
+        this.eventName = eventName;
     }
     
     /**

@@ -1,8 +1,6 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
-import net.vulcandev.vulcanevents.events.interfaces.IEvent;
-import net.vulcandev.vulcanevents.model.EventPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -14,37 +12,21 @@ import java.util.*;
  * Called when a VulcanEvent ends
  */
 public class EventEndEvent extends Event {
-    
+
     private static final HandlerList handlers = new HandlerList();
-    
+
     private final EventTypeWrapper eventType;
     private final String eventName;
     private final Map<UUID, Player> finalParticipants;
     private final Map<UUID, Player> finalSpectators;
     private final boolean wasSilent;
     private final boolean hadRewards;
-    
-    public EventEndEvent(@NotNull IEvent event, @NotNull Map<UUID, EventPlayer> finalParticipants, @NotNull Map<UUID, EventPlayer> finalSpectators, boolean wasSilent, boolean hadRewards) {
-        this.eventType = EventTypeWrapper.fromVulcanEventType(event.getEventType());
-        this.eventName = event.getName();
 
-        // Convert from EventPlayer → Player safely
-        this.finalParticipants = new HashMap<>();
-        for (Map.Entry<UUID, EventPlayer> entry : finalParticipants.entrySet()) {
-            Player player = entry.getValue().getPlayer();
-            if (player != null) {
-                this.finalParticipants.put(entry.getKey(), player);
-            }
-        }
-
-        this.finalSpectators = new HashMap<>();
-        for (Map.Entry<UUID, EventPlayer> entry : finalSpectators.entrySet()) {
-            Player player = entry.getValue().getPlayer();
-            if (player != null) {
-                this.finalSpectators.put(entry.getKey(), player);
-            }
-        }
-
+    public EventEndEvent(@NotNull EventTypeWrapper eventType, @NotNull String eventName, @NotNull Map<UUID, Player> finalParticipants, @NotNull Map<UUID, Player> finalSpectators, boolean wasSilent, boolean hadRewards) {
+        this.eventType = eventType;
+        this.eventName = eventName;
+        this.finalParticipants = finalParticipants;
+        this.finalSpectators = finalSpectators;
         this.wasSilent = wasSilent;
         this.hadRewards = hadRewards;
     }

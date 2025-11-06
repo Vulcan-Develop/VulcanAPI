@@ -16,8 +16,7 @@ public class PlayerVoteEvent extends Event implements Cancellable {
     private final long timestamp;
     private boolean cancelled = false;
     
-    public PlayerVoteEvent(@NotNull Player player, @NotNull String serviceName, 
-                          @NotNull String username, @NotNull String address, long timestamp) {
+    public PlayerVoteEvent(@NotNull Player player, @NotNull String serviceName, @NotNull String username, @NotNull String address, long timestamp) {
         this.player = player;
         this.serviceName = serviceName;
         this.username = username;

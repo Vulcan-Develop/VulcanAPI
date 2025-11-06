@@ -21,9 +21,7 @@ public class VulcanStaffAPI {
     private static VulcanStaffAPI instance;
     private final VulcanStaff plugin;
 
-    public VulcanStaffAPI(VulcanStaff plugin) {
-        this.plugin = plugin;
-    }
+    public VulcanStaffAPI(VulcanStaff plugin) {this.plugin = plugin;}
 
     /**
      * Gets the API instance
