@@ -3,4 +3,3 @@ main: ${project.groupId}.${project.artifactId}
 version: ${project.version}
 description: ${project.description}
 authors: [Xanthard, OfficialGaming]
-softdepend: [VulcanEnchants, VulcanEvents, VulcanStaff, VulcanStats, VulcanTools, VulcanVoting]

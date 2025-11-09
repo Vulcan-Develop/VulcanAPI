@@ -1,4 +1,4 @@
-package net.vulcandev.vulcanapi.events.interfaces;
+package net.vulcandev.vulcanapi.interfaces.events;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

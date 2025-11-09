@@ -1,9 +1,6 @@
 package net.vulcandev.vulcanapi.vulcanstaff;
 
-import net.vulcandev.staff.VulcanStaff;
-import net.vulcandev.staff.features.freeze.FreezeFeature;
-import net.vulcandev.staff.features.staffmode.StaffModeFeature;
-import net.vulcandev.staff.features.vanish.VanishFeature;
+import net.vulcandev.vulcanapi.interfaces.staff.IVulcanStaffPlugin;
 import net.vulcandev.vulcanapi.vulcanstaff.events.PlayerFreezeEvent;
 import net.vulcandev.vulcanapi.vulcanstaff.events.StaffVanishEvent;
 import org.bukkit.Bukkit;
@@ -19,9 +16,9 @@ import java.util.UUID;
  */
 public class VulcanStaffAPI {
     private static VulcanStaffAPI instance;
-    private final VulcanStaff plugin;
+    private final IVulcanStaffPlugin plugin;
 
-    public VulcanStaffAPI(VulcanStaff plugin) {this.plugin = plugin;}
+    public VulcanStaffAPI(IVulcanStaffPlugin plugin) {this.plugin = plugin;}
 
     /**
      * Gets the API instance
@@ -33,7 +30,7 @@ public class VulcanStaffAPI {
      * Check if VulcanStaff is available and loaded
      * @return true if VulcanStaff is available, false otherwise
      */
-    public static boolean isAvailable() {return instance != null && instance.plugin != null && instance.plugin.isEnabled();}
+    public static boolean isAvailable() {return instance != null && instance.plugin != null;}
 
     // ===== VANISH API =====
 
@@ -52,7 +49,7 @@ public class VulcanStaffAPI {
      * @return True if the player is vanished
      */
     public boolean isVanished(UUID uuid) {
-        return isAvailable() && VanishFeature.getInstance().getVanish().isVanished(uuid);
+        return isAvailable() && plugin.isVanished(uuid);
     }
 
     /**
@@ -69,12 +66,7 @@ public class VulcanStaffAPI {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
 
-        VanishFeature vanishFeature = VanishFeature.getInstance();
-        if (vanished) {
-            vanishFeature.getVanish().vanish(player);
-        } else {
-            vanishFeature.getVanish().unVanish(player);
-        }
+        plugin.setVanished(player.getUniqueId(), vanished);
         return true;
     }
 
@@ -84,7 +76,7 @@ public class VulcanStaffAPI {
      * @return True if the player can see vanished players
      */
     public boolean canSeeVanished(Player player) {
-        return isAvailable() && VanishFeature.getInstance().canSeeVanished(player);
+        return isAvailable() && plugin.canSeeVanished(player.getUniqueId());
     }
 
     /**
@@ -92,7 +84,7 @@ public class VulcanStaffAPI {
      * @return Set of UUIDs of vanished players
      */
     public Set<UUID> getVanishedPlayers() {
-        return isAvailable() ? VanishFeature.getInstance().getVanish().getVanishedPlayers() : Collections.emptySet();
+        return isAvailable() ? plugin.getVanishedPlayers() : Collections.emptySet();
     }
 
     // ===== STAFF MODE API =====
@@ -112,7 +104,7 @@ public class VulcanStaffAPI {
      * @return True if the player is in staff mode
      */
     public boolean isInStaffMode(UUID uuid) {
-        return isAvailable() && StaffModeFeature.getInstance().getStaffModeList().containsKey(uuid);
+        return isAvailable() && plugin.isInStaffMode(uuid);
     }
 
     // ===== FREEZE API =====
@@ -132,7 +124,7 @@ public class VulcanStaffAPI {
      * @return True if the player is frozen
      */
     public boolean isFrozen(UUID uuid) {
-        return isAvailable() && FreezeFeature.getInstance().getFrozenPlayers().contains(uuid);
+        return isAvailable() && plugin.isFrozen(uuid);
     }
 
     /**
@@ -150,19 +142,14 @@ public class VulcanStaffAPI {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
 
-        FreezeFeature freezeFeature = FreezeFeature.getInstance();
-        if (frozen) {
-            freezeFeature.addFrozenPlayer(target.getUniqueId());
-        } else {
-            freezeFeature.removeFrozenPlayer(target.getUniqueId());
-        }
+        plugin.setFrozen(target.getUniqueId(), frozen);
         return true;
     }
 
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
-        if (plugin.getClass().getName().equals("net.vulcandev.staff.VulcanStaff")) {
-            VulcanStaff vulcanStaffPlugin = (VulcanStaff) plugin;
+        if (plugin instanceof IVulcanStaffPlugin) {
+            IVulcanStaffPlugin vulcanStaffPlugin = (IVulcanStaffPlugin) plugin;
             instance = new VulcanStaffAPI(vulcanStaffPlugin);
         }
     }

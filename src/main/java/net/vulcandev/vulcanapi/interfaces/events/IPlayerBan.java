@@ -1,4 +1,4 @@
-package net.vulcandev.vulcanapi.events.interfaces;
+package net.vulcandev.vulcanapi.interfaces.events;
 
 /**
  * Interface for player ban to avoid direct class dependencies

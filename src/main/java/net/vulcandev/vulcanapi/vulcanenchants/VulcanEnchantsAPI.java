@@ -1,18 +1,14 @@
 package net.vulcandev.vulcanapi.vulcanenchants;
 
-import net.vulcandev.vulcanapi.vulcanenchants.wrapper.EnchantWrapper;
-import net.vulcandev.vulcanenchants.VulcanEnchants;
-import net.vulcandev.vulcanenchants.enchants.ExtraEnchants;
-import net.vulcandev.vulcanenchants.enchants.PotionEnchants;
-import net.vulcandev.vulcanenchants.interfaces.Enchants;
-import org.bukkit.entity.Player;
+import net.vulcandev.vulcanapi.interfaces.enchants.IEnchantWrapper;
+import net.vulcandev.vulcanapi.interfaces.enchants.IVulcanEnchantsPlugin;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Main API class for VulcanEnchants.
@@ -22,16 +18,16 @@ import java.util.stream.Collectors;
  * <pre>{@code
  * VulcanEnchantsAPI api = VulcanEnchantsAPI.getInstance();
  * if (api != null && VulcanEnchantsAPI.isAvailable()) {
- *     EnchantWrapper enchant = api.getEnchant("warrior");
+ *     IEnchantWrapper enchant = api.getEnchant("warrior");
  *     // Use the enchant...
  * }
  * }</pre>
  */
 public class VulcanEnchantsAPI {
     private static VulcanEnchantsAPI instance;
-    private final VulcanEnchants plugin;
+    private final IVulcanEnchantsPlugin plugin;
 
-    public VulcanEnchantsAPI(VulcanEnchants plugin) {
+    public VulcanEnchantsAPI(IVulcanEnchantsPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -50,7 +46,7 @@ public class VulcanEnchantsAPI {
      * @return true if VulcanEnchants is available, false otherwise
      */
     public static boolean isAvailable() {
-        return instance != null && instance.plugin != null && instance.plugin.isEnabled();
+        return instance != null && instance.plugin != null;
     }
 
     // ===== ENCHANT MANAGER API =====
@@ -59,16 +55,12 @@ public class VulcanEnchantsAPI {
      * Gets an enchant by its key/name.
      *
      * @param key the enchant key
-     * @return EnchantWrapper containing enchant information, or null if not found
+     * @return IEnchantWrapper containing enchant information, or null if not found
      */
     @Nullable
-    public EnchantWrapper getEnchant(@NotNull String key) {
+    public IEnchantWrapper getEnchant(@NotNull String key) {
         if (!isAvailable()) return null;
-
-        Enchants enchant = plugin.getEnchantManager().getEnchants().get(key);
-        if (enchant == null) return null;
-
-        return new EnchantWrapper(enchant);
+        return plugin.getEnchant(key);
     }
 
     /**
@@ -79,21 +71,18 @@ public class VulcanEnchantsAPI {
     @NotNull
     public Set<String> getAllEnchantKeys() {
         if (!isAvailable()) return Collections.emptySet();
-        return new HashSet<>(plugin.getEnchantManager().getEnchants().keySet());
+        return plugin.getAllEnchantKeys();
     }
 
     /**
      * Gets all registered enchants as wrappers.
      *
-     * @return List of EnchantWrappers
+     * @return List of IEnchantWrappers
      */
     @NotNull
-    public List<EnchantWrapper> getAllEnchants() {
+    public List<IEnchantWrapper> getAllEnchants() {
         if (!isAvailable()) return Collections.emptyList();
-
-        return plugin.getEnchantManager().getEnchants().values().stream()
-                .map(EnchantWrapper::new)
-                .collect(Collectors.toList());
+        return plugin.getAllEnchants();
     }
 
     /**
@@ -102,12 +91,9 @@ public class VulcanEnchantsAPI {
      * @return List of potion enchant wrappers
      */
     @NotNull
-    public List<EnchantWrapper> getPotionEnchants() {
+    public List<IEnchantWrapper> getPotionEnchants() {
         if (!isAvailable()) return Collections.emptyList();
-
-        return plugin.getEnchantManager().getPotionEnchants().values().stream()
-                .map(EnchantWrapper::new)
-                .collect(Collectors.toList());
+        return plugin.getPotionEnchants();
     }
 
     /**
@@ -116,12 +102,9 @@ public class VulcanEnchantsAPI {
      * @return List of custom enchant wrappers
      */
     @NotNull
-    public List<EnchantWrapper> getCustomEnchants() {
+    public List<IEnchantWrapper> getCustomEnchants() {
         if (!isAvailable()) return Collections.emptyList();
-
-        return plugin.getEnchantManager().getExtraEnchants().values().stream()
-                .map(EnchantWrapper::new)
-                .collect(Collectors.toList());
+        return plugin.getCustomEnchants();
     }
 
     /**
@@ -132,7 +115,7 @@ public class VulcanEnchantsAPI {
      */
     public boolean enchantExists(@NotNull String key) {
         if (!isAvailable()) return false;
-        return plugin.getEnchantManager().getEnchants().containsKey(key);
+        return plugin.enchantExists(key);
     }
 
     /**
@@ -143,9 +126,7 @@ public class VulcanEnchantsAPI {
      */
     public boolean isEnchantEnabled(@NotNull String key) {
         if (!isAvailable()) return false;
-
-        Enchants enchant = plugin.getEnchantManager().getEnchants().get(key);
-        return enchant != null && enchant.isEnabled() && enchant.isConfigEnabled();
+        return plugin.isEnchantEnabled(key);
     }
 
     /**
@@ -156,9 +137,7 @@ public class VulcanEnchantsAPI {
      */
     public int getEnchantCost(@NotNull String key) {
         if (!isAvailable()) return -1;
-
-        Enchants enchant = plugin.getEnchantManager().getEnchants().get(key);
-        return enchant != null ? enchant.getXpCost() : -1;
+        return plugin.getEnchantCost(key);
     }
 
     /**
@@ -170,9 +149,7 @@ public class VulcanEnchantsAPI {
     @Nullable
     public ItemStack getEnchantBook(@NotNull String key) {
         if (!isAvailable()) return null;
-
-        Enchants enchant = plugin.getEnchantManager().getEnchants().get(key);
-        return enchant != null ? enchant.getBookItem() : null;
+        return plugin.getEnchantBook(key);
     }
 
     // ===== POTION ENCHANT SPECIFIC API =====
@@ -185,7 +162,7 @@ public class VulcanEnchantsAPI {
      */
     public boolean isPotionEnchant(@NotNull String key) {
         if (!isAvailable()) return false;
-        return plugin.getEnchantManager().getPotionEnchants().containsKey(key);
+        return plugin.isPotionEnchant(key);
     }
 
     /**
@@ -197,9 +174,7 @@ public class VulcanEnchantsAPI {
     @Nullable
     public String getPotionEffectType(@NotNull String key) {
         if (!isAvailable()) return null;
-
-        PotionEnchants enchant = plugin.getEnchantManager().getPotionEnchants().get(key);
-        return enchant != null && enchant.getEffect() != null ? enchant.getEffect().getName() : null;
+        return plugin.getPotionEffectType(key);
     }
 
     /**
@@ -210,115 +185,7 @@ public class VulcanEnchantsAPI {
      */
     public int getPotionAmplifier(@NotNull String key) {
         if (!isAvailable()) return -1;
-
-        PotionEnchants enchant = plugin.getEnchantManager().getPotionEnchants().get(key);
-        return enchant != null ? enchant.getAmp() : -1;
-    }
-
-    /**
-     * Manually applies a potion enchant to a player from an item.
-     * This will check if the item has the enchant lore and apply the effect.
-     *
-     * @param player the player to apply the effect to
-     * @param key the enchant key
-     * @param item the item with the enchant
-     * @return true if successfully applied
-     */
-    public boolean applyPotionEnchant(@NotNull Player player, @NotNull String key, @NotNull ItemStack item) {
-        if (!isAvailable()) return false;
-
-        PotionEnchants enchant = plugin.getEnchantManager().getPotionEnchants().get(key);
-        if (enchant == null) return false;
-
-        enchant.applyPotion(player, item);
-        return true;
-    }
-
-    /**
-     * Manually removes a potion enchant effect from a player.
-     *
-     * @param player the player to remove the effect from
-     * @param key the enchant key
-     * @param item the item with the enchant
-     * @return true if successfully removed
-     */
-    public boolean removePotionEnchant(@NotNull Player player, @NotNull String key, @NotNull ItemStack item) {
-        if (!isAvailable()) return false;
-
-        PotionEnchants enchant = plugin.getEnchantManager().getPotionEnchants().get(key);
-        if (enchant == null) return false;
-
-        enchant.removePotion(player, item);
-        return true;
-    }
-
-    /**
-     * Applies all potion enchants from a player's currently equipped armor.
-     * This scans all armor pieces and applies any potion enchants found.
-     *
-     * @param player the player to apply enchants to
-     * @return the number of enchants successfully applied
-     */
-    public int applyAllPotionEnchants(@NotNull Player player) {
-        if (!isAvailable()) return 0;
-
-        int appliedCount = 0;
-        ItemStack[] armorContents = player.getInventory().getArmorContents();
-
-        for (ItemStack armorPiece : armorContents) {
-            if (armorPiece == null || armorPiece.getType() == org.bukkit.Material.AIR) continue;
-
-            for (PotionEnchants enchant : plugin.getEnchantManager().getPotionEnchants().values()) {
-                if (enchant.isConfigEnabled() && enchant.isEnabled()) {
-                    enchant.applyPotion(player, armorPiece);
-                    appliedCount++;
-                }
-            }
-        }
-
-        return appliedCount;
-    }
-
-    /**
-     * Removes all potion enchant effects from a player.
-     * This removes all potion effects that are associated with enchants,
-     * checking the player's current armor.
-     *
-     * @param player the player to remove enchants from
-     * @return the number of enchants successfully removed
-     */
-    public int removeAllPotionEnchants(@NotNull Player player) {
-        if (!isAvailable()) return 0;
-
-        int removedCount = 0;
-        ItemStack[] armorContents = player.getInventory().getArmorContents();
-
-        for (ItemStack armorPiece : armorContents) {
-            if (armorPiece == null || armorPiece.getType() == org.bukkit.Material.AIR) continue;
-
-            for (PotionEnchants enchant : plugin.getEnchantManager().getPotionEnchants().values()) {
-                if (enchant.isConfigEnabled() && enchant.isEnabled()) {
-                    enchant.removePotion(player, armorPiece);
-                    removedCount++;
-                }
-            }
-        }
-
-        return removedCount;
-    }
-
-    /**
-     * Refreshes all potion enchants for a player by removing and reapplying them.
-     * This is useful when armor changes or when you need to update enchant effects.
-     *
-     * @param player the player to refresh enchants for
-     * @return the number of enchants refreshed
-     */
-    public int refreshAllPotionEnchants(@NotNull Player player) {
-        if (!isAvailable()) return 0;
-
-        removeAllPotionEnchants(player);
-        return applyAllPotionEnchants(player);
+        return plugin.getPotionAmplifier(key);
     }
 
     // ===== ITEM CHECKING API =====
@@ -332,18 +199,8 @@ public class VulcanEnchantsAPI {
      * @return true if the item has the enchant
      */
     public boolean itemHasEnchant(@NotNull ItemStack item, @NotNull String key) {
-        if (!isAvailable() || item == null || !item.hasItemMeta()) return false;
-
-        Enchants enchant = plugin.getEnchantManager().getEnchants().get(key);
-        if (enchant == null || enchant.getArmorLore() == null) return false;
-
-        if (!item.getItemMeta().hasLore()) return false;
-
-        String armorLore = enchant.getArmorLore();
-        // Apply color codes
-        armorLore = armorLore.replace("&", "§");
-
-        return item.getItemMeta().getLore().contains(armorLore);
+        if (!isAvailable()) return false;
+        return plugin.itemHasEnchant(item, key);
     }
 
     /**
@@ -354,24 +211,8 @@ public class VulcanEnchantsAPI {
      */
     @NotNull
     public Set<String> getItemEnchants(@NotNull ItemStack item) {
-        if (!isAvailable() || item == null || !item.hasItemMeta() || !item.getItemMeta().hasLore()) {
-            return Collections.emptySet();
-        }
-
-        Set<String> enchants = new HashSet<>();
-        List<String> lore = item.getItemMeta().getLore();
-
-        for (Map.Entry<String, Enchants> entry : plugin.getEnchantManager().getEnchants().entrySet()) {
-            String enchantLore = entry.getValue().getArmorLore();
-            if (enchantLore != null) {
-                enchantLore = enchantLore.replace("&", "§");
-                if (lore.contains(enchantLore)) {
-                    enchants.add(entry.getKey());
-                }
-            }
-        }
-
-        return enchants;
+        if (!isAvailable()) return Collections.emptySet();
+        return plugin.getItemEnchants(item);
     }
 
     /**
@@ -383,12 +224,8 @@ public class VulcanEnchantsAPI {
      * @return true if the enchant can be applied to this item
      */
     public boolean canApplyEnchant(@NotNull ItemStack item, @NotNull String key) {
-        if (!isAvailable() || item == null) return false;
-
-        Enchants enchant = plugin.getEnchantManager().getEnchants().get(key);
-        if (enchant == null) return false;
-
-        return enchant.getArmorMaterials().contains(item.getType());
+        if (!isAvailable()) return false;
+        return plugin.canApplyEnchant(item, key);
     }
 
     /**
@@ -399,8 +236,8 @@ public class VulcanEnchantsAPI {
      */
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
-        if (plugin.getClass().getName().equals("net.vulcandev.vulcanenchants.VulcanEnchants")) {
-            VulcanEnchants vulcanEnchants = (VulcanEnchants) plugin;
+        if (plugin instanceof IVulcanEnchantsPlugin) {
+            IVulcanEnchantsPlugin vulcanEnchants = (IVulcanEnchantsPlugin) plugin;
             instance = new VulcanEnchantsAPI(vulcanEnchants);
         }
     }

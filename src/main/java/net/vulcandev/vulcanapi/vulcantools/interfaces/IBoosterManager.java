@@ -2,8 +2,6 @@ package net.vulcandev.vulcanapi.vulcantools.interfaces;
 
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 /**
  * Interface for managing boosters in VulcanTools.
  * This interface provides access to booster operations for external plugins.

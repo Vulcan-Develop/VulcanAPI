@@ -1,8 +1,8 @@
 package net.vulcandev.vulcanapi.vulcanevents;
 
-import net.vulcandev.vulcanapi.events.interfaces.IEventInstance;
-import net.vulcandev.vulcanapi.events.interfaces.IPlayerBan;
-import net.vulcandev.vulcanapi.events.interfaces.IVulcanEventsPlugin;
+import net.vulcandev.vulcanapi.interfaces.events.IEventInstance;
+import net.vulcandev.vulcanapi.interfaces.events.IPlayerBan;
+import net.vulcandev.vulcanapi.interfaces.events.IVulcanEventsPlugin;
 import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.entity.Player;
