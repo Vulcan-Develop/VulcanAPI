@@ -67,6 +67,51 @@
             <systemPath>C:/Development/libs/VulcanLib.jar</systemPath>
         </dependency>
 
+        <!-- Vulcan Tools dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcantools</groupId>
+            <artifactId>VulcanTools</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanTools.jar</systemPath>
+        </dependency>
+
+        <!-- Vulcan Enchants dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcanenchants</groupId>
+            <artifactId>VulcanEnchants</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanEnchants.jar</systemPath>
+        </dependency>
+
+        <!-- Vulcan Staff dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcanstaff</groupId>
+            <artifactId>VulcanStaff</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanStaff.jar</systemPath>
+        </dependency>
+
+        <!-- Vulcan Stats dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcanstats</groupId>
+            <artifactId>VulcanStats</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanStats.jar</systemPath>
+        </dependency>
+
+        <!-- Vulcan Voting dependency -->
+        <dependency>
+            <groupId>net.vulcandev.vulcanvoting</groupId>
+            <artifactId>VulcanVoting</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanVoting.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
