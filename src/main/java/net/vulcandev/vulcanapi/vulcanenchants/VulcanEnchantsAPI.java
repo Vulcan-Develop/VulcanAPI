@@ -2,6 +2,7 @@ package net.vulcandev.vulcanapi.vulcanenchants;
 
 import net.vulcandev.vulcanapi.interfaces.enchants.IEnchantWrapper;
 import net.vulcandev.vulcanapi.interfaces.enchants.IVulcanEnchantsPlugin;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -226,6 +227,20 @@ public class VulcanEnchantsAPI {
     public boolean canApplyEnchant(@NotNull ItemStack item, @NotNull String key) {
         if (!isAvailable()) return false;
         return plugin.canApplyEnchant(item, key);
+    }
+
+    // ===== POTION APPLICATION API =====
+
+    /**
+     * Applies all potion enchants from the player's equipped armor.
+     * This forces a re-application of all potion effects based on the player's current armor.
+     * Useful for manually triggering potion enchant updates.
+     *
+     * @param player the player to apply potion enchants to
+     */
+    public void applyAllPotionEnchants(@NotNull Player player) {
+        if (!isAvailable()) return;
+        plugin.applyAllPotionEnchants(player);
     }
 
     /**
