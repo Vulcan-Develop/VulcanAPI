@@ -6,7 +6,7 @@
 
   <groupId>net.vulcandev.vulcanapi</groupId>
   <artifactId>VulcanAPI</artifactId>
-  <version>1.5.0</version>
+  <version>1.7.0</version>
   <packaging>jar</packaging>
 
   <name>VulcanAPI</name>
@@ -103,6 +103,14 @@
             <systemPath>C:/Development/libs/VulcanStats.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>net.vulcandev.vulcanloader</groupId>
+            <artifactId>VulcanLoader</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanLoader.jar</systemPath>
+        </dependency>
+
         <!-- Vulcan Voting dependency -->
         <dependency>
             <groupId>net.vulcandev.vulcanvoting</groupId>
@@ -110,6 +118,15 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>C:/Development/libs/VulcanVoting.jar</systemPath>
+        </dependency>
+
+        <!-- Vulcan GenBlocks dependency -->
+        <dependency>
+            <groupId>net.vulcandev.genblocks</groupId>
+            <artifactId>VulcanGenBlocks</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Development/libs/VulcanGenBlocks.jar</systemPath>
         </dependency>
 
         <dependency>

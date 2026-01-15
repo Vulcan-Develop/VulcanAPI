@@ -1,12 +1,5 @@
 package net.vulcandev.vulcanapi;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import net.vulcandev.vulcanloader.loader.VulcanPlugin;
 
-public final class VulcanAPI extends JavaPlugin {
-
-    @Override
-    public void onEnable() {}
-
-    @Override
-    public void onDisable() {}
-}
+public final class VulcanAPI extends VulcanPlugin {}
