@@ -7,6 +7,7 @@ public enum CheckType {
     // MOVEMENT
     BARITONE("Baritone", "Detects automated pathfinding and movement", CheckCategory.MOVEMENT),
     BLINK("Blink", "Detects players delaying packet transmission", CheckCategory.MOVEMENT),
+    FAKE_LAG("Fake Lag", "Detects artificial connection delay modules", CheckCategory.MOVEMENT),
     MOVE("Move", "Detects invalid movement patterns and speeds", CheckCategory.MOVEMENT),
     FLY("Fly", "Detects if player is flying when they arent allowed", CheckCategory.MOVEMENT),
     SIMULATION("Simulation", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
