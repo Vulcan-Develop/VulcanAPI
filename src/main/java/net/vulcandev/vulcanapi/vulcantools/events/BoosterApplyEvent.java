@@ -1,24 +1,26 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import lombok.Getter;
+import lombok.Setter;
+import net.vulcandev.vulcanapi.event.Cancellable;
+import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Event fired when a booster is applied to a player or team
  */
-public class BoosterApplyEvent extends Event implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-
+@Getter
+public class BoosterApplyEvent extends VulcanEvent implements Cancellable {
     private final Player targetPlayer; // null if team booster
     private final String targetTeam; // null if player booster
     private final String boosterType;
     private final String targetCurrency; // null if applies to all
+    @Setter
     private double multiplier;
+    @Setter
     private int durationSeconds;
     private final Player appliedBy; // who applied the booster
+    @Setter
     private boolean cancelled;
     
     /**
@@ -41,87 +43,6 @@ public class BoosterApplyEvent extends Event implements Cancellable {
         this.durationSeconds = durationSeconds;
         this.appliedBy = appliedBy;
         this.cancelled = false;
-    }
-
-    /**
-     * Gets the target player for this booster.
-     *
-     * @return the target player, or null if this is a team booster
-     */
-    public Player getTargetPlayer() {
-        return targetPlayer;
-    }
-
-    /**
-     * Gets the target team for this booster.
-     *
-     * @return the target team name, or null if this is a player booster
-     */
-    public String getTargetTeam() {
-        return targetTeam;
-    }
-
-    /**
-     * Gets the type of booster being applied.
-     *
-     * @return the booster type
-     */
-    public String getBoosterType() {
-        return boosterType;
-    }
-
-    /**
-     * Gets the target currency for this booster.
-     *
-     * @return the target currency, or null if applies to all currencies
-     */
-    public String getTargetCurrency() {
-        return targetCurrency;
-    }
-
-    /**
-     * Gets the multiplier value of the booster.
-     *
-     * @return the multiplier value
-     */
-    public double getMultiplier() {
-        return multiplier;
-    }
-
-    /**
-     * Sets the multiplier value of the booster.
-     *
-     * @param multiplier the new multiplier value
-     */
-    public void setMultiplier(double multiplier) {
-        this.multiplier = multiplier;
-    }
-
-    /**
-     * Gets the duration of the booster in seconds.
-     *
-     * @return the duration in seconds
-     */
-    public int getDurationSeconds() {
-        return durationSeconds;
-    }
-
-    /**
-     * Sets the duration of the booster in seconds.
-     *
-     * @param durationSeconds the new duration in seconds
-     */
-    public void setDurationSeconds(int durationSeconds) {
-        this.durationSeconds = durationSeconds;
-    }
-
-    /**
-     * Gets the player who applied this booster.
-     *
-     * @return the player who applied the booster
-     */
-    public Player getAppliedBy() {
-        return appliedBy;
     }
 
     /**
@@ -159,24 +80,8 @@ public class BoosterApplyEvent extends Event implements Cancellable {
     public double getDurationMinutes() {
         return durationSeconds / 60.0;
     }
-    
     @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-    
-    @NotNull
-    @Override 
-    public HandlerList getHandlers() { 
-        return handlers; 
-    }
-    
-    public static HandlerList getHandlerList() {
-        return handlers;
+    public boolean isCancellable() {
+        return true;
     }
 }

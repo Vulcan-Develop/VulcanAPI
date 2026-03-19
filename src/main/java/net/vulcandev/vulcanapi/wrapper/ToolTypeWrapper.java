@@ -13,7 +13,9 @@ public class ToolTypeWrapper {
         FISHINGROD("Fishing Rod"),
         MOBSWORD("Mob Sword"),
         HARVESTERHOE("Harvester Hoe"),
-        LUMBERAXE("Lumber Axe");
+        SHOVEL("Shovel"),
+        LUMBERAXE("Lumber Axe"),
+        MINERPICKAXE("Miner Pickaxe");
         
         private final String niceName;
         

@@ -8,7 +8,7 @@ VulcanAPI provides a unified, global event system that all Vulcan plugins can us
 
 ### Core Event Framework
 
-All events extend `VulcanEvent` and can be listened to by any plugin implementing `VulcanListener`.
+Events exposed through the global Vulcan event bus extend `VulcanEvent` and can be listened to by any plugin implementing `VulcanListener`.
 
 **Event Classes:**
 - `VulcanEvent` - Base class for all events
@@ -67,7 +67,8 @@ import net.vulcandev.vulcanapi.event.*;
 VulcanEventManager eventManager = VulcanEventManager.getInstance();
 
 // Register a listener
-eventManager.registerListener(new MyListener());
+MyListener listener = new MyListener();
+eventManager.registerListener(listener);
 
 // Fire an event
 MyCustomEvent event = new MyCustomEvent(player, "Hello World");
@@ -75,14 +76,6 @@ boolean cancelled = eventManager.callEvent(event);
 
 // Unregister when done
 eventManager.unregisterListener(listener);
-```
-
-**Optional Logging:**
-```java
-// Set a custom logger for event system messages
-VulcanEventManager.getInstance().setLogger(msg -> {
-    Bukkit.getLogger().info("[Events] " + msg);
-});
 ```
 
 ### Event Priorities
@@ -372,17 +365,29 @@ boolean setFrozen(Player target, Player staff, boolean frozen)
 
 Manage currencies, boosters, and tool events.
 
-> **Note:** These are **Bukkit Events** (`extends org.bukkit.event.Event`). Use Bukkit's event system to listen to them:
+All VulcanTools VulcanEvents live in `net.vulcandev.vulcanapi.vulcantools.events`.
+
+> **Note:** VulcanTools events are `VulcanEvent`s. Use `VulcanToolsAPI#registerListener(...)` or `VulcanEventManager`. Do not use Bukkit's listener system for VulcanTools API events.
 > ```java
-> public class MyListener implements org.bukkit.event.Listener {
->     @org.bukkit.event.EventHandler
->     public void onToolEventStart(ToolEventStartEvent event) {
->         // Handle Bukkit event
+> import net.vulcandev.vulcanapi.event.EventHandler;
+> import net.vulcandev.vulcanapi.event.EventPriority;
+> import net.vulcandev.vulcanapi.event.VulcanListener;
+> import net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI;
+> import net.vulcandev.vulcanapi.vulcantools.events.MinerBreakEvent;
+>
+> public final class ToolListener implements VulcanListener {
+>     @EventHandler(priority = EventPriority.NORMAL)
+>     public void onMinerBreak(MinerBreakEvent event) {
+>         if (event.getAmount() > 128) {
+>             event.setCancelled(true);
+>         }
 >     }
 > }
 >
-> // Register with Bukkit
-> Bukkit.getPluginManager().registerEvents(new MyListener(), plugin);
+> if (VulcanToolsAPI.isAvailable()) {
+>     VulcanToolsAPI api = VulcanToolsAPI.getInstance();
+>     api.registerListener(new ToolListener());
+> }
 > ```
 
 **Basic Usage:**
@@ -408,12 +413,17 @@ void applyBooster(Player player, String boosterType, String target, double multi
 
 void startEvent(ToolType eventType, int durationSeconds)
 boolean isEventActive()
+
+void registerListener(VulcanListener listener)
+void unregisterListener(VulcanListener listener)
+boolean callEvent(VulcanEvent event)
 ```
 
-**Available Events:**
+**Available Vulcan Events:**
 - ToolEventStartEvent, ToolEventEndEvent, ToolModeChangeEvent, ToolUpgradeEvent
-- BoosterApplyEvent, CurrencyGrindEvent, CaneHarvestBatchAsyncEvent
-- LumberHarvestEvent, FishCatchEvent, MobKillBatchAsyncEvent
+- BoosterApplyEvent, CurrencyGrindEvent
+- HarvesterHarvestEvent, LumberHarvestEvent, FishCatchEvent, MobKillEvent
+- MinerBreakEvent, ShovelBreakEvent
 
 ---
 

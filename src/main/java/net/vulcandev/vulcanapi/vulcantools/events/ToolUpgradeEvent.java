@@ -1,28 +1,31 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import lombok.Getter;
+import lombok.Setter;
+import net.vulcandev.vulcanapi.event.Cancellable;
+import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Event fired when a player upgrades a VulcanTools tool enchantment
  */
-public class ToolUpgradeEvent extends Event implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-
+@Getter
+public class ToolUpgradeEvent extends VulcanEvent implements Cancellable {
     private final Player player;
     private final ItemStack tool;
     private final ToolTypeWrapper toolType;
     private final String enchantmentId;
     private final int oldLevel;
+    @Setter
     private int newLevel;
+    @Setter
     private long upgradeCost;
+    @Setter
     private String currencyType;
+    @Setter
     private boolean cancelled;
     
     /**
@@ -47,105 +50,6 @@ public class ToolUpgradeEvent extends Event implements Cancellable {
         this.upgradeCost = upgradeCost;
         this.currencyType = currencyType;
         this.cancelled = false;
-    }
-
-    /**
-     * Gets the player upgrading the tool.
-     *
-     * @return the player upgrading the tool
-     */
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
-     * Gets the tool being upgraded.
-     *
-     * @return the tool ItemStack
-     */
-    public ItemStack getTool() {
-        return tool;
-    }
-
-    /**
-     * Gets the type of tool being upgraded.
-     *
-     * @return the tool type
-     */
-    public ToolTypeWrapper getToolType() {
-        return toolType;
-    }
-
-    /**
-     * Gets the ID of the enchantment being upgraded.
-     *
-     * @return the enchantment identifier
-     */
-    public String getEnchantmentId() {
-        return enchantmentId;
-    }
-
-    /**
-     * Gets the previous level of the enchantment.
-     *
-     * @return the old enchantment level
-     */
-    public int getOldLevel() {
-        return oldLevel;
-    }
-
-    /**
-     * Gets the new level of the enchantment.
-     *
-     * @return the new enchantment level
-     */
-    public int getNewLevel() {
-        return newLevel;
-    }
-
-    /**
-     * Sets the new level of the enchantment.
-     *
-     * @param newLevel the new enchantment level
-     */
-    public void setNewLevel(int newLevel) {
-        this.newLevel = newLevel;
-    }
-
-    /**
-     * Gets the cost of the upgrade.
-     *
-     * @return the upgrade cost
-     */
-    public long getUpgradeCost() {
-        return upgradeCost;
-    }
-
-    /**
-     * Sets the cost of the upgrade.
-     *
-     * @param upgradeCost the new upgrade cost
-     */
-    public void setUpgradeCost(long upgradeCost) {
-        this.upgradeCost = upgradeCost;
-    }
-
-    /**
-     * Gets the type of currency used for the upgrade.
-     *
-     * @return the currency type
-     */
-    public String getCurrencyType() {
-        return currencyType;
-    }
-
-    /**
-     * Sets the type of currency used for the upgrade.
-     *
-     * @param currencyType the new currency type
-     */
-    public void setCurrencyType(String currencyType) {
-        this.currencyType = currencyType;
     }
 
     /**
@@ -174,24 +78,8 @@ public class ToolUpgradeEvent extends Event implements Cancellable {
     public boolean isNewEnchantment() {
         return oldLevel == 0;
     }
-    
     @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-    
-    @NotNull
-    @Override 
-    public HandlerList getHandlers() { 
-        return handlers; 
-    }
-    
-    public static HandlerList getHandlerList() {
-        return handlers;
+    public boolean isCancellable() {
+        return true;
     }
 }

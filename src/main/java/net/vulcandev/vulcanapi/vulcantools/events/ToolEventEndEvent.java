@@ -1,10 +1,9 @@
 package net.vulcandev.vulcanapi.vulcantools.events;
 
+import lombok.Getter;
+import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,9 +12,8 @@ import java.util.UUID;
 /**
  * Event fired when a tool event ends
  */
-public class ToolEventEndEvent extends Event {
-    private static final HandlerList handlers = new HandlerList();
-
+@Getter
+public class ToolEventEndEvent extends VulcanEvent {
     private final ToolTypeWrapper toolType;
     private final LinkedHashMap<UUID, Integer> finalLeaderboard;
     private final int totalParticipants;
@@ -33,42 +31,6 @@ public class ToolEventEndEvent extends Event {
         this.finalLeaderboard = finalLeaderboard;
         this.totalParticipants = finalLeaderboard.size();
         this.wasManuallyEnded = wasManuallyEnded;
-    }
-
-    /**
-     * Gets the type of tool event that ended.
-     *
-     * @return the tool event type
-     */
-    public ToolTypeWrapper getToolType() {
-        return toolType;
-    }
-
-    /**
-     * Gets the final leaderboard of the event.
-     *
-     * @return a LinkedHashMap with player UUIDs as keys and scores as values
-     */
-    public LinkedHashMap<UUID, Integer> getFinalLeaderboard() {
-        return finalLeaderboard;
-    }
-
-    /**
-     * Gets the total number of participants in the event.
-     *
-     * @return the total number of participants
-     */
-    public int getTotalParticipants() {
-        return totalParticipants;
-    }
-
-    /**
-     * Checks if the event was manually ended.
-     *
-     * @return true if manually ended, false if ended naturally
-     */
-    public boolean isWasManuallyEnded() {
-        return wasManuallyEnded;
     }
 
     /**
@@ -126,14 +88,9 @@ public class ToolEventEndEvent extends Event {
         }
         return toolType.getNiceName() + " event ended with " + totalParticipants + " participants. Winner achieved " + getWinningAmount();
     }
-    
-    @NotNull
-    @Override 
-    public HandlerList getHandlers() { 
-        return handlers; 
-    }
-    
-    public static HandlerList getHandlerList() {
-        return handlers;
+
+    @Override
+    public boolean isCancellable() {
+        return false;
     }
 }

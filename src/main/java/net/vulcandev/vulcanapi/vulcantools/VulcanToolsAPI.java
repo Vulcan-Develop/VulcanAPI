@@ -1,5 +1,8 @@
 package net.vulcandev.vulcanapi.vulcantools;
 
+import net.vulcandev.vulcanapi.event.VulcanEvent;
+import net.vulcandev.vulcanapi.event.VulcanEventManager;
+import net.vulcandev.vulcanapi.event.VulcanListener;
 import net.vulcandev.vulcanapi.interfaces.tools.IVulcanToolsPlugin;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
@@ -56,6 +59,34 @@ import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
        */
       public IBoosterManager getBoosterManager() {
           return plugin.getBoosterManager();
+      }
+
+      /**
+       * Registers a listener with the global Vulcan event system.
+       *
+       * @param listener the listener to register
+       */
+      public void registerListener(VulcanListener listener) {
+          VulcanEventManager.getInstance().registerListener(listener);
+      }
+
+      /**
+       * Unregisters a listener from the global Vulcan event system.
+       *
+       * @param listener the listener to unregister
+       */
+      public void unregisterListener(VulcanListener listener) {
+          VulcanEventManager.getInstance().unregisterListener(listener);
+      }
+
+      /**
+       * Fires a Vulcan event through the global event system.
+       *
+       * @param event the event to fire
+       * @return true if the event was cancelled
+       */
+      public boolean callEvent(VulcanEvent event) {
+          return VulcanEventManager.getInstance().callEvent(event);
       }
 
       public static void initialize(org.bukkit.plugin.Plugin plugin) {

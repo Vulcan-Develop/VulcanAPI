@@ -14,56 +14,38 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.List;
 
 /**
- * Event fired when a player harvests wood using a VulcanTools lumber axe
+ * Event fired when a player harvests crops using a VulcanTools harvester hoe
  */
 @Getter
-public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
+public class HarvesterHarvestEvent extends VulcanEvent implements Cancellable {
     private final Player player;
     private final List<Block> harvestedBlocks;
-    private final Material woodType;
+    private final Material cropType;
     private final BlockBreakEvent originalEvent;
     private final ToolModeWrapper toolMode;
     @Setter
     private int amount;
     @Setter
     private boolean cancelled;
-    
+
     /**
-     * Creates a new LumberHarvestEvent.
+     * Creates a new HarvesterHarvestEvent.
      *
-     * @param player the player who harvested the wood
+     * @param player the player who harvested the crops
      * @param harvestedBlocks the list of blocks that were harvested
-     * @param woodType the type of wood that was harvested
+     * @param cropType the type of crop that was harvested
      * @param originalEvent the original Bukkit BlockBreakEvent
-     * @param toolMode the tool mode of the lumber axe used
-     * @param amount the amount of wood harvested
+     * @param toolMode the tool mode of the harvester hoe used
+     * @param amount the amount of crops harvested
      */
-    public LumberHarvestEvent(Player player, List<Block> harvestedBlocks, Material woodType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
+    public HarvesterHarvestEvent(Player player, List<Block> harvestedBlocks, Material cropType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
         this.player = player;
         this.harvestedBlocks = harvestedBlocks;
-        this.woodType = woodType;
+        this.cropType = cropType;
         this.originalEvent = originalEvent;
         this.toolMode = ToolModeWrapper.fromVulcanToolMode(toolMode);
         this.amount = amount;
         this.cancelled = false;
-    }
-
-    /**
-     * Gets the amount of wood harvested (alias for getAmount).
-     *
-     * @return the number of wood blocks harvested
-     */
-    public int getHarvestedAmount() {
-        return amount;
-    }
-
-    /**
-     * Gets the original Bukkit BlockBreakEvent (alias for getOriginalEvent).
-     *
-     * @return the original block break event
-     */
-    public BlockBreakEvent getBukkitEvent() {
-        return originalEvent;
     }
 
     @Override

@@ -14,34 +14,35 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.List;
 
 /**
- * Event fired when a player harvests wood using a VulcanTools lumber axe
+ * Event fired when a player breaks blocks using a VulcanTools shovel.
+ * This event is fired synchronously before blocks are removed, allowing cancellation.
  */
 @Getter
-public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
+public class ShovelBreakEvent extends VulcanEvent implements Cancellable {
     private final Player player;
-    private final List<Block> harvestedBlocks;
-    private final Material woodType;
+    private final List<Block> brokenBlocks;
+    private final Material blockType;
     private final BlockBreakEvent originalEvent;
     private final ToolModeWrapper toolMode;
     @Setter
     private int amount;
     @Setter
     private boolean cancelled;
-    
+
     /**
-     * Creates a new LumberHarvestEvent.
+     * Creates a new ShovelBreakEvent.
      *
-     * @param player the player who harvested the wood
-     * @param harvestedBlocks the list of blocks that were harvested
-     * @param woodType the type of wood that was harvested
+     * @param player the player who broke the blocks
+     * @param brokenBlocks the list of blocks that were broken
+     * @param blockType the type of block that was broken
      * @param originalEvent the original Bukkit BlockBreakEvent
-     * @param toolMode the tool mode of the lumber axe used
-     * @param amount the amount of wood harvested
+     * @param toolMode the tool mode of the shovel used
+     * @param amount the total number of blocks broken
      */
-    public LumberHarvestEvent(Player player, List<Block> harvestedBlocks, Material woodType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
+    public ShovelBreakEvent(Player player, List<Block> brokenBlocks, Material blockType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
         this.player = player;
-        this.harvestedBlocks = harvestedBlocks;
-        this.woodType = woodType;
+        this.brokenBlocks = brokenBlocks;
+        this.blockType = blockType;
         this.originalEvent = originalEvent;
         this.toolMode = ToolModeWrapper.fromVulcanToolMode(toolMode);
         this.amount = amount;
@@ -49,11 +50,11 @@ public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
     }
 
     /**
-     * Gets the amount of wood harvested (alias for getAmount).
+     * Gets the amount of blocks broken (alias for getAmount).
      *
-     * @return the number of wood blocks harvested
+     * @return the number of blocks broken
      */
-    public int getHarvestedAmount() {
+    public int getBrokenAmount() {
         return amount;
     }
 
