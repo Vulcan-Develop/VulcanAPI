@@ -1,6 +1,6 @@
 # VulcanAPI
 
-API for VulcanEvents, VulcanStaff, VulcanTools, VulcanEnchants, and Fortress.
+API for VulcanEvents, VulcanStaff, VulcanTools, VulcanCrates, VulcanEnchants, and Fortress.
 
 ## Global Event System
 
@@ -214,6 +214,7 @@ Available categories:
 - **VulcanEventsAPI**: Manage server events, competitions, and player participation
 - **VulcanStaffAPI**: Staff management tools including vanish, staff mode, and freeze functionality
 - **VulcanToolsAPI**: Advanced tool system with currency management, boosters, and tool events
+- **VulcanCratesAPI**: Crate open events through the global Vulcan event bus
 - **VulcanEnchantsAPI**: Custom enchantments system with potion effects and special abilities
 - **FortressAPI**: Anticheat integration for flag monitoring and player tracking
 - **Global Event System**: Unified event bus for cross-plugin communication
@@ -244,6 +245,10 @@ private void initializeVulcanAPIs() {
 
     if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
         getLogger().info("VulcanToolsAPI enabled");
+    }
+
+    if (net.vulcandev.vulcanapi.vulcancrates.VulcanCratesAPI.isAvailable()) {
+        getLogger().info("VulcanCratesAPI enabled");
     }
 
     if (net.vulcandev.vulcanapi.vulcanenchants.VulcanEnchantsAPI.isAvailable()) {
@@ -427,7 +432,47 @@ boolean callEvent(VulcanEvent event)
 
 ---
 
-### 4. VulcanEnchantsAPI
+### 4. VulcanCratesAPI
+
+Listen for crate activity published by VulcanCrates.
+
+All VulcanCrates VulcanEvents live in `net.vulcandev.vulcanapi.vulcancrates.events`.
+
+> **Note:** VulcanCrates events are `VulcanEvent`s. Use `VulcanCratesAPI#registerListener(...)` or `VulcanEventManager`. Do not use Bukkit's listener system for crate API events.
+> ```java
+> import net.vulcandev.vulcanapi.event.EventHandler;
+> import net.vulcandev.vulcanapi.event.VulcanListener;
+> import net.vulcandev.vulcanapi.vulcancrates.VulcanCratesAPI;
+> import net.vulcandev.vulcanapi.vulcancrates.events.CrateOpenEvent;
+>
+> public final class CrateListener implements VulcanListener {
+>     @EventHandler
+>     public void onCrateOpen(CrateOpenEvent event) {
+>         String crateName = event.getCrate().getName();
+>         String prizeName = event.getPrize().getName();
+>         boolean broadcast = event.getPrize().isAnnounce();
+>     }
+> }
+>
+> if (VulcanCratesAPI.isAvailable()) {
+>     VulcanCratesAPI api = VulcanCratesAPI.getInstance();
+>     api.registerListener(new CrateListener());
+> }
+> ```
+
+**Key Methods:**
+```java
+void registerListener(VulcanListener listener)
+void unregisterListener(VulcanListener listener)
+boolean callEvent(VulcanEvent event)
+```
+
+**Available Vulcan Events:**
+- CrateOpenEvent - Fired after a prize is rolled and before reward commands execute
+
+---
+
+### 5. VulcanEnchantsAPI
 
 Manage custom enchantments, potion effects, and special abilities.
 
@@ -495,6 +540,7 @@ This plugin is compiled and available through the Vulcan Loader found in the cli
 - VulcanEvents (optional)
 - VulcanStaff (optional)
 - VulcanTools (optional)
+- VulcanCrates (optional)
 - VulcanEnchants (optional)
 - Fortress (optional)
 
