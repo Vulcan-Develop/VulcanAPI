@@ -30,6 +30,9 @@ public enum CheckType {
     HITBOX("Hitbox", "Detects expanded hitbox modifications", CheckCategory.COMBAT),
     PIERCING("Piercing", "Detects hitting through blocks", CheckCategory.COMBAT),
     REACH("Reach", "Detects hitting beyond normal distance", CheckCategory.COMBAT),
+    ACTION_STATE("Action State", "Detects invalid sprint and sneak state transitions", CheckCategory.COMBAT),
+    SPRINT_RESET("Sprint Reset", "Detects automated sprint reset patterns", CheckCategory.COMBAT),
+    @Deprecated
     WTAP("WTap", "Detects W-Tap sprint manipulation", CheckCategory.COMBAT),
     HEURISTIC("Heuristic", "Detects combat behavior patterns", CheckCategory.COMBAT),
     BACKTRACK("Backtrack", "Detects hit delay exploitation", CheckCategory.COMBAT),
@@ -66,4 +69,3 @@ public enum CheckType {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 }
-
