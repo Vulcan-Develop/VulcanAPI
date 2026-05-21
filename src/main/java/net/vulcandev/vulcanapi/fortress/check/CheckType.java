@@ -18,7 +18,6 @@ public enum CheckType {
     INVALID_INTERACT("Invalid Interact", "Detects impossible interactions", CheckCategory.PLAYER),
     NUKER("Nuker", "Detects breaking multiple blocks rapidly", CheckCategory.PLAYER),
     SCAFFOLD("Scaffold", "Detects automated block placement", CheckCategory.PLAYER),
-    AIRPLACE("Air Place", "Detects placing blocks without solid neighbors", CheckCategory.PLAYER),
     // COMBAT
     AIM("Aim", "Detects aim assistance and snapping", CheckCategory.COMBAT),
     ANALYSIS("Analysis", "Detects combat pattern anomalies", CheckCategory.COMBAT),
@@ -32,7 +31,6 @@ public enum CheckType {
     HEURISTIC("Heuristic", "Detects combat behavior patterns", CheckCategory.COMBAT),
     KEEPSPRINT("KeepSprint", "Detects sprint persistence during combat", CheckCategory.COMBAT),
     KILLAURA("KillAura", "Detects kill aura during combat", CheckCategory.COMBAT),
-    MULTI_ACTIONS("Multi Actions", "Detects performing multiple actions simultaneously", CheckCategory.COMBAT),
     ELYTRA("Elytra", "Detects illegal combat behaviour while gliding with elytra", CheckCategory.COMBAT),
     // INVENTORY
     INVENTORY("Inventory", "Detects inventory manipulation cheats", CheckCategory.INVENTORY),
@@ -49,6 +47,10 @@ public enum CheckType {
     NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC),
 
     //DEPRECATED
+    @Deprecated
+    MULTI_ACTIONS("Multi Actions", "Detects performing multiple actions simultaneously", CheckCategory.COMBAT),
+    @Deprecated
+    AIRPLACE("Air Place", "Detects placing blocks without solid neighbors", CheckCategory.PLAYER),
     @Deprecated
     BLINK("Blink", "Detects players delaying packet transmission", CheckCategory.MOVEMENT),
     @Deprecated
