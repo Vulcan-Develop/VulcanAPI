@@ -6,8 +6,6 @@ import lombok.Getter;
 public enum CheckType {
     // MOVEMENT
     BARITONE("Baritone", "Detects automated pathfinding and movement", CheckCategory.MOVEMENT),
-    BLINK("Blink", "Detects players delaying packet transmission", CheckCategory.MOVEMENT),
-    FAKE_LAG("Fake Lag", "Detects artificial connection delay modules", CheckCategory.MOVEMENT),
     MOVE("Move", "Detects invalid movement patterns and speeds", CheckCategory.MOVEMENT),
     FLY("Fly", "Detects if player is flying when they arent allowed", CheckCategory.MOVEMENT),
     SIMULATION("Simulation", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
@@ -21,7 +19,6 @@ public enum CheckType {
     NUKER("Nuker", "Detects breaking multiple blocks rapidly", CheckCategory.PLAYER),
     SCAFFOLD("Scaffold", "Detects automated block placement", CheckCategory.PLAYER),
     AIRPLACE("Air Place", "Detects placing blocks without solid neighbors", CheckCategory.PLAYER),
-    AUTOTRAP("Auto Trap", "Detects rapid block placements trapping another player", CheckCategory.PLAYER),
     // COMBAT
     AIM("Aim", "Detects aim assistance and snapping", CheckCategory.COMBAT),
     ANALYSIS("Analysis", "Detects combat pattern anomalies", CheckCategory.COMBAT),
@@ -32,10 +29,7 @@ public enum CheckType {
     REACH("Reach", "Detects hitting beyond normal distance", CheckCategory.COMBAT),
     ACTION_STATE("Action State", "Detects invalid sprint and sneak state transitions", CheckCategory.COMBAT),
     SPRINT_RESET("Sprint Reset", "Detects automated sprint reset patterns", CheckCategory.COMBAT),
-    @Deprecated
-    WTAP("WTap", "Detects W-Tap sprint manipulation", CheckCategory.COMBAT),
     HEURISTIC("Heuristic", "Detects combat behavior patterns", CheckCategory.COMBAT),
-    BACKTRACK("Backtrack", "Detects hit delay exploitation", CheckCategory.COMBAT),
     KEEPSPRINT("KeepSprint", "Detects sprint persistence during combat", CheckCategory.COMBAT),
     KILLAURA("KillAura", "Detects kill aura during combat", CheckCategory.COMBAT),
     MULTI_ACTIONS("Multi Actions", "Detects performing multiple actions simultaneously", CheckCategory.COMBAT),
@@ -52,7 +46,19 @@ public enum CheckType {
     PROTOCOL("Protocol", "Detects protocol violations", CheckCategory.PACKET),
     // MISC
     MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC),
-    NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC);
+    NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC),
+
+    //DEPRECATED
+    @Deprecated
+    BLINK("Blink", "Detects players delaying packet transmission", CheckCategory.MOVEMENT),
+    @Deprecated
+    WTAP("WTap", "Detects W-Tap sprint manipulation", CheckCategory.COMBAT),
+    @Deprecated
+    FAKE_LAG("Fake Lag", "Detects artificial connection delay modules", CheckCategory.MOVEMENT),
+    @Deprecated
+    AUTOTRAP("Auto Trap", "Detects rapid block placements trapping another player", CheckCategory.PLAYER),
+    @Deprecated
+    BACKTRACK("Backtrack", "Detects hit delay exploitation", CheckCategory.COMBAT);
 
     private final String value;
     private final String description;
