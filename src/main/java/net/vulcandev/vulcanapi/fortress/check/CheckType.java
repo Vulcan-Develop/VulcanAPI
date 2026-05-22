@@ -11,7 +11,6 @@ public enum CheckType {
     SIMULATION("Simulation", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
     TIMER("Timer", "Detects game speed manipulation", CheckCategory.MOVEMENT),
     VELOCITY("Velocity", "Detects knockback modifications", CheckCategory.MOVEMENT),
-    FASTCLIMB("Fast Climb", "Detects climbing faster than vanilla allows", CheckCategory.MOVEMENT),
     // PLAYER
     FASTBREAK("Fast Break", "Detects breaking blocks too quickly", CheckCategory.PLAYER),
     FASTPLACE("Fast Place", "Detects placing blocks too quickly", CheckCategory.PLAYER),
@@ -47,6 +46,8 @@ public enum CheckType {
     NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC),
 
     //DEPRECATED
+    @Deprecated
+    FASTCLIMB("Fast Climb", "Detects climbing faster than vanilla allows", CheckCategory.MOVEMENT),
     @Deprecated
     MULTI_ACTIONS("Multi Actions", "Detects performing multiple actions simultaneously", CheckCategory.COMBAT),
     @Deprecated
