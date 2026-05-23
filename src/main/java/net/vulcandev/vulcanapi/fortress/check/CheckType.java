@@ -9,14 +9,16 @@ public enum CheckType {
     MOVE("Move", "Detects invalid movement patterns and speeds", CheckCategory.MOVEMENT),
     FLY("Fly", "Detects if player is flying when they arent allowed", CheckCategory.MOVEMENT),
     SIMULATION("Simulation", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
-    TIMER("Timer", "Detects game speed manipulation", CheckCategory.MOVEMENT),
     VELOCITY("Velocity", "Detects knockback modifications", CheckCategory.MOVEMENT),
+    ELYTRA("Elytra", "Detects illegal combat behaviour while gliding with elytra", CheckCategory.MOVEMENT),
     // PLAYER
     FASTBREAK("Fast Break", "Detects breaking blocks too quickly", CheckCategory.PLAYER),
     FASTPLACE("Fast Place", "Detects placing blocks too quickly", CheckCategory.PLAYER),
     INVALID_INTERACT("Invalid Interact", "Detects impossible interactions", CheckCategory.PLAYER),
     NUKER("Nuker", "Detects breaking multiple blocks rapidly", CheckCategory.PLAYER),
     SCAFFOLD("Scaffold", "Detects automated block placement", CheckCategory.PLAYER),
+    CONNECTION_ABUSE("Connection Abuse", "Detects connection exploitation", CheckCategory.PLAYER),
+    TIMER("Timer", "Detects game speed manipulation", CheckCategory.PLAYER),
     // COMBAT
     AIM("Aim", "Detects aim assistance and snapping", CheckCategory.COMBAT),
     ANALYSIS("Analysis", "Detects combat pattern anomalies", CheckCategory.COMBAT),
@@ -30,7 +32,6 @@ public enum CheckType {
     HEURISTIC("Heuristic", "Detects combat behavior patterns", CheckCategory.COMBAT),
     KEEPSPRINT("KeepSprint", "Detects sprint persistence during combat", CheckCategory.COMBAT),
     KILLAURA("KillAura", "Detects kill aura during combat", CheckCategory.COMBAT),
-    ELYTRA("Elytra", "Detects illegal combat behaviour while gliding with elytra", CheckCategory.COMBAT),
     // INVENTORY
     INVENTORY("Inventory", "Detects inventory manipulation cheats", CheckCategory.INVENTORY),
     REFILL("Refill", "Detects automated inventory refilling", CheckCategory.INVENTORY),
@@ -38,7 +39,6 @@ public enum CheckType {
     AUTOTOTEM("Auto Totem", "Detects automated totem-of-undying offhand swapping", CheckCategory.INVENTORY),
     // PACKET
     BADPACKETS("Bad Packets", "Detects malformed or invalid packets", CheckCategory.PACKET),
-    CONNECTION_ABUSE("Connection Abuse", "Detects connection exploitation", CheckCategory.PACKET),
     CRASHER("Crasher", "Detects server crash attempts", CheckCategory.PACKET),
     PROTOCOL("Protocol", "Detects protocol violations", CheckCategory.PACKET),
     // MISC
