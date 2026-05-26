@@ -13,6 +13,8 @@ public enum CheckType {
     ELYTRA("Elytra", "Detects illegal combat behaviour while gliding with elytra", CheckCategory.MOVEMENT),
     // PLAYER
     FASTBREAK("Fast Break", "Detects breaking blocks too quickly", CheckCategory.PLAYER),
+    LEFTCLICKER("Left Clicker", "Detects automated clicking patterns", CheckCategory.PLAYER),
+    RIGHTCLICKER("Right Clicker", "Detects automated right-click patterns", CheckCategory.PLAYER),
     FASTPLACE("Fast Place", "Detects placing blocks too quickly", CheckCategory.PLAYER),
     INVALID_INTERACT("Invalid Interact", "Detects impossible interactions", CheckCategory.PLAYER),
     NUKER("Nuker", "Detects breaking multiple blocks rapidly", CheckCategory.PLAYER),
@@ -22,8 +24,6 @@ public enum CheckType {
     // COMBAT
     AIM("Aim", "Detects aim assistance and snapping", CheckCategory.COMBAT),
     ANALYSIS("Analysis", "Detects combat pattern anomalies", CheckCategory.COMBAT),
-    LEFTCLICKER("Left Clicker", "Detects automated clicking patterns", CheckCategory.COMBAT),
-    RIGHTCLICKER("Right Clicker", "Detects automated right-click patterns", CheckCategory.COMBAT),
     HITBOX("Hitbox", "Detects expanded hitbox modifications", CheckCategory.COMBAT),
     PIERCING("Piercing", "Detects hitting through blocks", CheckCategory.COMBAT),
     REACH("Reach", "Detects hitting beyond normal distance", CheckCategory.COMBAT),
