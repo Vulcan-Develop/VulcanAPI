@@ -24,6 +24,7 @@ public enum CheckType {
     // COMBAT
     AIM("Aim", "Detects aim assistance and snapping", CheckCategory.COMBAT),
     ANALYSIS("Analysis", "Detects combat pattern anomalies", CheckCategory.COMBAT),
+    MACHINE_LEARNING("Machine Learning", "Evaluates backend-hosted behavior models from sampled combat telemetry", CheckCategory.COMBAT),
     HITBOX("Hitbox", "Detects expanded hitbox modifications", CheckCategory.COMBAT),
     PIERCING("Piercing", "Detects hitting through blocks", CheckCategory.COMBAT),
     REACH("Reach", "Detects hitting beyond normal distance", CheckCategory.COMBAT),
@@ -43,9 +44,10 @@ public enum CheckType {
     PROTOCOL("Protocol", "Detects protocol violations", CheckCategory.PACKET),
     // MISC
     MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC),
-    NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC),
 
     //DEPRECATED
+    @Deprecated
+    NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC),
     @Deprecated
     FASTCLIMB("Fast Climb", "Detects climbing faster than vanilla allows", CheckCategory.MOVEMENT),
     @Deprecated
