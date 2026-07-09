@@ -54,8 +54,7 @@ public class CrateOpenEvent extends VulcanEvent {
         private final List<String> lore;
         private final boolean glowing;
 
-        public PrizeSnapshot(String name, List<String> commands, double chance, boolean announce, String url,
-                             Material material, int amount, byte data, List<String> lore, boolean glowing) {
+        public PrizeSnapshot(String name, List<String> commands, double chance, boolean announce, String url, Material material, int amount, byte data, List<String> lore, boolean glowing) {
             this.name = name;
             this.commands = immutableCopy(commands);
             this.chance = chance;

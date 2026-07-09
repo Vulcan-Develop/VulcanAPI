@@ -1,11 +1,12 @@
 package net.vulcandev.vulcanapi.wrapper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Wrapper for VulcanEvents EventState to provide a clean API without exposing internal types
- */
+@Getter
+@EqualsAndHashCode
 public class EventStateWrapper {
 
     public enum State {
@@ -21,40 +22,15 @@ public class EventStateWrapper {
         this.state = state;
     }
 
-    /**
-     * Gets the event state
-     * @return the event state
-     */
-    @NotNull
-    public State getState() {
-        return state;
-    }
-
-    /**
-     * Creates an EventStateWrapper from a string
-     * @param stateName the event state name
-     * @return EventStateWrapper instance or null if no matching state exists
-     */
     @Nullable
     public static EventStateWrapper fromString(@NotNull String stateName) {
         try {
-            State state = State.valueOf(stateName.toUpperCase());
-            return new EventStateWrapper(state);
+            return new EventStateWrapper(State.valueOf(stateName.toUpperCase()));
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        
-        EventStateWrapper that = (EventStateWrapper) obj;
-
-        return state == that.state;
-    }
-    
     @Override
     public String toString() {
         return state.name();

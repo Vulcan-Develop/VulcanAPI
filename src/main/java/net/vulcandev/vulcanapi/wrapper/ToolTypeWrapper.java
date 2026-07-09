@@ -1,14 +1,16 @@
 package net.vulcandev.vulcanapi.wrapper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Wrapper for VulcanTools ToolType to provide a clean API without exposing internal types
- */
+@Getter
+@EqualsAndHashCode
 public class ToolTypeWrapper {
-    
+
+    @Getter
     public enum Type {
         FISHINGROD("Fishing Rod"),
         MOBSWORD("Mob Sword"),
@@ -30,51 +32,24 @@ public class ToolTypeWrapper {
         this.type = type;
     }
 
-    public String getNiceName() {return type.niceName;}
-    
-    /**
-     * Gets the tool type
-     * @return the tool type
-     */
-    @NotNull
-    public Type getType() {
-        return type;
+    public String getNiceName() {
+        return type.niceName;
     }
-    
-    /**
-     * Creates a ToolTypeWrapper from a VulcanTools ToolType enum
-     * @param toolType the VulcanTools ToolType enum
-     * @return ToolTypeWrapper instance or null if no matching type exists
-     */
+
     @Nullable
     public static ToolTypeWrapper fromVulcanToolType(@NotNull ToolType toolType) {
         try {
-            String name = toolType.name();
-            Type wrapperType = Type.valueOf(name);
-            return new ToolTypeWrapper(wrapperType);
+            return new ToolTypeWrapper(Type.valueOf(toolType.name()));
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
-    
-    /**
-     * Converts this wrapper back to the original VulcanTools ToolType enum
-     * @return the VulcanTools ToolType enum
-     */
+
     @NotNull
     public ToolType toVulcanToolType() {
         return ToolType.valueOf(type.name());
     }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        
-        ToolTypeWrapper that = (ToolTypeWrapper) obj;
-        return type == that.type;
-    }
-    
+
     @Override
     public String toString() {
         return type.name();

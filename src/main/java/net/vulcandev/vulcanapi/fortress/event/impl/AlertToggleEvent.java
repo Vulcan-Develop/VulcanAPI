@@ -4,18 +4,18 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
 
-/**
- * Event fired when a player toggles their alerts
- */
-
 @Getter
 public class AlertToggleEvent extends VulcanEvent {
     private final PlayerProfile player;
-    private final boolean state; //true = alerts off -> on, false = alerts on -> off, this does NOT handle the on-join alert enabling
+    private final boolean state;
 
     public AlertToggleEvent(PlayerProfile player, boolean state) {
         this.player = player;
         this.state = state;
+    }
+
+    public boolean isAlertsEnabled() {
+        return state;
     }
 
     @Override

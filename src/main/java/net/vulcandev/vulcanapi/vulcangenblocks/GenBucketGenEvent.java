@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.vulcangenblocks;
 
+import lombok.Getter;
 import net.vulcandev.vulcanapi.wrapper.GenWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -13,7 +14,10 @@ import java.util.UUID;
 
 public class GenBucketGenEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
+
+    @Getter
     private final UUID playerId;
+    @Getter
     private final GenWrapper gen;
 
     public GenBucketGenEvent(UUID playerId, GenWrapper gen) {
@@ -21,24 +25,38 @@ public class GenBucketGenEvent extends Event implements Cancellable {
         this.gen = gen;
     }
 
-    public Player getPlayer() {return Bukkit.getPlayer(playerId);}
-    public OfflinePlayer getOfflinePlayer() {return Bukkit.getOfflinePlayer(playerId);}
-    public UUID getPlayerId() {return playerId;}
+    public Player getPlayer() {
+        return Bukkit.getPlayer(playerId);
+    }
 
-    public GenWrapper getGen() {return gen;}
+    public OfflinePlayer getOfflinePlayer() {
+        return Bukkit.getOfflinePlayer(playerId);
+    }
 
-    public boolean getReversed() {return gen.isReversed();}
-    public void setReversed(boolean reversed) {gen.setReversed(reversed);}
+    public boolean getReversed() {
+        return gen.isReversed();
+    }
+
+    public void setReversed(boolean reversed) {
+        gen.setReversed(reversed);
+    }
 
     @Override
-    public boolean isCancelled() { return this.gen.isCancelled();}
+    public boolean isCancelled() {
+        return this.gen.isCancelled();
+    }
+
     @Override
     public void setCancelled(boolean cancel) {
         this.gen.setCancelled(cancel);
     }
 
-    @Override @NotNull
-    public HandlerList getHandlers() { return handlers; }
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
     public static HandlerList getHandlerList() {
         return handlers;
     }

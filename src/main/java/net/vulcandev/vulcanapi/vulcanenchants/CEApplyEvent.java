@@ -1,5 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanenchants;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -10,13 +12,20 @@ import org.jetbrains.annotations.NotNull;
 
 public class CEApplyEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    
+
+    @Getter
     private final Player player;
+    @Getter
     private final String enchantName;
+    @Getter
     private final int amp;
     private final ItemStack targetItem;
     private final ItemStack bookItem;
+    @Getter
     private final PotionEffectType potionEffectType;
+
+    @Getter
+    @Setter
     private boolean cancelled = false;
     
     public CEApplyEvent(@NotNull Player player, @NotNull String enchantName, int amp, PotionEffectType potionEffectType, @NotNull ItemStack targetItem, @NotNull ItemStack bookItem) {
@@ -27,23 +36,7 @@ public class CEApplyEvent extends Event implements Cancellable {
         this.targetItem = targetItem.clone();
         this.bookItem = bookItem.clone();
     }
-    
-    @NotNull
-    public Player getPlayer() {
-        return player;
-    }
-    
-    @NotNull
-    public String getEnchantName() {
-        return enchantName;
-    }
-    
-    public int getAmp() {
-        return amp;
-    }
 
-    public PotionEffectType getPotionEffectType() { return potionEffectType; }
-    
     @NotNull
     public ItemStack getTargetItem() {
         return targetItem.clone();
@@ -53,17 +46,7 @@ public class CEApplyEvent extends Event implements Cancellable {
     public ItemStack getBookItem() {
         return bookItem.clone();
     }
-    
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-    
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-    
+
     @NotNull
     @Override
     public HandlerList getHandlers() {

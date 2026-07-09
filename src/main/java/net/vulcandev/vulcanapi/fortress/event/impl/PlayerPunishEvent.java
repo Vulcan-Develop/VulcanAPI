@@ -22,11 +22,9 @@ public class PlayerPunishEvent extends VulcanEvent implements Cancellable {
     private boolean cancelled = false;
 
     @Setter
-    private String customPunishCommand; // Allow plugins to override punishment
+    private String customPunishCommand;
 
-    public PlayerPunishEvent(PlayerProfile player, CheckType checkName, String checkType,
-                             String checkTypeAdvanced, String debugData, String description,
-                             int violationLevel, int maxViolationLevel) {
+    public PlayerPunishEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel) {
         this.player = player;
         this.checkName = checkName;
         this.checkType = checkType;

@@ -21,10 +21,9 @@ public class GhostBlockEvent extends VulcanEvent implements Cancellable {
     private boolean mitigated;
 
     @Setter
-    private boolean suppressCorrection = false; // Allow plugins to handle correction themselves
+    private boolean suppressCorrection = false;
 
-    public GhostBlockEvent(PlayerProfile player, String reason, Location playerLocation,
-                           Location blockLocation, boolean mitigated) {
+    public GhostBlockEvent(PlayerProfile player, String reason, Location playerLocation, Location blockLocation, boolean mitigated) {
         this.player = player;
         this.reason = reason;
         this.playerLocation = playerLocation.clone();

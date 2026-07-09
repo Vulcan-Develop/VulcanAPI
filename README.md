@@ -1,554 +1,96 @@
 # VulcanAPI
 
-API for VulcanEvents, VulcanStaff, VulcanTools, VulcanCrates, VulcanEnchants, and Fortress.
+VulcanAPI is the shared integration layer for Vulcan plugins. It gives other plugins one stable place to check which Vulcan modules are available, read supported data, and listen to public events.
 
-## Global Event System
+## Current Release Focus
 
-VulcanAPI provides a unified, global event system that all Vulcan plugins can use for cross-plugin communication and custom event handling.
+- Cleaner public APIs across VulcanEvents, VulcanStaff, VulcanTools, VulcanCrates, VulcanEnchants, VulcanGenBlocks, VulcanStats, VulcanVoting, and Fortress.
+- Expanded Fortress reporting access for logs, punishments, player sessions, session snapshots, and alt-match results.
+- Safer optional integration patterns so servers can run with only the Vulcan modules they use.
+- Updated documentation for the current event systems and module support.
 
-### Core Event Framework
+For the client-facing audit summary, see [CHANGELOG.txt](CHANGELOG.txt).
 
-Events exposed through the global Vulcan event bus extend `VulcanEvent` and can be listened to by any plugin implementing `VulcanListener`.
+For Fortress anticheat integration details, see [ANTICHEAT.md](ANTICHEAT.md).
 
-**Event Classes:**
-- `VulcanEvent` - Base class for all events
-- `VulcanListener` - Interface for event listeners
-- `VulcanEventManager` - Global singleton event bus
-- `EventHandler` - Annotation to mark listener methods
-- `EventPriority` - Event priority levels (LOWEST, LOW, NORMAL, HIGH, HIGHEST, MONITOR)
-- `Cancellable` - Interface for cancellable events
+## Supported Modules
 
-### Quick Start
+| Module | What VulcanAPI Exposes |
+| --- | --- |
+| VulcanEvents | Active event state, participants, spectators, event bans, and event status checks. |
+| VulcanStaff | Vanish, staff mode, freeze state, and cancellable staff action events. |
+| VulcanTools | Currency, booster, tool event managers, and tool event hooks. |
+| VulcanCrates | Crate event hooks through the global Vulcan event bus. |
+| VulcanEnchants | Enchant lookup, enchant lists, potion enchant metadata, item checks, and Bukkit enchant events. |
+| VulcanGenBlocks | GenBlocks availability, plugin access, and gen bucket events. |
+| VulcanStats | Player stats access when VulcanStats is loaded. |
+| VulcanVoting | Voting availability and plugin access. |
+| Fortress | Anticheat monitoring state, flag events, punish events, logs, punishments, sessions, and alt-match data. |
 
-**Creating a Custom Event:**
+## Event Systems
+
+VulcanAPI uses two event systems depending on the module.
+
+Use Bukkit listeners for Bukkit events from VulcanEvents, VulcanStaff, VulcanEnchants, VulcanGenBlocks, and VulcanVoting.
+
+Use `VulcanListener` with `net.vulcandev.vulcanapi.event.EventHandler` for `VulcanEvent` based events from Fortress, VulcanTools, and VulcanCrates.
+
 ```java
-public class MyCustomEvent extends VulcanEvent {
-    private final Player player;
-    private final String message;
-
-    public MyCustomEvent(Player player, String message) {
-        this.player = player;
-        this.message = message;
-    }
-
-    @Override
-    public boolean isCancellable() {
-        return true;
-    }
-
-    public Player getPlayer() { return player; }
-    public String getMessage() { return message; }
-}
-```
-
-**Creating a Listener:**
-```java
-public class MyListener implements VulcanListener {
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onMyEvent(MyCustomEvent event) {
-        Player player = event.getPlayer();
-        player.sendMessage("Event received: " + event.getMessage());
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerFlag(PlayerFlagEvent event) {
-        // Listen to Fortress events from any plugin
-        String checkName = event.getCheckName();
+public final class ToolListener implements net.vulcandev.vulcanapi.event.VulcanListener {
+    @net.vulcandev.vulcanapi.event.EventHandler
+    public void onToolUpgrade(net.vulcandev.vulcanapi.vulcantools.events.ToolUpgradeEvent event) {
+        if (event.isCancelled()) return;
     }
 }
 ```
 
-**Registering & Firing Events:**
-```java
-import net.vulcandev.vulcanapi.event.*;
+## Safe Integration
 
-// Get the global event manager
-VulcanEventManager eventManager = VulcanEventManager.getInstance();
+Use `softdepend: [VulcanLoader]` in `plugin.yml` and check availability before calling a module API.
 
-// Register a listener
-MyListener listener = new MyListener();
-eventManager.registerListener(listener);
-
-// Fire an event
-MyCustomEvent event = new MyCustomEvent(player, "Hello World");
-boolean cancelled = eventManager.callEvent(event);
-
-// Unregister when done
-eventManager.unregisterListener(listener);
-```
-
-### Event Priorities
-
-Events are processed in priority order (highest to lowest):
-
-- `MONITOR` (5) - Final observation, cannot cancel events
-- `HIGHEST` (4) - Last chance to modify
-- `HIGH` (3) - High priority modifications
-- `NORMAL` (2) - Default priority
-- `LOW` (1) - Early modifications
-- `LOWEST` (0) - First to process
-
-### Cross-Plugin Communication
-
-Any Vulcan plugin can listen to events from other plugins:
+Avoid importing optional Vulcan module API classes at the top of your main plugin class if your plugin must still load without VulcanAPI installed. Use fully qualified class names during startup checks.
 
 ```java
-@EventHandler
-public void onEnchantApply(CEApplyEvent event) {
-    // VulcanStaff listening to VulcanEnchants
-}
-
-@EventHandler
-public void onFortressFlag(PlayerFlagEvent event) {
-    // VulcanTools listening to Fortress
-    if (event.getCheckName().equals("KillAura")) {
-        // React to anticheat flags
-    }
-}
-```
-
----
-
-## Fortress API
-
-Fortress anticheat integration for flag monitoring, player tracking, and check management.
-
-> **Note:** Fortress events are **VulcanEvents** (custom event system, `extends VulcanEvent`). Use `VulcanEventManager` to listen to them as shown in the Global Event System section above. Do NOT use Bukkit's `@EventHandler` or `org.bukkit.event.Listener` for these events.
-
-### Basic Usage
-
-```java
-import net.vulcandev.vulcanapi.fortress.FortressAPI;
-import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
-
-FortressAPI fortress = FortressAPI.getInstance();
-
-// Get player profile
-PlayerProfile profile = fortress.getPlayerProfile(player.getUniqueId());
-if (profile != null) {
-    String clientName = profile.getClientName();
-    String version = profile.getVersion();
-    long ping = profile.getPing();
-}
-
-// Check monitoring status
-boolean monitored = fortress.isPlayerMonitored(uuid);
-
-// Get all online profiles
-Collection<PlayerProfile> profiles = fortress.getOnlineProfiles();
-```
-
-### Available Fortress Events
-
-**Flag Events:**
-```java
-@EventHandler
-public void onPlayerFlag(PlayerFlagEvent event) {
-    PlayerProfile player = event.getPlayer();
-    CheckType checkName = event.getCheckName();
-    String checkType = event.getCheckType();
-    int violations = event.getViolations();
-
-    if (event.isCancelled()) return;
-    event.setCancelled(true); // Prevent flag from processing
-}
-```
-
-**Alert Events:**
-```java
-@EventHandler
-public void onAlertToggle(AlertToggleEvent event) {
-    UUID staff = event.getUuid();
-    boolean enabled = event.isEnabled();
-}
-```
-
-**Punishment Events:**
-```java
-@EventHandler
-public void onPlayerPunish(PlayerPunishEvent event) {
-    UUID player = event.getUuid();
-    String punishment = event.getPunishmentType();
-    String command = event.getCommand();
-}
-```
-
-**Banwave Events:**
-```java
-@EventHandler
-public void onBanwave(BanwaveEvent event) {
-    List<UUID> players = event.getPlayers();
-    event.setCancelled(true); // Cancel banwave
-}
-```
-
-**Additional Events:**
-- `PlayerJoinEvent` - Player joins and starts being monitored
-- `PlayerLeaveEvent` - Player leaves and stops being monitored
-- `PlayerKickEvent` - Player kicked by anticheat
-- `AurabotSpawnEvent` / `AurabotDespawnEvent` - Aurabot management
-- `GhostBlockEvent` - Ghost block placement/removal
-- `AttemptedCrashEvent` - Crash attempt detection
-
-### Check Types
-
-Access check information through events:
-
-```java
-CheckType checkType = event.getCheckName();
-String checkVariant = event.getCheckType(); // A, B, C, etc.
-String advanced = event.getCheckTypeAdvanced(); // Detailed variant info
-```
-
-Available categories:
-- Combat: KillAura, Reach, Velocity, etc.
-- Movement: Fly, Speed, Step, etc.
-- Player: BadPackets, Timer, Inventory, etc.
-- World: Scaffold, FastPlace, etc.
-
----
-
-## Current API Features
-
-- **VulcanEventsAPI**: Manage server events, competitions, and player participation
-- **VulcanStaffAPI**: Staff management tools including vanish, staff mode, and freeze functionality
-- **VulcanToolsAPI**: Advanced tool system with currency management, boosters, and tool events
-- **VulcanCratesAPI**: Crate open events through the global Vulcan event bus
-- **VulcanEnchantsAPI**: Custom enchantments system with potion effects and special abilities
-- **FortressAPI**: Anticheat integration for flag monitoring and player tracking
-- **Global Event System**: Unified event bus for cross-plugin communication
-
-## Integration Guide
-
-### Initialization (Recommended Pattern)
-
-Use this method in your plugin's `onEnable()`:
-
-> **⚠️ Important**: Do not add imports for the API classes at the top of your main plugin class (e.g., `import net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI;`). If VulcanAPI is not present on the server, Java will fail to load your plugin class entirely, throwing a `NoClassDefFoundError` during plugin initialization. Instead, use fully qualified class names as shown below, which allows your plugin to load even when VulcanAPI is absent.
-
-```java
-private void initializeVulcanAPIs() {
-    Plugin vulcanAPI = getServer().getPluginManager().getPlugin("VulcanAPI");
-    if (vulcanAPI == null || !vulcanAPI.isEnabled()) {
-        getLogger().warning("VulcanAPI not found - API features disabled");
+private void initializeVulcanApis() {
+    org.bukkit.plugin.Plugin apiPlugin = getServer().getPluginManager().getPlugin("VulcanAPI");
+    if (apiPlugin == null || !apiPlugin.isEnabled()) {
+        getLogger().warning("VulcanAPI not found - optional Vulcan integrations disabled");
         return;
     }
 
-    if (net.vulcandev.vulcanapi.vulcanevents.VulcanEventsAPI.isAvailable()) {
-        getLogger().info("VulcanEventsAPI enabled");
-    }
-
-    if (net.vulcandev.vulcanapi.vulcanstaff.VulcanStaffAPI.isAvailable()) {
-        getLogger().info("VulcanStaffAPI enabled");
-    }
-
     if (net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI.isAvailable()) {
-        getLogger().info("VulcanToolsAPI enabled");
-    }
-
-    if (net.vulcandev.vulcanapi.vulcancrates.VulcanCratesAPI.isAvailable()) {
-        getLogger().info("VulcanCratesAPI enabled");
-    }
-
-    if (net.vulcandev.vulcanapi.vulcanenchants.VulcanEnchantsAPI.isAvailable()) {
-        getLogger().info("VulcanEnchantsAPI enabled");
+        getLogger().info("VulcanTools integration enabled");
     }
 
     if (net.vulcandev.vulcanapi.fortress.FortressAPI.getInstance() != null) {
-        getLogger().info("FortressAPI enabled");
+        getLogger().info("Fortress integration enabled");
     }
 }
 ```
-
-### Plugin Dependencies (plugin.yml)
-
-```yaml
-name: YourPlugin
-main: com.yourplugin.Main
-version: 1.0.0
-softdepend: [VulcanLoader]
-```
-
-## API Usage
-
-### 1. VulcanEventsAPI
-
-Manage server events and player participation.
-
-> **Note:** These are **Bukkit Events** (`extends org.bukkit.event.Event`). Use Bukkit's event system to listen to them:
-> ```java
-> public class MyListener implements org.bukkit.event.Listener {
->     @org.bukkit.event.EventHandler
->     public void onEventStart(EventStartEvent event) {
->         // Handle Bukkit event
->     }
-> }
->
-> // Register with Bukkit
-> Bukkit.getPluginManager().registerEvents(new MyListener(), plugin);
-> ```
-
-**Basic Usage:**
-```java
-if (VulcanEventsAPI.isAvailable()) {
-    VulcanEventsAPI api = VulcanEventsAPI.getInstance();
-
-    if (api.hasActiveEvent()) {
-        String name = api.getCurrentEventName();
-        int participants = api.getParticipantCount();
-    }
-}
-```
-
-**Key Methods:**
-```java
-boolean hasActiveEvent()
-String getCurrentEventName()
-EventState getCurrentEventState()
-int getTimeRemaining()
-
-boolean isPlayerInEvent(Player player)
-boolean isPlayerSpectating(Player player)
-int getParticipantCount()
-int getSpectatorCount()
-```
-
-**Available Events:**
-- EventStartEvent, EventEndEvent, EventStateChangeEvent
-- PlayerJoinEventEvent, PlayerLeaveEventEvent, PlayerEliminateEvent
-- PlayerSpectateEventEvent, KitPreApplyEvent, KitPostApplyEvent
-
----
-
-### 2. VulcanStaffAPI
-
-Manage staff features including vanish, staff mode, and player freezing.
-
-> **Note:** These are **Bukkit Events** (`extends org.bukkit.event.Event`). Use Bukkit's event system to listen to them:
-> ```java
-> public class MyListener implements org.bukkit.event.Listener {
->     @org.bukkit.event.EventHandler
->     public void onStaffVanish(StaffVanishEvent event) {
->         // Handle Bukkit event
->     }
-> }
->
-> // Register with Bukkit
-> Bukkit.getPluginManager().registerEvents(new MyListener(), plugin);
-> ```
-
-**Basic Usage:**
-```java
-if (VulcanStaffAPI.isAvailable()) {
-    VulcanStaffAPI api = VulcanStaffAPI.getInstance();
-
-    api.setVanished(player, true);
-    boolean frozen = api.isFrozen(player);
-}
-```
-
-**Key Methods:**
-```java
-boolean isVanished(Player player)
-boolean setVanished(Player player, boolean vanished)
-Set<UUID> getVanishedPlayers()
-
-boolean isInStaffMode(Player player)
-
-boolean isFrozen(Player player)
-boolean setFrozen(Player target, Player staff, boolean frozen)
-```
-
-**Available Events:**
-- StaffVanishEvent, StaffModeToggleEvent, PlayerFreezeEvent
-- StaffActionEvent, StaffChatEvent
-
----
-
-### 3. VulcanToolsAPI
-
-Manage currencies, boosters, and tool events.
-
-All VulcanTools VulcanEvents live in `net.vulcandev.vulcanapi.vulcantools.events`.
-
-> **Note:** VulcanTools events are `VulcanEvent`s. Use `VulcanToolsAPI#registerListener(...)` or `VulcanEventManager`. Do not use Bukkit's listener system for VulcanTools API events.
-> ```java
-> import net.vulcandev.vulcanapi.event.EventHandler;
-> import net.vulcandev.vulcanapi.event.EventPriority;
-> import net.vulcandev.vulcanapi.event.VulcanListener;
-> import net.vulcandev.vulcanapi.vulcantools.VulcanToolsAPI;
-> import net.vulcandev.vulcanapi.vulcantools.events.MinerBreakEvent;
->
-> public final class ToolListener implements VulcanListener {
->     @EventHandler(priority = EventPriority.NORMAL)
->     public void onMinerBreak(MinerBreakEvent event) {
->         if (event.getAmount() > 128) {
->             event.setCancelled(true);
->         }
->     }
-> }
->
-> if (VulcanToolsAPI.isAvailable()) {
->     VulcanToolsAPI api = VulcanToolsAPI.getInstance();
->     api.registerListener(new ToolListener());
-> }
-> ```
-
-**Basic Usage:**
-```java
-if (VulcanToolsAPI.isAvailable()) {
-    VulcanToolsAPI api = VulcanToolsAPI.getInstance();
-    ICurrencyManager currency = api.getCurrencyManager();
-
-    currency.giveCurrency(player, "coins", 1000);
-    long balance = currency.getBalance(player, "coins");
-}
-```
-
-**Key Methods:**
-```java
-long getBalance(OfflinePlayer player, String currency)
-void giveCurrency(OfflinePlayer player, String currency, long amount)
-void removeCurrency(OfflinePlayer player, String currency, long amount)
-boolean hasEnough(OfflinePlayer player, String currency, long amount)
-
-double getTotalMultiplier(Player player, String boosterType, String target)
-void applyBooster(Player player, String boosterType, String target, double multiplier, int duration)
-
-void startEvent(ToolType eventType, int durationSeconds)
-boolean isEventActive()
-
-void registerListener(VulcanListener listener)
-void unregisterListener(VulcanListener listener)
-boolean callEvent(VulcanEvent event)
-```
-
-**Available Vulcan Events:**
-- ToolEventStartEvent, ToolEventEndEvent, ToolModeChangeEvent, ToolUpgradeEvent
-- BoosterApplyEvent, CurrencyGrindEvent
-- HarvesterHarvestEvent, LumberHarvestEvent, FishCatchEvent, MobKillEvent
-- MinerBreakEvent, ShovelBreakEvent
-
----
-
-### 4. VulcanCratesAPI
-
-Listen for crate activity published by VulcanCrates.
-
-All VulcanCrates VulcanEvents live in `net.vulcandev.vulcanapi.vulcancrates.events`.
-
-> **Note:** VulcanCrates events are `VulcanEvent`s. Use `VulcanCratesAPI#registerListener(...)` or `VulcanEventManager`. Do not use Bukkit's listener system for crate API events.
-> ```java
-> import net.vulcandev.vulcanapi.event.EventHandler;
-> import net.vulcandev.vulcanapi.event.VulcanListener;
-> import net.vulcandev.vulcanapi.vulcancrates.VulcanCratesAPI;
-> import net.vulcandev.vulcanapi.vulcancrates.events.CrateOpenEvent;
->
-> public final class CrateListener implements VulcanListener {
->     @EventHandler
->     public void onCrateOpen(CrateOpenEvent event) {
->         String crateName = event.getCrate().getName();
->         String prizeName = event.getPrize().getName();
->         boolean broadcast = event.getPrize().isAnnounce();
->     }
-> }
->
-> if (VulcanCratesAPI.isAvailable()) {
->     VulcanCratesAPI api = VulcanCratesAPI.getInstance();
->     api.registerListener(new CrateListener());
-> }
-> ```
-
-**Key Methods:**
-```java
-void registerListener(VulcanListener listener)
-void unregisterListener(VulcanListener listener)
-boolean callEvent(VulcanEvent event)
-```
-
-**Available Vulcan Events:**
-- CrateOpenEvent - Fired after a prize is rolled and before reward commands execute
-
----
-
-### 5. VulcanEnchantsAPI
-
-Manage custom enchantments, potion effects, and special abilities.
-
-> **Note:** These are **Bukkit Events** (`extends org.bukkit.event.Event`). Use Bukkit's event system to listen to them:
-> ```java
-> public class MyListener implements org.bukkit.event.Listener {
->     @org.bukkit.event.EventHandler
->     public void onEnchantApply(CEApplyEvent event) {
->         // Handle Bukkit event
->     }
-> }
->
-> // Register with Bukkit
-> Bukkit.getPluginManager().registerEvents(new MyListener(), plugin);
-> ```
-
-**Basic Usage:**
-```java
-if (VulcanEnchantsAPI.isAvailable()) {
-    VulcanEnchantsAPI api = VulcanEnchantsAPI.getInstance();
-
-    EnchantWrapper warrior = api.getEnchant("warrior");
-    if (warrior != null) {
-        int cost = warrior.getXpCost();
-        String type = warrior.getEnchantType();
-    }
-
-    Set<String> enchants = api.getItemEnchants(item);
-}
-```
-
-**Key Methods:**
-```java
-EnchantWrapper getEnchant(String key)
-Set<String> getAllEnchantKeys()
-boolean enchantExists(String key)
-boolean isEnchantEnabled(String key)
-ItemStack getEnchantBook(String key)
-
-boolean isPotionEnchant(String key)
-boolean applyPotionEnchant(Player player, String key, ItemStack item)
-boolean removePotionEnchant(Player player, String key, ItemStack item)
-int applyAllPotionEnchants(Player player)
-int removeAllPotionEnchants(Player player)
-
-boolean itemHasEnchant(ItemStack item, String key)
-Set<String> getItemEnchants(ItemStack item)
-boolean canApplyEnchant(ItemStack item, String key)
-```
-
-**Available Events:**
-- CEApplyEvent - When enchant book is applied to item
-- CEBuyEvent - When player purchases enchant book
-- CEActivateEvent - When custom enchant effect triggers
-- CEPotionApplyEvent - When potion effect is applied
-- CEPotionRemoveEvent - When potion effect is removed
-
----
 
 ## Installation
 
-This plugin is compiled and available through the Vulcan Loader found in the client panel [Here](https://vulcandev.net/).
-## Dependencies
+VulcanAPI is compiled and distributed through the Vulcan Loader in the client panel at https://vulcandev.net/.
 
-- VulcanEvents (optional)
-- VulcanStaff (optional)
-- VulcanTools (optional)
-- VulcanCrates (optional)
-- VulcanEnchants (optional)
-- Fortress (optional)
+## Optional Dependencies
+
+- VulcanEvents
+- VulcanStaff
+- VulcanTools
+- VulcanCrates
+- VulcanEnchants
+- VulcanGenBlocks
+- VulcanStats
+- VulcanVoting
+- Fortress
 
 ## Support
 
-For support and questions, please contact the development team:
-- **Authors**: Xanthard, OfficialGaming
-- **Minecraft Version**: 1.7 - Latest
+For support and questions, contact the development team.
+
+Authors: Xanthard, OfficialGaming
+
+Minecraft Version: 1.7 - Latest
 
 ## License
 

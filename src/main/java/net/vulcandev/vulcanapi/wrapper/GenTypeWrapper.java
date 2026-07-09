@@ -1,12 +1,13 @@
 package net.vulcandev.vulcanapi.wrapper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import net.vulcandev.genblocks.managers.BucketManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Wrapper for VulcanGenBlocks GenType to provide a clean API without exposing internal types
- */
+@Getter
+@EqualsAndHashCode
 public class GenTypeWrapper {
 
     public enum Type {
@@ -20,11 +21,6 @@ public class GenTypeWrapper {
 
     public GenTypeWrapper(@NotNull Type type) {
         this.type = type;
-    }
-
-    @NotNull
-    public Type getType() {
-        return type;
     }
 
     @Nullable
@@ -41,19 +37,6 @@ public class GenTypeWrapper {
     @NotNull
     public BucketManager.Type toVulcanGenType() {
         return BucketManager.Type.valueOf(type.name());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        GenTypeWrapper that = (GenTypeWrapper) obj;
-        return type == that.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return type.hashCode();
     }
 
     @Override

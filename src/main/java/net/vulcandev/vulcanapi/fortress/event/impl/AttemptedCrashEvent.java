@@ -17,7 +17,7 @@ public class AttemptedCrashEvent extends VulcanEvent implements Cancellable {
     private boolean cancelled = false;
 
     @Setter
-    private boolean autoKick = true; // Allow plugins to prevent auto-kick
+    private boolean autoKick = true;
 
     public AttemptedCrashEvent(PlayerProfile player, String reason, Location location) {
         this.player = player;

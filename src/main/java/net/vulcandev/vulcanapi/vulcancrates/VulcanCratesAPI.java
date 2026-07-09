@@ -1,15 +1,15 @@
 package net.vulcandev.vulcanapi.vulcancrates;
 
+import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.event.VulcanEventManager;
 import net.vulcandev.vulcanapi.event.VulcanListener;
 import org.bukkit.plugin.Plugin;
 
-/**
- * Minimal API bridge for VulcanCrates events.
- */
 public final class VulcanCratesAPI {
     private static VulcanCratesAPI instance;
+
+    @Getter
     private final Plugin plugin;
 
     private VulcanCratesAPI(Plugin plugin) {
@@ -22,10 +22,6 @@ public final class VulcanCratesAPI {
 
     public static boolean isAvailable() {
         return instance != null && instance.plugin != null && instance.plugin.isEnabled();
-    }
-
-    public Plugin getPlugin() {
-        return plugin;
     }
 
     public void registerListener(VulcanListener listener) {

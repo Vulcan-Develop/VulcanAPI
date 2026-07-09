@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 @Getter
 public class AlertClickEvent extends VulcanEvent implements Cancellable {
     private final Player staff;
-    private final Player target;      // null if offline
+    private final Player target;
     private final String targetName;
 
     @Setter

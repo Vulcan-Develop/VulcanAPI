@@ -8,9 +8,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-/**
- * Event fired when a player kills a mob using a Mob Sword.
- */
 @Getter
 public class MobKillEvent extends VulcanEvent {
     private final Player player;

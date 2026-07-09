@@ -1,12 +1,13 @@
 package net.vulcandev.vulcanapi.wrapper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import net.vulcandev.staff.enums.Chats;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Wrapper for VulcanStaff Chats to provide a clean API without exposing internal types
- */
+@Getter
+@EqualsAndHashCode
 public class ChatsWrapper {
     
     public enum Chat {
@@ -20,51 +21,21 @@ public class ChatsWrapper {
     public ChatsWrapper(@NotNull Chat chat) {
         this.chat = chat;
     }
-    
-    /**
-     * Gets the chat type
-     * @return the chat type
-     */
-    @NotNull
-    public Chat getChat() {
-        return chat;
-    }
-    
-    /**
-     * Creates a ChatsWrapper from a VulcanStaff Chats enum
-     * @param chats the VulcanStaff Chats enum
-     * @return ChatsWrapper instance or null if no matching chat exists
-     */
+
     @Nullable
     public static ChatsWrapper fromVulcanChats(@NotNull Chats chats) {
         try {
-            String name = chats.name();
-            Chat wrapperChat = Chat.valueOf(name);
-            return new ChatsWrapper(wrapperChat);
+            return new ChatsWrapper(Chat.valueOf(chats.name()));
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
-    
-    /**
-     * Converts this wrapper back to the original VulcanStaff Chats enum
-     * @return the VulcanStaff Chats enum
-     */
+
     @NotNull
     public Chats toVulcanChats() {
         return Chats.valueOf(chat.name());
     }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        
-        ChatsWrapper that = (ChatsWrapper) obj;
 
-        return chat == that.chat;
-    }
-    
     @Override
     public String toString() {
         return chat.name();

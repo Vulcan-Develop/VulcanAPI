@@ -1,5 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanenchants;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -8,17 +10,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Called when a potion enchant effect is removed from a player.
- * This happens when a player unequips armor with a potion enchant.
- */
 public class CEPotionRemoveEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
+    @Getter
     private final Player player;
+    @Getter
     private final String enchantName;
+    @Getter
     private final PotionEffectType potionType;
     private final ItemStack armorItem;
+
+    @Getter
+    @Setter
     private boolean cancelled = false;
 
     public CEPotionRemoveEvent(@NotNull Player player, @NotNull String enchantName, @NotNull PotionEffectType potionType, @NotNull ItemStack armorItem) {
@@ -28,54 +32,9 @@ public class CEPotionRemoveEvent extends Event implements Cancellable {
         this.armorItem = armorItem.clone();
     }
 
-    /**
-     * Gets the player losing the potion effect.
-     *
-     * @return the player
-     */
-    @NotNull
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
-     * Gets the enchant name that is removing the effect.
-     *
-     * @return the enchant name
-     */
-    @NotNull
-    public String getEnchantName() {
-        return enchantName;
-    }
-
-    /**
-     * Gets the potion effect type being removed.
-     *
-     * @return the potion effect type
-     */
-    @NotNull
-    public PotionEffectType getPotionType() {
-        return potionType;
-    }
-
-    /**
-     * Gets the armor item that had the enchant.
-     *
-     * @return the armor item
-     */
     @NotNull
     public ItemStack getArmorItem() {
         return armorItem.clone();
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
     }
 
     @NotNull

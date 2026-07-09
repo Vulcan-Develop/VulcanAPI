@@ -21,16 +21,10 @@ public class PlayerProfile {
     private long ping;
     private Location location;
 
-    /**
-     * Get the Bukkit player object (may be null if offline)
-     */
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
     }
 
-    /**
-     * Check if player is online
-     */
     public boolean isOnline() {
         return getPlayer() != null;
     }

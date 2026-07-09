@@ -1,11 +1,12 @@
 package net.vulcandev.vulcanapi.wrapper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Wrapper for VulcanEvents EventType to provide a clean API without exposing internal types
- */
+@Getter
+@EqualsAndHashCode
 public class EventTypeWrapper {
 
     public enum Type {
@@ -25,45 +26,15 @@ public class EventTypeWrapper {
         this.type = type;
     }
 
-    /**
-     * Gets the event type
-     * @return the event type
-     */
-    @NotNull
-    public Type getType() {
-        return type;
-    }
-
-    /**
-     * Creates an EventTypeWrapper from a string
-     * @param typeName the event type name
-     * @return EventTypeWrapper instance or null if no matching type exists
-     */
     @Nullable
     public static EventTypeWrapper fromString(@NotNull String typeName) {
         try {
-            Type type = Type.valueOf(typeName.toUpperCase());
-            return new EventTypeWrapper(type);
+            return new EventTypeWrapper(Type.valueOf(typeName.toUpperCase()));
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        
-        EventTypeWrapper that = (EventTypeWrapper) obj;
-        
-        return type == that.type;
-    }
-    
-    @Override
-    public int hashCode() {
-        return type.hashCode();
-    }
-    
+
     @Override
     public String toString() {
         return type.name();

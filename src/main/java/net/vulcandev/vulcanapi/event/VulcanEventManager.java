@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.event;
 
+import lombok.AllArgsConstructor;
 import net.vulcandev.vulcanapi.VulcanAPI;
 import net.xantharddev.vulcanlib.Logger;
 
@@ -8,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Consumer;
 
 public class VulcanEventManager {
 
@@ -107,17 +107,11 @@ public class VulcanEventManager {
                 .sum();
     }
 
+    @AllArgsConstructor
     private static class RegisteredListener {
         final VulcanListener listener;
         final Method method;
         final EventPriority priority;
         final boolean ignoreCancelled;
-
-        RegisteredListener(VulcanListener listener, Method method, EventPriority priority, boolean ignoreCancelled) {
-            this.listener = listener;
-            this.method = method;
-            this.priority = priority;
-            this.ignoreCancelled = ignoreCancelled;
-        }
     }
 }

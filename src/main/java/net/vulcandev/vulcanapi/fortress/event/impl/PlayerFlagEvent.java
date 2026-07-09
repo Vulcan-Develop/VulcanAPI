@@ -23,11 +23,9 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
     private boolean cancelled = false;
 
     @Setter
-    private boolean suppressAlert = false; // Allow plugins to suppress alerts
+    private boolean suppressAlert = false;
 
-    public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType,
-                           String checkTypeAdvanced, String debugData, String description,
-                           int violationLevel, int maxViolationLevel, String releaseType) {
+    public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, String releaseType) {
         this.player = player;
         this.checkName = checkName;
         this.checkType = checkType;

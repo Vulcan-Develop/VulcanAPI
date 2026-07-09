@@ -10,10 +10,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-/**
- * Wrapper that adapts VulcanGenBlocks' internal Gen to a clean API.
- * This allows events to expose Gen functionality without exposing internal types.
- */
 public class GenWrapper {
     private final Gen internalGen;
 
@@ -21,11 +17,6 @@ public class GenWrapper {
         this.internalGen = internalGen;
     }
 
-    /**
-     * Creates a GenWrapper from a VulcanGenBlocks internal Gen
-     * @param internalGen the VulcanGenBlocks internal Gen
-     * @return GenWrapper instance
-     */
     @NotNull
     public static GenWrapper fromVulcanGen(@NotNull Gen internalGen) {
         return new GenWrapper(internalGen);
@@ -145,10 +136,6 @@ public class GenWrapper {
         return internalGen.isShifted();
     }
 
-    /**
-     * Get the internal VulcanGenBlocks Gen object.
-     * @return the internal Gen
-     */
     @NotNull
     public Gen getInternalGen() {
         return internalGen;

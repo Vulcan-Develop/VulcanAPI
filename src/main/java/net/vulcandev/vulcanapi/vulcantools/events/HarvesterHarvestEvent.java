@@ -13,9 +13,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.List;
 
-/**
- * Event fired when a player harvests crops using a VulcanTools harvester hoe
- */
 @Getter
 public class HarvesterHarvestEvent extends VulcanEvent implements Cancellable {
     private final Player player;
@@ -28,16 +25,6 @@ public class HarvesterHarvestEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
-    /**
-     * Creates a new HarvesterHarvestEvent.
-     *
-     * @param player the player who harvested the crops
-     * @param harvestedBlocks the list of blocks that were harvested
-     * @param cropType the type of crop that was harvested
-     * @param originalEvent the original Bukkit BlockBreakEvent
-     * @param toolMode the tool mode of the harvester hoe used
-     * @param amount the amount of crops harvested
-     */
     public HarvesterHarvestEvent(Player player, List<Block> harvestedBlocks, Material cropType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
         this.player = player;
         this.harvestedBlocks = harvestedBlocks;

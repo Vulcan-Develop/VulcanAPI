@@ -1,13 +1,12 @@
 package net.vulcandev.vulcanapi.vulcanevents.events;
 
+import lombok.Getter;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Called when a VulcanEvent starts (transitions to WAITING state)
- */
+@Getter
 public class EventStartEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
@@ -20,22 +19,6 @@ public class EventStartEvent extends Event {
         this.eventName = eventName;
     }
 
-    /**
-     * Gets the type of event that started
-     * @return the EventTypeWrapper
-     */
-    @NotNull
-    public EventTypeWrapper getEventType() {return eventType;}
-    
-    /**
-     * Gets the name of the event that started
-     * @return the event name
-     */
-    @NotNull
-    public String getEventName() {
-        return eventName;
-    }
-    
     @NotNull
     @Override
     public HandlerList getHandlers() {

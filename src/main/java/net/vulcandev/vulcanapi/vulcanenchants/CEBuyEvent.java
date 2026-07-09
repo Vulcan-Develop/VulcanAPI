@@ -1,5 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanenchants;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -9,11 +11,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class CEBuyEvent extends Event implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
-    
+
+    @Getter
     private final Player player;
+    @Getter
     private final String enchantName;
     private final ItemStack bookItem;
+
+    @Getter
+    @Setter
     private double cost;
+
+    @Getter
+    @Setter
     private boolean cancelled = false;
     
     public CEBuyEvent(@NotNull Player player, @NotNull String enchantName, @NotNull ItemStack bookItem, double cost) {
@@ -22,40 +32,12 @@ public class CEBuyEvent extends Event implements Cancellable {
         this.bookItem = bookItem.clone();
         this.cost = cost;
     }
-    
-    @NotNull
-    public Player getPlayer() {
-        return player;
-    }
-    
-    @NotNull
-    public String getEnchantName() {
-        return enchantName;
-    }
-    
+
     @NotNull
     public ItemStack getBookItem() {
         return bookItem.clone();
     }
-    
-    public double getCost() {
-        return cost;
-    }
-    
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
 
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-    
-    @Override
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
-    }
-    
     @NotNull
     @Override
     public HandlerList getHandlers() {

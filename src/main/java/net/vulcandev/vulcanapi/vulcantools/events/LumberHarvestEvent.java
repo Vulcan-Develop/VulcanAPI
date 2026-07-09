@@ -13,9 +13,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.List;
 
-/**
- * Event fired when a player harvests wood using a VulcanTools lumber axe
- */
 @Getter
 public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
     private final Player player;
@@ -27,17 +24,7 @@ public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
     private int amount;
     @Setter
     private boolean cancelled;
-    
-    /**
-     * Creates a new LumberHarvestEvent.
-     *
-     * @param player the player who harvested the wood
-     * @param harvestedBlocks the list of blocks that were harvested
-     * @param woodType the type of wood that was harvested
-     * @param originalEvent the original Bukkit BlockBreakEvent
-     * @param toolMode the tool mode of the lumber axe used
-     * @param amount the amount of wood harvested
-     */
+
     public LumberHarvestEvent(Player player, List<Block> harvestedBlocks, Material woodType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
         this.player = player;
         this.harvestedBlocks = harvestedBlocks;
@@ -48,20 +35,10 @@ public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
         this.cancelled = false;
     }
 
-    /**
-     * Gets the amount of wood harvested (alias for getAmount).
-     *
-     * @return the number of wood blocks harvested
-     */
     public int getHarvestedAmount() {
         return amount;
     }
 
-    /**
-     * Gets the original Bukkit BlockBreakEvent (alias for getOriginalEvent).
-     *
-     * @return the original block break event
-     */
     public BlockBreakEvent getBukkitEvent() {
         return originalEvent;
     }

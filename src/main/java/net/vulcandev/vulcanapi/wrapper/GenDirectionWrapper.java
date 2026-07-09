@@ -1,12 +1,13 @@
 package net.vulcandev.vulcanapi.wrapper;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import net.vulcandev.genblocks.managers.BucketManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Wrapper for VulcanGenBlocks GenDirection to provide a clean API without exposing internal types
- */
+@Getter
+@EqualsAndHashCode
 public class GenDirectionWrapper {
 
     public enum Direction {
@@ -24,11 +25,6 @@ public class GenDirectionWrapper {
         this.direction = direction;
     }
 
-    @NotNull
-    public Direction getDirection() {
-        return direction;
-    }
-
     @Nullable
     public static GenDirectionWrapper fromVulcanGenDirection(@Nullable BucketManager.Direction genDirection) {
         if (genDirection == null) return null;
@@ -43,19 +39,6 @@ public class GenDirectionWrapper {
     @NotNull
     public BucketManager.Direction toVulcanGenDirection() {
         return BucketManager.Direction.valueOf(direction.name());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        GenDirectionWrapper that = (GenDirectionWrapper) obj;
-        return direction == that.direction;
-    }
-
-    @Override
-    public int hashCode() {
-        return direction.hashCode();
     }
 
     @Override

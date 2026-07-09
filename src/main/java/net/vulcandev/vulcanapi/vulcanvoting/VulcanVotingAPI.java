@@ -1,13 +1,13 @@
 package net.vulcandev.vulcanapi.vulcanvoting;
 
+import lombok.Getter;
 import net.vulcandev.vulcanvoting.VulcanVoting;
 import org.bukkit.plugin.Plugin;
 
-/**
- * Minimal API bridge for VulcanVoting to expose its plugin instance when available.
- */
 public class VulcanVotingAPI {
     private static VulcanVotingAPI instance;
+
+    @Getter
     private final VulcanVoting plugin;
 
     private VulcanVotingAPI(VulcanVoting plugin) {
@@ -20,10 +20,6 @@ public class VulcanVotingAPI {
 
     public static boolean isAvailable() {
         return instance != null && instance.plugin != null && instance.plugin.isEnabled();
-    }
-
-    public VulcanVoting getPlugin() {
-        return plugin;
     }
 
     public static void initialize(Plugin plugin) {
