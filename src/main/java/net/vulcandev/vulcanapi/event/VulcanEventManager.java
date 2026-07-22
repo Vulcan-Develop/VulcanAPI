@@ -5,14 +5,14 @@ import net.vulcandev.vulcanapi.VulcanAPI;
 import net.xantharddev.vulcanlib.Logger;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class VulcanEventManager {
 
-    private final Map<Class<? extends VulcanEvent>, List<RegisteredListener>> listeners = new HashMap<>();
+    private final Map<Class<? extends VulcanEvent>, List<RegisteredListener>> listeners = new ConcurrentHashMap<>();
 
     private VulcanEventManager() {}
 
