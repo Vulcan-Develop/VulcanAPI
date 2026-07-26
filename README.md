@@ -11,7 +11,8 @@ VulcanAPI is the shared integration layer for Vulcan plugins. It gives other plu
 
 For the client-facing audit summary, see [CHANGELOG.txt](CHANGELOG.txt).
 
-For Fortress anticheat integration details, see [ANTICHEAT.md](ANTICHEAT.md).
+For Fortress anticheat integration details, see the workspace hub:
+`Intellij/docs/31-fortress-api.md`.
 
 ## Supported Modules
 

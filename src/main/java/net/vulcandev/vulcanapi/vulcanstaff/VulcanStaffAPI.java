@@ -83,6 +83,19 @@ public class VulcanStaffAPI {
         return true;
     }
 
+    /**
+     * Runs VulcanStaff's chat moderation (words, slurs, caps, spam, links, length) over a message
+     * and applies any punishment it earns. Use this for chat that arrives through a command instead
+     * of a chat event — those never fire AsyncPlayerChatEvent and would otherwise skip moderation.
+     *
+     * @return the message to send, possibly edited; null when it must be dropped (the player has
+     *         already been told why). Returns {@code message} unchanged when VulcanStaff is absent.
+     */
+    public String moderateChat(Player player, String message) {
+        if (plugin == null || player == null || message == null) return message;
+        return plugin.moderateChat(player.getUniqueId(), message);
+    }
+
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
         if (plugin instanceof IVulcanStaffPlugin) {

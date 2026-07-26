@@ -59,4 +59,17 @@ public interface IVulcanStaffPlugin {
      * @param frozen true to freeze, false to unfreeze
      */
     void setFrozen(@NotNull UUID uuid, boolean frozen);
+
+    /**
+     * Runs VulcanStaff's chat moderation over a message that did not come from a chat event, and
+     * applies any punishment it earns. Chat sent through another plugin's command (a channel
+     * command, for instance) has no AsyncPlayerChatEvent to filter, so it must come through here or
+     * it bypasses moderation entirely.
+     *
+     * @param uuid    the sender's UUID
+     * @param message the raw message
+     * @return the message to send — possibly edited — or null if it must be dropped. The player has
+     *         already been told why.
+     */
+    String moderateChat(@NotNull UUID uuid, @NotNull String message);
 }
