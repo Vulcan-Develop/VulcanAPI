@@ -32,6 +32,8 @@ public interface FortressAPI {
 
     boolean isPlayerMonitored(UUID uuid);
 
+    boolean isOrbitClient(UUID uuid);
+
     String getVersion();
 
     boolean isEnabled();
