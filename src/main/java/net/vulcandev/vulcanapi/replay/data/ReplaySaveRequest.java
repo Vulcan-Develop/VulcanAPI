@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public final class ReplaySaveRequest {
     private final UUID playerId;
+    private final String playerName;
     private final int lookbackSeconds;
     private final String source;
     private final String reason;
@@ -16,6 +17,7 @@ public final class ReplaySaveRequest {
 
     private ReplaySaveRequest(Builder builder) {
         this.playerId = builder.playerId;
+        this.playerName = builder.playerName;
         this.lookbackSeconds = builder.lookbackSeconds;
         this.source = builder.source;
         this.reason = builder.reason;
@@ -25,6 +27,7 @@ public final class ReplaySaveRequest {
     }
 
     public UUID getPlayerId() { return playerId; }
+    public String getPlayerName() { return playerName; }
     public int getLookbackSeconds() { return lookbackSeconds; }
     public String getSource() { return source; }
     public String getReason() { return reason; }
@@ -36,6 +39,7 @@ public final class ReplaySaveRequest {
 
     public static final class Builder {
         private final UUID playerId;
+        private String playerName;
         private int lookbackSeconds = 300;
         private String source = "api";
         private String reason = "API request";
@@ -49,6 +53,7 @@ public final class ReplaySaveRequest {
         }
 
         public Builder lookbackSeconds(int value) { this.lookbackSeconds = value; return this; }
+        public Builder playerName(String value) { this.playerName = value; return this; }
         public Builder source(String value) { this.source = value; return this; }
         public Builder reason(String value) { this.reason = value; return this; }
         public Builder actorId(UUID value) { this.actorId = value; return this; }
