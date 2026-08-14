@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.VulcanAPI;
 import net.xantharddev.vulcanlib.Logger;
 
 import java.lang.reflect.Method;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,7 +26,8 @@ public class VulcanEventManager {
     }
 
     private void log(String message) {
-        Logger.log(VulcanAPI.getInstance(), message);
+        VulcanAPI plugin = VulcanAPI.getInstance();
+        if (plugin != null) Logger.log(plugin, message);
     }
 
     public void registerListener(VulcanListener listener) {
@@ -50,8 +52,7 @@ public class VulcanEventManager {
 
             listeners.computeIfAbsent(eventType, k -> new CopyOnWriteArrayList<>()).add(regListener);
 
-            listeners.get(eventType).sort((a, b) ->
-                    Integer.compare(b.priority.getPriority(), a.priority.getPriority()));
+            listeners.get(eventType).sort(Comparator.comparingInt(a -> a.priority.getPriority()));
         }
 
         log("Registered listener: " + clazz.getSimpleName());
@@ -66,7 +67,9 @@ public class VulcanEventManager {
 
     public boolean callEvent(VulcanEvent event) {
         List<RegisteredListener> eventListeners = listeners.get(event.getClass());
-        if (eventListeners == null) return false;
+        if (eventListeners == null) {
+            return event instanceof Cancellable && ((Cancellable) event).isCancelled();
+        }
 
         for (RegisteredListener listener : eventListeners) {
             if (event instanceof Cancellable && ((Cancellable) event).isCancelled()
@@ -80,11 +83,6 @@ public class VulcanEventManager {
             } catch (Exception e) {
                 log("Error executing event handler: " + e.getMessage());
                 e.printStackTrace();
-            }
-
-            if (event instanceof Cancellable && ((Cancellable) event).isCancelled()
-                    && listener.priority != EventPriority.MONITOR) {
-                break;
             }
         }
 

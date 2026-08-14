@@ -15,6 +15,7 @@ public enum CheckType {
     FASTBREAK("Fast Break", "Detects breaking blocks too quickly", CheckCategory.PLAYER),
     LEFTCLICKER("Left Clicker", "Detects automated clicking patterns", CheckCategory.PLAYER),
     RIGHTCLICKER("Right Clicker", "Detects automated right-click patterns", CheckCategory.PLAYER),
+    AUTOFISH("Auto Fish", "Detects automated fishing reactions and timing", CheckCategory.PLAYER),
     FASTPLACE("Fast Place", "Detects placing blocks too quickly", CheckCategory.PLAYER),
     INVALID_INTERACT("Invalid Interact", "Detects impossible interactions", CheckCategory.PLAYER),
     NUKER("Nuker", "Detects breaking multiple blocks rapidly", CheckCategory.PLAYER),

@@ -26,6 +26,7 @@ For Fortress anticheat integration details, see the workspace hub:
 | VulcanGenBlocks | GenBlocks availability, plugin access, and gen bucket events. |
 | VulcanStats | Player stats access when VulcanStats is loaded. |
 | VulcanVoting | Voting availability and plugin access. |
+| VulcanReplay | Rolling-buffer inspection, replay saves, markers, clip queries, and replay lifecycle events. |
 | Fortress | Anticheat monitoring state, flag events, punish events, logs, punishments, sessions, and alt-match data. |
 
 ## Event Systems
@@ -38,12 +39,16 @@ Use `VulcanListener` with `net.vulcandev.vulcanapi.event.EventHandler` for `Vulc
 
 ```java
 public final class ToolListener implements net.vulcandev.vulcanapi.event.VulcanListener {
-    @net.vulcandev.vulcanapi.event.EventHandler
+    @net.vulcandev.vulcanapi.event.EventHandler(
+            priority = net.vulcandev.vulcanapi.event.EventPriority.MONITOR,
+            ignoreCancelled = true)
     public void onToolUpgrade(net.vulcandev.vulcanapi.vulcantools.events.ToolUpgradeEvent event) {
-        if (event.isCancelled()) return;
     }
 }
 ```
+
+Vulcan events run from `LOWEST` through `MONITOR`. Cancelled events continue through the bus, but
+handlers with `ignoreCancelled = true` are skipped. `MONITOR` is observation-only.
 
 ## Safe Integration
 
