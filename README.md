@@ -8,6 +8,7 @@ VulcanAPI is the shared integration layer for Vulcan plugins. It gives other plu
 - Expanded Fortress reporting access for logs, punishments, player sessions, session snapshots, and alt-match results.
 - Safer optional integration patterns so servers can run with only the Vulcan modules they use.
 - Updated documentation for the current event systems and module support.
+- Added Opaque conceal/reveal events and synchronous nametag-retention claims.
 
 For the client-facing audit summary, see [CHANGELOG.txt](CHANGELOG.txt).
 
@@ -28,6 +29,7 @@ For Fortress anticheat integration details, see the workspace hub:
 | VulcanVoting | Voting availability and plugin access. |
 | VulcanReplay | Rolling-buffer inspection, replay saves, markers, clip queries, and replay lifecycle events. |
 | Fortress | Anticheat monitoring state, flag events, punish events, logs, punishments, sessions, and alt-match data. |
+| Opaque | Per-viewer player conceal and reveal events, including nametag ownership handoff. |
 
 ## Event Systems
 
@@ -35,7 +37,7 @@ VulcanAPI uses two event systems depending on the module.
 
 Use Bukkit listeners for Bukkit events from VulcanEvents, VulcanStaff, VulcanEnchants, VulcanGenBlocks, and VulcanVoting.
 
-Use `VulcanListener` with `net.vulcandev.vulcanapi.event.EventHandler` for `VulcanEvent` based events from Fortress, VulcanTools, and VulcanCrates.
+Use `VulcanListener` with `net.vulcandev.vulcanapi.event.EventHandler` for `VulcanEvent` based events from Fortress, VulcanTools, VulcanCrates, and Opaque.
 
 ```java
 public final class ToolListener implements net.vulcandev.vulcanapi.event.VulcanListener {
@@ -49,6 +51,10 @@ public final class ToolListener implements net.vulcandev.vulcanapi.event.VulcanL
 
 Vulcan events run from `LOWEST` through `MONITOR`. Cancelled events continue through the bus, but
 handlers with `ignoreCancelled = true` are skipped. `MONITOR` is observation-only.
+
+`OpaquePlayerVisibilityEvent` is synchronous and may run on a player's network event loop. It uses
+UUIDs rather than Bukkit players. A nametag renderer that owns an independently tracked marker may
+call `retainNametag()` during `CONCEALED`; `VISIBLE` is notification-only.
 
 ## Safe Integration
 
@@ -88,6 +94,7 @@ VulcanAPI is compiled and distributed through the Vulcan Loader in the client pa
 - VulcanGenBlocks
 - VulcanStats
 - VulcanVoting
+- Opaque
 - Fortress
 
 ## Support
