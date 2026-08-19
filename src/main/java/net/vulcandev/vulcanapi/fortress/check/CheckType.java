@@ -8,7 +8,7 @@ public enum CheckType {
     BARITONE("Baritone", "Detects automated pathfinding and movement", CheckCategory.MOVEMENT),
     MOVE("Move", "Detects invalid movement patterns and speeds", CheckCategory.MOVEMENT),
     FLY("Fly", "Detects if player is flying when they arent allowed", CheckCategory.MOVEMENT),
-    SIMULATION("Simulation", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
+    PREDICTION("Prediction", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
     VELOCITY("Velocity", "Detects knockback modifications", CheckCategory.MOVEMENT),
     ELYTRA("Elytra", "Detects illegal combat behaviour while gliding with elytra", CheckCategory.MOVEMENT),
     // PLAYER
