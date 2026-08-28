@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.interfaces.staff;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 import java.util.UUID;
@@ -72,4 +73,7 @@ public interface IVulcanStaffPlugin {
      *         already been told why.
      */
     String moderateChat(@NotNull UUID uuid, @NotNull String message);
+
+    boolean saveInventorySnapshot(@NotNull UUID uuid, @Nullable String reason);
+
 }

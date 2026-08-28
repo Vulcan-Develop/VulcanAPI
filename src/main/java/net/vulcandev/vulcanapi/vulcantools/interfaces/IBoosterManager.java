@@ -16,7 +16,8 @@ public interface IBoosterManager {
      *
      * @param player the player to check
      * @param boosterType the type of booster (e.g., "currencybooster", "enchantbooster")
-     * @param target the target of the booster (e.g., currency name, enchant name)
+     * @param target the target of the booster (e.g., currency name, enchant name). For an
+     *               "enchantbooster", this is the enchantment id such as "sellbooster".
      * @return the total multiplier value
      */
     double getTotalMultiplier(Player player, String boosterType, String target);

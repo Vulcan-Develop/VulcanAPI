@@ -83,6 +83,11 @@ public class VulcanStaffAPI {
         return true;
     }
 
+    /** Saves the player's current inventory to the rollback history. */
+    public boolean saveInventorySnapshot(Player player, String reason) {
+        return isAvailable() && player != null && plugin.saveInventorySnapshot(player.getUniqueId(), reason);
+    }
+
     /**
      * Runs VulcanStaff's chat moderation (words, slurs, caps, spam, links, length) over a message
      * and applies any punishment it earns. Use this for chat that arrives through a command instead
