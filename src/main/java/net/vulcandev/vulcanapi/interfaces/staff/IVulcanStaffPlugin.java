@@ -2,6 +2,8 @@ package net.vulcandev.vulcanapi.interfaces.staff;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import net.vulcandev.vulcanapi.vulcanstaff.InventorySnapshot;
+import net.vulcandev.vulcanapi.vulcanstaff.InventorySnapshotComponent;
 
 import java.util.Set;
 import java.util.UUID;
@@ -74,6 +76,12 @@ public interface IVulcanStaffPlugin {
      */
     String moderateChat(@NotNull UUID uuid, @NotNull String message);
 
-    boolean saveInventorySnapshot(@NotNull UUID uuid, @Nullable String reason);
+    @Nullable
+    InventorySnapshot saveInventorySnapshot(@NotNull UUID uuid, @Nullable String reason);
+
+    @Nullable
+    InventorySnapshot getInventorySnapshot(@NotNull UUID snapshotId);
+
+    boolean restoreInventorySnapshot(@NotNull UUID uuid, @NotNull UUID snapshotId, @NotNull Set<InventorySnapshotComponent> components);
 
 }

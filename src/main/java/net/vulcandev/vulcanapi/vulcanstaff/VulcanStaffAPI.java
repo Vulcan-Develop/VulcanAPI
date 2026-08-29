@@ -6,6 +6,7 @@ import net.vulcandev.vulcanapi.vulcanstaff.events.PlayerFreezeEvent;
 import net.vulcandev.vulcanapi.vulcanstaff.events.StaffVanishEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.Set;
@@ -83,9 +84,22 @@ public class VulcanStaffAPI {
         return true;
     }
 
-    /** Saves the player's current inventory to the rollback history. */
-    public boolean saveInventorySnapshot(Player player, String reason) {
-        return isAvailable() && player != null && plugin.saveInventorySnapshot(player.getUniqueId(), reason);
+    /** Saves the player's current inventory to the rollback history and returns its audit reference. */
+    @Nullable
+    public InventorySnapshot saveInventorySnapshot(Player player, String reason) {
+        return isAvailable() && player != null ? plugin.saveInventorySnapshot(player.getUniqueId(), reason) : null;
+    }
+
+    /** Returns the audit reference for a rollback snapshot ID. */
+    @Nullable
+    public InventorySnapshot getInventorySnapshot(UUID snapshotId) {
+        return isAvailable() && snapshotId != null ? plugin.getInventorySnapshot(snapshotId) : null;
+    }
+
+    /** Restores selected snapshot components to the snapshot's original player only. */
+    public boolean restoreInventorySnapshot(Player player, UUID snapshotId, Set<InventorySnapshotComponent> components) {
+        return isAvailable() && player != null && snapshotId != null && components != null && !components.isEmpty()
+                && plugin.restoreInventorySnapshot(player.getUniqueId(), snapshotId, components);
     }
 
     /**
