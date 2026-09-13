@@ -25,12 +25,13 @@ public final class RaidStatsView {
     private final long firstShotAt;
     private final long lastShotAt;
     private final Set<UUID> participantIds;
+    private final Map<UUID, RaidPlayerStatsView> playerStats;
 
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
                          long kills, long deaths, double damageDealt, double damageTaken) {
         this(shots, explosions, blocksBroken, blocksPlaced, kills, deaths, damageDealt, damageTaken,
                 Collections.<String, Long>emptyMap(), Collections.<String, Double>emptyMap(),
-                0L, 0L, 0L, Collections.<UUID>emptySet());
+                0L, 0L, 0L, Collections.<UUID>emptySet(), Collections.<UUID, RaidPlayerStatsView>emptyMap());
     }
 
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
@@ -39,7 +40,7 @@ public final class RaidStatsView {
                          long activeMillis, long firstShotAt, long lastShotAt) {
         this(shots, explosions, blocksBroken, blocksPlaced, kills, deaths, damageDealt, damageTaken,
                 counters, measurements, activeMillis, firstShotAt, lastShotAt,
-                Collections.<UUID>emptySet());
+                Collections.<UUID>emptySet(), Collections.<UUID, RaidPlayerStatsView>emptyMap());
     }
 
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
@@ -47,6 +48,16 @@ public final class RaidStatsView {
                          Map<String, Long> counters, Map<String, Double> measurements,
                          long activeMillis, long firstShotAt, long lastShotAt,
                          Set<UUID> participantIds) {
+        this(shots, explosions, blocksBroken, blocksPlaced, kills, deaths, damageDealt, damageTaken,
+                counters, measurements, activeMillis, firstShotAt, lastShotAt, participantIds,
+                Collections.<UUID, RaidPlayerStatsView>emptyMap());
+    }
+
+    public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
+                         long kills, long deaths, double damageDealt, double damageTaken,
+                         Map<String, Long> counters, Map<String, Double> measurements,
+                         long activeMillis, long firstShotAt, long lastShotAt,
+                         Set<UUID> participantIds, Map<UUID, RaidPlayerStatsView> playerStats) {
         this.shots = shots;
         this.explosions = explosions;
         this.blocksBroken = blocksBroken;
@@ -64,6 +75,8 @@ public final class RaidStatsView {
         this.lastShotAt = lastShotAt;
         this.participantIds = Collections.unmodifiableSet(new LinkedHashSet<>(
                 participantIds == null ? Collections.<UUID>emptySet() : participantIds));
+        this.playerStats = Collections.unmodifiableMap(new LinkedHashMap<>(
+                playerStats == null ? Collections.<UUID, RaidPlayerStatsView>emptyMap() : playerStats));
     }
 
     public long getCounter(String key) {
