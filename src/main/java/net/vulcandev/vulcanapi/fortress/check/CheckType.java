@@ -45,27 +45,7 @@ public enum CheckType {
     CRASHER("Crasher", "Detects server crash attempts", CheckCategory.PACKET),
     PROTOCOL("Protocol", "Detects protocol violations", CheckCategory.PACKET),
     // MISC
-    MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC),
-
-    //DEPRECATED
-    @Deprecated
-    NEURAL("Neural", "Detects cheats using neural networks", CheckCategory.MISC),
-    @Deprecated
-    FASTCLIMB("Fast Climb", "Detects climbing faster than vanilla allows", CheckCategory.MOVEMENT),
-    @Deprecated
-    MULTI_ACTIONS("Multi Actions", "Detects performing multiple actions simultaneously", CheckCategory.COMBAT),
-    @Deprecated
-    AIRPLACE("Air Place", "Detects placing blocks without solid neighbors", CheckCategory.PLAYER),
-    @Deprecated
-    BLINK("Blink", "Detects players delaying packet transmission", CheckCategory.MOVEMENT),
-    @Deprecated
-    WTAP("WTap", "Detects W-Tap sprint manipulation", CheckCategory.COMBAT),
-    @Deprecated
-    FAKE_LAG("Fake Lag", "Detects artificial connection delay modules", CheckCategory.MOVEMENT),
-    @Deprecated
-    AUTOTRAP("Auto Trap", "Detects rapid block placements trapping another player", CheckCategory.PLAYER),
-    @Deprecated
-    BACKTRACK("Backtrack", "Detects hit delay exploitation", CheckCategory.COMBAT);
+    MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC);
 
     private final String value;
     private final String description;
