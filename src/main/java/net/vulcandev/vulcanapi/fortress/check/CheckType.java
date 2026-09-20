@@ -35,6 +35,7 @@ public enum CheckType {
     KEEPSPRINT("KeepSprint", "Detects sprint persistence during combat", CheckCategory.COMBAT),
     KILLAURA("KillAura", "Detects kill aura during combat", CheckCategory.COMBAT),
     AUTOMACE("Auto Mace", "Detects automated mace swapping for smash and stun-slam attacks", CheckCategory.COMBAT),
+    EXPLOSION_AURA("Explosion Aura", "Detects automated end crystal and respawn anchor combat", CheckCategory.COMBAT),
     // INVENTORY
     INVENTORY("Inventory", "Detects inventory manipulation cheats", CheckCategory.INVENTORY),
     REFILL("Refill", "Detects automated inventory refilling", CheckCategory.INVENTORY),
