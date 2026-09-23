@@ -14,6 +14,8 @@
   <properties>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- The schema generator needs JDK 11+; point this at one when building on JDK 8. -->
+    <api.schema.java>${java.home}/bin/java</api.schema.java>
   </properties>
 
     <build>
@@ -47,7 +49,7 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${java.home}/bin/java</executable>
+                            <executable>${api.schema.java}</executable>
                             <arguments>
                                 <argument>${project.basedir}/tools/ApiSchemaGenerator.java</argument>
                                 <argument>${project.build.sourceDirectory}</argument>
