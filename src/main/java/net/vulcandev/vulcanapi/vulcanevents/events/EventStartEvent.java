@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -14,6 +15,7 @@ public class EventStartEvent extends Event {
     private final EventTypeWrapper eventType;
     private final String eventName;
 
+    @ApiStatus.Internal
     public EventStartEvent(@NotNull EventTypeWrapper eventType, @NotNull String eventName) {
         this.eventType = eventType;
         this.eventName = eventName;

@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class PlayerKickEvent extends VulcanEvent implements Cancellable {
@@ -13,6 +14,7 @@ public class PlayerKickEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled = false;
 
+    @ApiStatus.Internal
     public PlayerKickEvent(PlayerProfile player, String reason) {
         this.player = player;
         this.reason = reason;

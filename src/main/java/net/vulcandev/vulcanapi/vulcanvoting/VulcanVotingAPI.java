@@ -3,11 +3,13 @@ package net.vulcandev.vulcanapi.vulcanvoting;
 import lombok.Getter;
 import net.vulcandev.vulcanvoting.VulcanVoting;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 
 public class VulcanVotingAPI {
     private static VulcanVotingAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final VulcanVoting plugin;
 
     private VulcanVotingAPI(VulcanVoting plugin) {
@@ -22,6 +24,7 @@ public class VulcanVotingAPI {
         return instance != null && instance.plugin != null && instance.plugin.isEnabled();
     }
 
+    @ApiStatus.Internal
     public static void initialize(Plugin plugin) {
         cleanup();
         if (plugin instanceof VulcanVoting) {
@@ -29,6 +32,7 @@ public class VulcanVotingAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

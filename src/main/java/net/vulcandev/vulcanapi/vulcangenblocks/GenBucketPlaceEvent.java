@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.BlockEvent;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class GenBucketPlaceEvent extends BlockEvent implements Cancellable {
     @Getter
     private final GenWrapper gen;
 
+    @ApiStatus.Internal
     public GenBucketPlaceEvent(Block placedBlock, Block placedAgainstBlock, UUID playerId, GenWrapper gen) {
         super(placedBlock);
         this.placedAgainstBlock = placedAgainstBlock;

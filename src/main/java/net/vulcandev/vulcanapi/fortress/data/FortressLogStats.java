@@ -2,6 +2,7 @@ package net.vulcandev.vulcanapi.fortress.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,6 +19,7 @@ public final class FortressLogStats {
     private final List<CheckCount> checkCounts;
     private final List<TopPlayer> topPlayers;
 
+    @ApiStatus.Internal
     public FortressLogStats(long totalFlags, long uniquePlayers, int maxVl, int avgPing, long lastFlagAt, List<CheckCount> checkCounts, List<TopPlayer> topPlayers) {
         this.totalFlags = totalFlags;
         this.uniquePlayers = uniquePlayers;
@@ -29,7 +31,7 @@ public final class FortressLogStats {
     }
 
     @Getter
-    @AllArgsConstructor
+    @AllArgsConstructor(onConstructor_ = @ApiStatus.Internal)
     public static final class CheckCount {
         private final String checkName;
         private final String checkType;
@@ -37,7 +39,7 @@ public final class FortressLogStats {
     }
 
     @Getter
-    @AllArgsConstructor
+    @AllArgsConstructor(onConstructor_ = @ApiStatus.Internal)
     public static final class TopPlayer {
         private final UUID uuid;
         private final long flags;

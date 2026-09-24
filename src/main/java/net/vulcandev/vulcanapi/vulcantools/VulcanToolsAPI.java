@@ -8,13 +8,16 @@ import net.vulcandev.vulcanapi.interfaces.tools.IVulcanToolsPlugin;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
+import org.jetbrains.annotations.ApiStatus;
 
 public class VulcanToolsAPI {
     private static VulcanToolsAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final IVulcanToolsPlugin plugin;
 
+    @ApiStatus.Internal
     public VulcanToolsAPI(IVulcanToolsPlugin plugin) {
         this.plugin = plugin;
     }
@@ -47,10 +50,12 @@ public class VulcanToolsAPI {
         VulcanEventManager.getInstance().unregisterListener(listener);
     }
 
+    @ApiStatus.Internal
     public boolean callEvent(VulcanEvent event) {
         return VulcanEventManager.getInstance().callEvent(event);
     }
 
+    @ApiStatus.Internal
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
         if (plugin instanceof IVulcanToolsPlugin) {
@@ -58,6 +63,7 @@ public class VulcanToolsAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

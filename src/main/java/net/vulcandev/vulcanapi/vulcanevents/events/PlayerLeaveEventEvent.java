@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -19,6 +20,7 @@ public class PlayerLeaveEventEvent extends Event {
     private final boolean wasSpectator;
     private final boolean sendMessage;
 
+    @ApiStatus.Internal
     public PlayerLeaveEventEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName, boolean wasParticipant, boolean wasSpectator, boolean sendMessage) {
         this.player = player;
         this.eventType = eventType;

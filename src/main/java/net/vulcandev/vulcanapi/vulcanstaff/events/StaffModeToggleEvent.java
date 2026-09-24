@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -17,6 +18,7 @@ public class StaffModeToggleEvent extends Event implements Cancellable {
     private final Player player;
     private final boolean enteringStaffMode;
 
+    @ApiStatus.Internal
     public StaffModeToggleEvent(Player player, boolean enteringStaffMode) {
         this.player = player;
         this.enteringStaffMode = enteringStaffMode;

@@ -4,7 +4,9 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEventManager;
 import net.vulcandev.vulcanloader.loader.VulcanPlugin;
 import net.xantharddev.vulcanlib.Logger;
+import org.jetbrains.annotations.ApiStatus;
 
+@ApiStatus.Internal
 public final class VulcanAPI extends VulcanPlugin {
     @Getter
     private static VulcanAPI instance;

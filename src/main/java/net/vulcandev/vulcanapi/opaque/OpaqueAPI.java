@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.event.VulcanListener;
 import net.vulcandev.vulcanapi.opaque.event.OpaquePlayerVisibilityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 
 public final class OpaqueAPI {
 
@@ -24,6 +25,7 @@ public final class OpaqueAPI {
         VulcanEventManager.getInstance().unregisterListener(listener);
     }
 
+    @ApiStatus.Internal
     public static void callEvent(OpaquePlayerVisibilityEvent event) {
         VulcanEventManager.getInstance().callEvent(event);
     }

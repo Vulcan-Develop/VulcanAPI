@@ -8,6 +8,7 @@ import net.vulcandev.vulcanapi.replay.data.ReplayMarkerRequest;
 import net.vulcandev.vulcanapi.replay.data.ReplayPage;
 import net.vulcandev.vulcanapi.replay.data.ReplayQuery;
 import net.vulcandev.vulcanapi.replay.data.ReplaySaveRequest;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -19,6 +20,7 @@ public interface ReplayAPI {
 
     void unregisterListener(VulcanListener listener);
 
+    @ApiStatus.Internal
     boolean callEvent(VulcanEvent event);
 
     CompletableFuture<ReplayClipView> saveLast(ReplaySaveRequest request);
@@ -43,6 +45,7 @@ public interface ReplayAPI {
         return ReplayAPIInstance.getInstance();
     }
 
+    @ApiStatus.Internal
     class ReplayAPIInstance {
         private static volatile ReplayAPI replayAPI;
 

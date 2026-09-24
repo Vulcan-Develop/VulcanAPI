@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class GenBucketGenEvent extends Event implements Cancellable {
     @Getter
     private final GenWrapper gen;
 
+    @ApiStatus.Internal
     public GenBucketGenEvent(UUID playerId, GenWrapper gen) {
         this.playerId = playerId;
         this.gen = gen;

@@ -7,6 +7,7 @@ import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class ToolEventStartEvent extends VulcanEvent implements Cancellable {
@@ -17,6 +18,7 @@ public class ToolEventStartEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
+    @ApiStatus.Internal
     public ToolEventStartEvent(ToolType toolType, int durationSeconds, CommandSender startedBy) {
         this.toolType = ToolTypeWrapper.fromVulcanToolType(toolType);
         this.durationSeconds = durationSeconds;

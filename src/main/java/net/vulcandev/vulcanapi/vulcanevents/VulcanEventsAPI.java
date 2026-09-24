@@ -7,6 +7,7 @@ import net.vulcandev.vulcanapi.interfaces.events.IVulcanEventsPlugin;
 import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,8 +19,10 @@ public class VulcanEventsAPI {
     private static VulcanEventsAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final IVulcanEventsPlugin plugin;
 
+    @ApiStatus.Internal
     public VulcanEventsAPI(IVulcanEventsPlugin plugin) {
         this.plugin = plugin;
     }
@@ -113,6 +116,7 @@ public class VulcanEventsAPI {
         return currentEvent.isSpace();
     }
 
+    @ApiStatus.Internal
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
         if (plugin instanceof IVulcanEventsPlugin) {
@@ -120,6 +124,7 @@ public class VulcanEventsAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

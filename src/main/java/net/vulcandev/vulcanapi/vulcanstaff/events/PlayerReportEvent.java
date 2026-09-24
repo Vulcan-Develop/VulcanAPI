@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -18,6 +19,7 @@ public class PlayerReportEvent extends Event implements Cancellable {
     private final String reportedPlayer;
     private final String reason;
 
+    @ApiStatus.Internal
     public PlayerReportEvent(Player reporter, String reportedPlayer, String reason) {
         this.reporter = reporter;
         this.reportedPlayer = reportedPlayer;

@@ -9,6 +9,7 @@ import net.vulcandev.vulcanapi.fortress.data.FortressPage;
 import net.vulcandev.vulcanapi.fortress.data.FortressPlayerSession;
 import net.vulcandev.vulcanapi.fortress.data.FortressPunishment;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,6 +25,7 @@ public interface FortressAPI {
 
     void unregisterListener(VulcanListener listener);
 
+    @ApiStatus.Internal
     boolean callEvent(VulcanEvent event);
 
     PlayerProfile getPlayerProfile(UUID uuid);
@@ -102,6 +104,7 @@ public interface FortressAPI {
         return FortressAPIInstance.getInstance();
     }
 
+    @ApiStatus.Internal
     class FortressAPIInstance {
         private static FortressAPI fortressAPI;
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ public class GiftClaimEvent extends VulcanEvent implements Cancellable {
     private final UUID owner;
     private final GiftItemSnapshot gift;
 
+    @ApiStatus.Internal
     public GiftClaimEvent(Player claimer, UUID owner, GiftItemSnapshot gift) {
         this.claimer = claimer;
         this.owner = owner;

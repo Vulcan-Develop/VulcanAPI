@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Fired when a player gifts an item to another player, before the gift is handed over.
@@ -16,6 +17,7 @@ public class GiftSendEvent extends VulcanEvent implements Cancellable {
     private final Player recipient;
     private final GiftItemSnapshot gift;
 
+    @ApiStatus.Internal
     public GiftSendEvent(Player sender, Player recipient, GiftItemSnapshot gift) {
         this.sender = sender;
         this.recipient = recipient;

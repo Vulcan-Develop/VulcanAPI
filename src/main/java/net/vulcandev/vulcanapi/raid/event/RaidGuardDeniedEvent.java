@@ -2,6 +2,7 @@ package net.vulcandev.vulcanapi.raid.event;
 
 import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ public final class RaidGuardDeniedEvent extends VulcanEvent {
     private final String action;
     private final String reason;
 
+    @ApiStatus.Internal
     public RaidGuardDeniedEvent(UUID nodeId, String action, String reason) {
         this.nodeId = nodeId;
         this.action = action;

@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +20,7 @@ public class PlayerEliminateEvent extends Event {
     private final String reason;
     private final Player killer;
 
+    @ApiStatus.Internal
     public PlayerEliminateEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName, @Nullable String reason, @Nullable Player killer) {
         this.player = player;
         this.eventType = eventType;

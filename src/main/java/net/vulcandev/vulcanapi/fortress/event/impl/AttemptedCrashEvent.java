@@ -6,6 +6,7 @@ import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
 import org.bukkit.Location;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class AttemptedCrashEvent extends VulcanEvent implements Cancellable {
@@ -19,6 +20,7 @@ public class AttemptedCrashEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean autoKick = true;
 
+    @ApiStatus.Internal
     public AttemptedCrashEvent(PlayerProfile player, String reason, Location location) {
         this.player = player;
         this.reason = reason;

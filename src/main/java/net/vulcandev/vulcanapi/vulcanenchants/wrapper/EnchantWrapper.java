@@ -5,12 +5,14 @@ import net.vulcandev.vulcanenchants.interfaces.Enchants;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.Set;
 
+@ApiStatus.Internal
 public class EnchantWrapper {
     private final Enchants enchant;
     private final boolean isPotionEnchant;

@@ -7,6 +7,7 @@ import net.vulcandev.vulcantools.enums.ToolMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class MobKillEvent extends VulcanEvent {
@@ -16,6 +17,7 @@ public class MobKillEvent extends VulcanEvent {
     private final ToolModeWrapper toolMode;
     private final int amountKilled;
 
+    @ApiStatus.Internal
     public MobKillEvent(Player player, Entity killedEntity, EntityDeathEvent originalEvent, ToolMode toolMode, int amountKilled) {
         this.player = player;
         this.killedEntity = killedEntity;

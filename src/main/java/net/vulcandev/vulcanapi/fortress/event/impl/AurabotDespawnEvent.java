@@ -6,6 +6,7 @@ import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
 import org.bukkit.Location;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class AurabotDespawnEvent extends VulcanEvent implements Cancellable {
@@ -16,6 +17,7 @@ public class AurabotDespawnEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled = false;
 
+    @ApiStatus.Internal
     public AurabotDespawnEvent(PlayerProfile player, int id, Location location) {
         this.player = player;
         this.botId = id;

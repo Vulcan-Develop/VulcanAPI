@@ -6,6 +6,7 @@ import net.vulcandev.vulcanapi.vulcanstaff.events.PlayerFreezeEvent;
 import net.vulcandev.vulcanapi.vulcanstaff.events.StaffVanishEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -16,8 +17,10 @@ public class VulcanStaffAPI {
     private static VulcanStaffAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final IVulcanStaffPlugin plugin;
 
+    @ApiStatus.Internal
     public VulcanStaffAPI(IVulcanStaffPlugin plugin) {
         this.plugin = plugin;
     }
@@ -115,6 +118,7 @@ public class VulcanStaffAPI {
         return plugin.moderateChat(player.getUniqueId(), message);
     }
 
+    @ApiStatus.Internal
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
         if (plugin instanceof IVulcanStaffPlugin) {
@@ -122,6 +126,7 @@ public class VulcanStaffAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

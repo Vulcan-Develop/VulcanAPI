@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.wrapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import net.vulcandev.staff.enums.Chats;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +24,7 @@ public class ChatsWrapper {
     }
 
     @Nullable
+    @ApiStatus.Internal
     public static ChatsWrapper fromVulcanChats(@NotNull Chats chats) {
         try {
             return new ChatsWrapper(Chat.valueOf(chats.name()));
@@ -32,6 +34,7 @@ public class ChatsWrapper {
     }
 
     @NotNull
+    @ApiStatus.Internal
     public Chats toVulcanChats() {
         return Chats.valueOf(chat.name());
     }

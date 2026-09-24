@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.vulcanstaff;
 
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ public final class InventorySnapshot {
     private final long timestamp;
     private final String reason;
 
+    @ApiStatus.Internal
     public InventorySnapshot(UUID id, UUID playerId, long timestamp, String reason) {
         this.id = id;
         this.playerId = playerId;

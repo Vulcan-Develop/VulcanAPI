@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.wrapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import net.vulcandev.genblocks.managers.BucketManager;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,6 +27,7 @@ public class GenDirectionWrapper {
     }
 
     @Nullable
+    @ApiStatus.Internal
     public static GenDirectionWrapper fromVulcanGenDirection(@Nullable BucketManager.Direction genDirection) {
         if (genDirection == null) return null;
         try {
@@ -37,6 +39,7 @@ public class GenDirectionWrapper {
     }
 
     @NotNull
+    @ApiStatus.Internal
     public BucketManager.Direction toVulcanGenDirection() {
         return BucketManager.Direction.valueOf(direction.name());
     }

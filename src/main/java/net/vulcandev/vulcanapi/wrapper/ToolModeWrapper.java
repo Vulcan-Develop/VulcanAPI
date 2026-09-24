@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.wrapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import net.vulcandev.vulcantools.enums.ToolMode;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +38,7 @@ public class ToolModeWrapper {
     }
 
     @Nullable
+    @ApiStatus.Internal
     public static ToolModeWrapper fromVulcanToolMode(@NotNull ToolMode toolMode) {
         try {
             return new ToolModeWrapper(Mode.valueOf(toolMode.name()));
@@ -46,6 +48,7 @@ public class ToolModeWrapper {
     }
 
     @NotNull
+    @ApiStatus.Internal
     public ToolMode toVulcanToolMode() {
         return ToolMode.valueOf(mode.name());
     }

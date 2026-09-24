@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -21,6 +22,7 @@ public class PlayerVoteEvent extends Event implements Cancellable {
     @Setter
     private boolean cancelled = false;
     
+    @ApiStatus.Internal
     public PlayerVoteEvent(@NotNull Player player, @NotNull String serviceName, @NotNull String username, @NotNull String address, long timestamp) {
         this.player = player;
         this.serviceName = serviceName;

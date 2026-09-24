@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -18,6 +19,7 @@ public class StaffVanishEvent extends Event implements Cancellable {
     private final boolean vanishing;
     private final VanishReason reason;
 
+    @ApiStatus.Internal
     public StaffVanishEvent(Player player, boolean vanishing, VanishReason reason) {
         this.player = player;
         this.vanishing = vanishing;

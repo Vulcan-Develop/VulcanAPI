@@ -5,11 +5,13 @@ import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.event.VulcanEventManager;
 import net.vulcandev.vulcanapi.event.VulcanListener;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 
 public final class VulcanCratesAPI {
     private static VulcanCratesAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final Plugin plugin;
 
     private VulcanCratesAPI(Plugin plugin) {
@@ -32,10 +34,12 @@ public final class VulcanCratesAPI {
         VulcanEventManager.getInstance().unregisterListener(listener);
     }
 
+    @ApiStatus.Internal
     public boolean callEvent(VulcanEvent event) {
         return VulcanEventManager.getInstance().callEvent(event);
     }
 
+    @ApiStatus.Internal
     public static void initialize(Plugin plugin) {
         cleanup();
         if (plugin != null && "VulcanCrates".equals(plugin.getName())) {
@@ -43,6 +47,7 @@ public final class VulcanCratesAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

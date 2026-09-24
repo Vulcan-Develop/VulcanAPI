@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.interfaces.staff;
 
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import net.vulcandev.vulcanapi.vulcanstaff.InventorySnapshot;
@@ -12,6 +13,7 @@ import java.util.UUID;
  * Interface for VulcanStaff plugin to avoid direct class dependencies
  * This allows VulcanAPI to work with VulcanStaff across classloader boundaries
  */
+@ApiStatus.Internal
 public interface IVulcanStaffPlugin {
 
     /**

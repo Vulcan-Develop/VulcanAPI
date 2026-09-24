@@ -2,11 +2,12 @@ package net.vulcandev.vulcanapi.raid;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @ApiStatus.Internal)
 public final class RaidPlayerStatsView {
     private final UUID playerId;
     private final long kills;

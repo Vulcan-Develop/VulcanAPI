@@ -6,6 +6,7 @@ import net.vulcandev.vulcanapi.fortress.check.CheckType;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
@@ -25,6 +26,7 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean suppressAlert = false;
 
+    @ApiStatus.Internal
     public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, String releaseType) {
         this.player = player;
         this.checkName = checkName;

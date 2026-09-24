@@ -10,6 +10,7 @@ import net.vulcandev.vulcantools.enums.ToolMode;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class ToolModeChangeEvent extends VulcanEvent implements Cancellable {
@@ -22,6 +23,7 @@ public class ToolModeChangeEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
+    @ApiStatus.Internal
     public ToolModeChangeEvent(Player player, ItemStack tool, ToolType toolType, ToolMode oldMode, ToolMode newMode) {
         this.player = player;
         this.tool = tool;

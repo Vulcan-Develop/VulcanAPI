@@ -1,5 +1,6 @@
 package net.vulcandev.vulcanapi.interfaces.events;
 
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -8,6 +9,7 @@ import java.util.UUID;
  * Interface for VulcanEvents plugin to avoid direct class dependencies
  * This allows VulcanAPI to work with VulcanEvents across classloader boundaries
  */
+@ApiStatus.Internal
 public interface IVulcanEventsPlugin {
 
     /**

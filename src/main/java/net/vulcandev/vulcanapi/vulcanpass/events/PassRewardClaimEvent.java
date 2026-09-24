@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +22,7 @@ public class PassRewardClaimEvent extends VulcanEvent implements Cancellable {
     private final String rewardName;
     private final List<String> commands;
 
+    @ApiStatus.Internal
     public PassRewardClaimEvent(Player player, int level, String passType, String rewardName, List<String> commands) {
         this.player = player;
         this.level = level;

@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,11 +14,13 @@ import java.util.UUID;
 public class GenWrapper {
     private final Gen internalGen;
 
+    @ApiStatus.Internal
     public GenWrapper(@NotNull Gen internalGen) {
         this.internalGen = internalGen;
     }
 
     @NotNull
+    @ApiStatus.Internal
     public static GenWrapper fromVulcanGen(@NotNull Gen internalGen) {
         return new GenWrapper(internalGen);
     }
@@ -137,6 +140,7 @@ public class GenWrapper {
     }
 
     @NotNull
+    @ApiStatus.Internal
     public Gen getInternalGen() {
         return internalGen;
     }

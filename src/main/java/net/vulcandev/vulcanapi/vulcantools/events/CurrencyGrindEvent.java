@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class CurrencyGrindEvent extends VulcanEvent {
@@ -12,6 +13,7 @@ public class CurrencyGrindEvent extends VulcanEvent {
     @Setter
     private long amount;
 
+    @ApiStatus.Internal
     public CurrencyGrindEvent(Player player, String currency, long amount) {
         this.player = player;
         this.currency = currency;
