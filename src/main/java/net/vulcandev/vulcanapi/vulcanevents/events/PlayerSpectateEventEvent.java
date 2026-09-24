@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -22,6 +23,7 @@ public class PlayerSpectateEventEvent extends Event implements Cancellable {
     @Setter
     private boolean cancelled = false;
 
+    @ApiStatus.Internal
     public PlayerSpectateEventEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName, boolean wasParticipant) {
         this.player = player;
         this.eventType = eventType;

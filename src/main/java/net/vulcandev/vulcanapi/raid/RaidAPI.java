@@ -2,6 +2,7 @@ package net.vulcandev.vulcanapi.raid;
 
 import net.vulcandev.vulcanapi.event.VulcanEventManager;
 import net.vulcandev.vulcanapi.event.VulcanListener;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -39,6 +40,7 @@ public interface RaidAPI {
         return RaidAPIInstance.getInstance();
     }
 
+    @ApiStatus.Internal
     final class RaidAPIInstance {
         private static volatile RaidAPI instance = new Empty();
 
@@ -54,6 +56,7 @@ public interface RaidAPI {
         }
     }
 
+    @ApiStatus.Internal
     final class Empty implements RaidAPI {
         @Override
         public boolean isEnabled() { return false; }

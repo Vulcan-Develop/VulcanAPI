@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.wrapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import net.vulcandev.genblocks.managers.BucketManager;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,6 +25,7 @@ public class GenTypeWrapper {
     }
 
     @Nullable
+    @ApiStatus.Internal
     public static GenTypeWrapper fromVulcanGenType(@Nullable BucketManager.Type genType) {
         if (genType == null) return null;
         try {
@@ -35,6 +37,7 @@ public class GenTypeWrapper {
     }
 
     @NotNull
+    @ApiStatus.Internal
     public BucketManager.Type toVulcanGenType() {
         return BucketManager.Type.valueOf(type.name());
     }

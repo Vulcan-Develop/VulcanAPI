@@ -3,12 +3,14 @@ package net.vulcandev.vulcanapi.interfaces.tools;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IBoosterManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.ICurrencyManager;
 import net.vulcandev.vulcanapi.vulcantools.interfaces.IEventManager;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Interface for VulcanTools plugin to avoid direct class dependencies
  * This allows VulcanAPI to work with VulcanTools across classloader boundaries
  */
+@ApiStatus.Internal
 public interface IVulcanToolsPlugin {
     /**
      * Gets the currency manager interface

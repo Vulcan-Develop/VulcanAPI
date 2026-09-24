@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class KitPostApplyEvent extends Event {
     private final List<ItemStack> armor;
     private final List<ItemStack> items;
 
+    @ApiStatus.Internal
     public KitPostApplyEvent(@NotNull Player player, @NotNull EventTypeWrapper eventType, @NotNull String eventName, ItemStack offHand, @NotNull List<ItemStack> armor, @NotNull List<ItemStack> items) {
         this.player = player;
         this.eventType = eventType;

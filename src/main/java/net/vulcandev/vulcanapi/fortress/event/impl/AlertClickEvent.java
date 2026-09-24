@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Fired when a staff member clicks a Fortress violation alert to teleport to the
@@ -19,6 +20,7 @@ public class AlertClickEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled = false;
 
+    @ApiStatus.Internal
     public AlertClickEvent(Player staff, Player target, String targetName) {
         this.staff = staff;
         this.target = target;

@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class BoosterApplyEvent extends VulcanEvent implements Cancellable {
@@ -20,6 +21,7 @@ public class BoosterApplyEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
+    @ApiStatus.Internal
     public BoosterApplyEvent(Player targetPlayer, String targetTeam, String boosterType, String targetCurrency, double multiplier, int durationSeconds, Player appliedBy) {
         this.targetPlayer = targetPlayer;
         this.targetTeam = targetTeam;

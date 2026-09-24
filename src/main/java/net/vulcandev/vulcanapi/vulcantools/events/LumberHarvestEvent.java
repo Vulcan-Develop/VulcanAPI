@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class LumberHarvestEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
+    @ApiStatus.Internal
     public LumberHarvestEvent(Player player, List<Block> harvestedBlocks, Material woodType, BlockBreakEvent originalEvent, ToolMode toolMode, int amount) {
         this.player = player;
         this.harvestedBlocks = harvestedBlocks;

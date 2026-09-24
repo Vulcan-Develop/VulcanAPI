@@ -6,10 +6,11 @@ import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor_ = @ApiStatus.Internal)
 @Getter
 @Setter
 public class PlayerProfile {

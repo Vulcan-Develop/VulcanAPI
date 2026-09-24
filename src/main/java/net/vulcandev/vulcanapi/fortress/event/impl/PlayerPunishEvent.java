@@ -6,6 +6,7 @@ import net.vulcandev.vulcanapi.fortress.check.CheckType;
 import net.vulcandev.vulcanapi.event.Cancellable;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class PlayerPunishEvent extends VulcanEvent implements Cancellable {
@@ -24,6 +25,7 @@ public class PlayerPunishEvent extends VulcanEvent implements Cancellable {
     @Setter
     private String customPunishCommand;
 
+    @ApiStatus.Internal
     public PlayerPunishEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel) {
         this.player = player;
         this.checkName = checkName;

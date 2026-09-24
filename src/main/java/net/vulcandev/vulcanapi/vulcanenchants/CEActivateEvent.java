@@ -7,6 +7,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,6 +37,7 @@ public class CEActivateEvent extends Event implements Cancellable {
         OTHER
     }
 
+    @ApiStatus.Internal
     public CEActivateEvent(@NotNull Player player, @NotNull String enchantName, @Nullable ItemStack item, @NotNull ActivationType activationType) {
         this.player = player;
         this.enchantName = enchantName;

@@ -5,11 +5,13 @@ import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.event.VulcanEventManager;
 import net.vulcandev.vulcanapi.event.VulcanListener;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.ApiStatus;
 
 public final class VulcanGiftAPI {
     private static VulcanGiftAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final Plugin plugin;
 
     private VulcanGiftAPI(Plugin plugin) {
@@ -32,10 +34,12 @@ public final class VulcanGiftAPI {
         VulcanEventManager.getInstance().unregisterListener(listener);
     }
 
+    @ApiStatus.Internal
     public boolean callEvent(VulcanEvent event) {
         return VulcanEventManager.getInstance().callEvent(event);
     }
 
+    @ApiStatus.Internal
     public static void initialize(Plugin plugin) {
         cleanup();
         if (plugin != null && "VulcanGifts".equals(plugin.getName())) {
@@ -43,6 +47,7 @@ public final class VulcanGiftAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

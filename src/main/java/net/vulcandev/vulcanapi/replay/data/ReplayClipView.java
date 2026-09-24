@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.replay.data;
 
 import net.vulcandev.vulcanapi.replay.ReplayClipStatus;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -22,6 +23,7 @@ public final class ReplayClipView {
     private final long cloudExpiresAt;
     private final Map<String, String> metadata;
 
+    @ApiStatus.Internal
     public ReplayClipView(String clipId, UUID playerId, long startedAt, long endedAt,
                           long compressedBytes, ReplayClipStatus status, String source,
                           String reason, String sha256, String viewerUrl, long localExpiresAt,

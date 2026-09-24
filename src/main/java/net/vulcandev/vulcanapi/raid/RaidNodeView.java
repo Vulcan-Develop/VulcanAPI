@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.raid;
 
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -30,6 +31,7 @@ public final class RaidNodeView {
     private final Set<String> claimKeys;
     private final RaidStatsView stats;
 
+    @ApiStatus.Internal
     public RaidNodeView(UUID id, UUID rootId, UUID parentId, RaidNodeType type, RaidStatus status,
                         RaidDirection direction, String targetType, String targetId,
                         String defendingFactionId, String attackingFactionId, String phaseId,

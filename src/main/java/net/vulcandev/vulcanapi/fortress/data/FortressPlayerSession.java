@@ -2,11 +2,12 @@ package net.vulcandev.vulcanapi.fortress.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.UUID;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor_ = @ApiStatus.Internal)
 public final class FortressPlayerSession {
     private final UUID uuid;
     private final String name;

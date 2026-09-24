@@ -3,12 +3,14 @@ package net.vulcandev.vulcanapi.fortress.event.impl;
 import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class PlayerJoinEvent extends VulcanEvent {
     private final PlayerProfile player;
     private final int protocolVersion;
 
+    @ApiStatus.Internal
     public PlayerJoinEvent(PlayerProfile player, int protocolVersion) {
         this.player = player;
         this.protocolVersion = protocolVersion;

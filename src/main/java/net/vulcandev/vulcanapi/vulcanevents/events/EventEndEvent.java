@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class EventEndEvent extends Event {
     private final boolean wasSilent;
     private final boolean hadRewards;
 
+    @ApiStatus.Internal
     public EventEndEvent(@NotNull EventTypeWrapper eventType, @NotNull String eventName, @NotNull Map<UUID, Player> finalParticipants, @NotNull Map<UUID, Player> finalSpectators, boolean wasSilent, boolean hadRewards) {
         this.eventType = eventType;
         this.eventName = eventName;

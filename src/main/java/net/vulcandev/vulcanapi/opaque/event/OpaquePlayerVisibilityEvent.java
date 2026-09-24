@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.opaque.event;
 
 import net.vulcandev.vulcanapi.event.VulcanEvent;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -22,6 +23,7 @@ public final class OpaquePlayerVisibilityEvent extends VulcanEvent {
     private final State state;
     private final AtomicBoolean nametagRetained = new AtomicBoolean();
 
+    @ApiStatus.Internal
     public OpaquePlayerVisibilityEvent(UUID viewerId, UUID targetId, State state) {
         this.viewerId = Objects.requireNonNull(viewerId, "viewerId");
         this.targetId = Objects.requireNonNull(targetId, "targetId");

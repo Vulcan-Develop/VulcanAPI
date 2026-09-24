@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.fortress.data;
 
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public final class FortressLog {
     private final long loggedAt;
     private final List<String> data;
 
+    @ApiStatus.Internal
     public FortressLog(UUID id, UUID target, String checkName, String checkType, String checkDescription, int violation, int transactionPing, long loggedAt, List<String> data) {
         this.id = id;
         this.target = target;

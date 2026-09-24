@@ -7,6 +7,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class CEBuyEvent extends Event implements Cancellable {
@@ -26,6 +27,7 @@ public class CEBuyEvent extends Event implements Cancellable {
     @Setter
     private boolean cancelled = false;
     
+    @ApiStatus.Internal
     public CEBuyEvent(@NotNull Player player, @NotNull String enchantName, @NotNull ItemStack bookItem, double cost) {
         this.player = player;
         this.enchantName = enchantName;

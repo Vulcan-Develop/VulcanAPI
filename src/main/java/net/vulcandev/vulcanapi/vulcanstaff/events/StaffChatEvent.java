@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -20,6 +21,7 @@ public class StaffChatEvent extends Event implements Cancellable {
     private final String message;
     private final ChatsWrapper chatType;
 
+    @ApiStatus.Internal
     public StaffChatEvent(Player player, String message, Chats chatType) {
         this.player = player;
         this.message = message;

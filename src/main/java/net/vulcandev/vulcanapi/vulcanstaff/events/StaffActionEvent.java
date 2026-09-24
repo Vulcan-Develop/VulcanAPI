@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -17,6 +18,7 @@ public class StaffActionEvent extends Event {
     private final Location location;
     private final String details;
 
+    @ApiStatus.Internal
     public StaffActionEvent(Player staff, ActionType actionType, String target, Location location, String details) {
         this.staff = staff;
         this.actionType = actionType;

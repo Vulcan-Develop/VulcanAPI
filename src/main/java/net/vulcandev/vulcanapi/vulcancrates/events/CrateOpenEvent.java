@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class CrateOpenEvent extends VulcanEvent {
     private final CrateSnapshot crate;
     private final PrizeSnapshot prize;
 
+    @ApiStatus.Internal
     public CrateOpenEvent(Player player, CrateSnapshot crate, PrizeSnapshot prize) {
         this.player = player;
         this.crate = crate;
@@ -35,6 +37,7 @@ public class CrateOpenEvent extends VulcanEvent {
         private final String name;
         private final String displayName;
 
+        @ApiStatus.Internal
         public CrateSnapshot(String name, String displayName) {
             this.name = name;
             this.displayName = displayName;
@@ -54,6 +57,7 @@ public class CrateOpenEvent extends VulcanEvent {
         private final List<String> lore;
         private final boolean glowing;
 
+        @ApiStatus.Internal
         public PrizeSnapshot(String name, List<String> commands, double chance, boolean announce, String url, Material material, int amount, byte data, List<String> lore, boolean glowing) {
             this.name = name;
             this.commands = immutableCopy(commands);

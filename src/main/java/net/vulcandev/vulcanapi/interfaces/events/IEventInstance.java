@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.interfaces.events;
 
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.UUID;
  * Interface for event instances to avoid direct class dependencies
  * This allows VulcanAPI to work with events across classloader boundaries
  */
+@ApiStatus.Internal
 public interface IEventInstance {
 
     /**

@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class ToolEventEndEvent extends VulcanEvent {
     private final int totalParticipants;
     private final boolean wasManuallyEnded;
 
+    @ApiStatus.Internal
     public ToolEventEndEvent(ToolType toolType, LinkedHashMap<UUID, Integer> finalLeaderboard, boolean wasManuallyEnded) {
         this.toolType = ToolTypeWrapper.fromVulcanToolType(toolType);
         this.finalLeaderboard = finalLeaderboard;

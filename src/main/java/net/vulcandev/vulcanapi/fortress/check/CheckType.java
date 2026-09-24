@@ -7,6 +7,7 @@ public enum CheckType {
     // MOVEMENT
     BARITONE("Baritone", "Detects automated pathfinding and movement", CheckCategory.MOVEMENT),
     MOVE("Move", "Detects invalid movement patterns and speeds", CheckCategory.MOVEMENT),
+    NOSLOW("No Slow", "Detects moving without the item-use slowdown", CheckCategory.MOVEMENT),
     FLY("Fly", "Detects if player is flying when they arent allowed", CheckCategory.MOVEMENT),
     PREDICTION("Prediction", "Detects desynced client-server movement", CheckCategory.MOVEMENT),
     VELOCITY("Velocity", "Detects knockback modifications", CheckCategory.MOVEMENT),

@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.wrapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import net.vulcandev.vulcantools.enums.ToolType;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,6 +38,7 @@ public class ToolTypeWrapper {
     }
 
     @Nullable
+    @ApiStatus.Internal
     public static ToolTypeWrapper fromVulcanToolType(@NotNull ToolType toolType) {
         try {
             return new ToolTypeWrapper(Type.valueOf(toolType.name()));
@@ -46,6 +48,7 @@ public class ToolTypeWrapper {
     }
 
     @NotNull
+    @ApiStatus.Internal
     public ToolType toVulcanToolType() {
         return ToolType.valueOf(type.name());
     }

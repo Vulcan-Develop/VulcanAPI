@@ -596,6 +596,9 @@ public final class ApiSchemaGenerator {
                 return;
             }
             Map<String, String> args = arguments(found);
+            if (internalOn(args.get("onConstructor_")) || internalOn(args.get("onConstructor"))) {
+                return;
+            }
             String access = level(args.containsKey("access") ? args.get("access") : "PUBLIC");
             String staticName = args.get("staticName");
             List<VariableTree> selected = new ArrayList<>();
@@ -839,6 +842,10 @@ public final class ApiSchemaGenerator {
             }
         }
         return false;
+    }
+
+    private static boolean internalOn(String expression) {
+        return expression != null && expression.contains("ApiStatus.Internal");
     }
 
     private static boolean isDeprecated(ModifiersTree modifiers, DocCommentTree comment) {

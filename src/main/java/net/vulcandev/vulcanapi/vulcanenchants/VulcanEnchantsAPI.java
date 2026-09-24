@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.interfaces.enchants.IEnchantWrapper;
 import net.vulcandev.vulcanapi.interfaces.enchants.IVulcanEnchantsPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,8 +17,10 @@ public class VulcanEnchantsAPI {
     private static VulcanEnchantsAPI instance;
 
     @Getter
+    @ApiStatus.Internal
     private final IVulcanEnchantsPlugin plugin;
 
+    @ApiStatus.Internal
     public VulcanEnchantsAPI(IVulcanEnchantsPlugin plugin) {
         this.plugin = plugin;
     }
@@ -118,6 +121,7 @@ public class VulcanEnchantsAPI {
         plugin.applyAllPotionEnchants(player);
     }
 
+    @ApiStatus.Internal
     public static void initialize(org.bukkit.plugin.Plugin plugin) {
         cleanup();
         if (plugin instanceof IVulcanEnchantsPlugin) {
@@ -125,6 +129,7 @@ public class VulcanEnchantsAPI {
         }
     }
 
+    @ApiStatus.Internal
     public static void cleanup() {
         instance = null;
     }

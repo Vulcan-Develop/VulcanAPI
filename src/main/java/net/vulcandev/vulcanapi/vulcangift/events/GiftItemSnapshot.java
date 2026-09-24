@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.vulcangift.events;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 
 /**
  * Immutable description of a gifted item. Snapshotting keeps VulcanGift's internals out of the
@@ -15,6 +16,7 @@ public final class GiftItemSnapshot {
     private final short durability;
     private final String displayName;
 
+    @ApiStatus.Internal
     public GiftItemSnapshot(Material material, int amount, short durability, String displayName) {
         this.material = material;
         this.amount = amount;

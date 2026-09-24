@@ -5,6 +5,7 @@ import net.vulcandev.vulcanapi.wrapper.EventStateWrapper;
 import net.vulcandev.vulcanapi.wrapper.EventTypeWrapper;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 @Getter
@@ -17,6 +18,7 @@ public class EventStateChangeEvent extends Event {
     private final EventStateWrapper previousState;
     private final EventStateWrapper newState;
 
+    @ApiStatus.Internal
     public EventStateChangeEvent(@NotNull EventTypeWrapper eventType, @NotNull String eventName, @NotNull EventStateWrapper previousState, @NotNull EventStateWrapper newState) {
         this.eventType = eventType;
         this.eventName = eventName;

@@ -1,6 +1,7 @@
 package net.vulcandev.vulcanapi.raid;
 
 import lombok.Getter;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -27,6 +28,7 @@ public final class RaidStatsView {
     private final Set<UUID> participantIds;
     private final Map<UUID, RaidPlayerStatsView> playerStats;
 
+    @ApiStatus.Internal
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
                          long kills, long deaths, double damageDealt, double damageTaken) {
         this(shots, explosions, blocksBroken, blocksPlaced, kills, deaths, damageDealt, damageTaken,
@@ -34,6 +36,7 @@ public final class RaidStatsView {
                 0L, 0L, 0L, Collections.<UUID>emptySet(), Collections.<UUID, RaidPlayerStatsView>emptyMap());
     }
 
+    @ApiStatus.Internal
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
                          long kills, long deaths, double damageDealt, double damageTaken,
                          Map<String, Long> counters, Map<String, Double> measurements,
@@ -43,6 +46,7 @@ public final class RaidStatsView {
                 Collections.<UUID>emptySet(), Collections.<UUID, RaidPlayerStatsView>emptyMap());
     }
 
+    @ApiStatus.Internal
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
                          long kills, long deaths, double damageDealt, double damageTaken,
                          Map<String, Long> counters, Map<String, Double> measurements,
@@ -53,6 +57,7 @@ public final class RaidStatsView {
                 Collections.<UUID, RaidPlayerStatsView>emptyMap());
     }
 
+    @ApiStatus.Internal
     public RaidStatsView(long shots, long explosions, long blocksBroken, long blocksPlaced,
                          long kills, long deaths, double damageDealt, double damageTaken,
                          Map<String, Long> counters, Map<String, Double> measurements,

@@ -3,6 +3,7 @@ package net.vulcandev.vulcanapi.event;
 import lombok.AllArgsConstructor;
 import net.vulcandev.vulcanapi.VulcanAPI;
 import net.xantharddev.vulcanlib.Logger;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.lang.reflect.Method;
 import java.util.Comparator;
@@ -89,6 +90,7 @@ public class VulcanEventManager {
         return event instanceof Cancellable && ((Cancellable) event).isCancelled();
     }
 
+    @ApiStatus.Internal
     public void shutdown() {
         listeners.clear();
         log("Event manager shutdown - all listeners cleared");

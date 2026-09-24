@@ -8,6 +8,7 @@ import net.vulcandev.vulcanapi.wrapper.ToolTypeWrapper;
 import net.vulcandev.vulcantools.enums.ToolType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public class ToolUpgradeEvent extends VulcanEvent implements Cancellable {
@@ -25,6 +26,7 @@ public class ToolUpgradeEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
+    @ApiStatus.Internal
     public ToolUpgradeEvent(Player player, ItemStack tool, ToolType toolType, String enchantmentId, int oldLevel, int newLevel, long upgradeCost, String currencyType) {
         this.player = player;
         this.tool = tool;

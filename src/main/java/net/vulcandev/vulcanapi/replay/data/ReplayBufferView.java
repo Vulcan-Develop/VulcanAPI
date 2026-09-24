@@ -1,5 +1,7 @@
 package net.vulcandev.vulcanapi.replay.data;
 
+import org.jetbrains.annotations.ApiStatus;
+
 import java.util.UUID;
 
 public final class ReplayBufferView {
@@ -10,6 +12,7 @@ public final class ReplayBufferView {
     private final int segments;
     private final boolean degraded;
 
+    @ApiStatus.Internal
     public ReplayBufferView(UUID playerId, long startedAt, long newestAt, long bytes,
                             int segments, boolean degraded) {
         this.playerId = playerId;

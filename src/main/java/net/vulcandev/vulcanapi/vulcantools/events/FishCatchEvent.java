@@ -8,6 +8,7 @@ import net.vulcandev.vulcanapi.wrapper.ToolModeWrapper;
 import net.vulcandev.vulcantools.enums.ToolMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 @Getter
@@ -21,6 +22,7 @@ public class FishCatchEvent extends VulcanEvent implements Cancellable {
     @Setter
     private boolean cancelled;
 
+    @ApiStatus.Internal
     public FishCatchEvent(Player player, @Nullable PlayerFishEvent originalEvent, ToolMode toolMode, int fishAmount) {
         this.player = player;
         this.originalEvent = originalEvent;

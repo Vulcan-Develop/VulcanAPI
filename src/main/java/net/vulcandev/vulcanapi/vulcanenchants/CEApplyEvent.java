@@ -8,6 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class CEApplyEvent extends Event implements Cancellable {
@@ -28,6 +29,7 @@ public class CEApplyEvent extends Event implements Cancellable {
     @Setter
     private boolean cancelled = false;
     
+    @ApiStatus.Internal
     public CEApplyEvent(@NotNull Player player, @NotNull String enchantName, int amp, PotionEffectType potionEffectType, @NotNull ItemStack targetItem, @NotNull ItemStack bookItem) {
         this.player = player;
         this.enchantName = enchantName;
