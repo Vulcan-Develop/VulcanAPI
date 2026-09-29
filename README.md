@@ -30,6 +30,7 @@ For Fortress anticheat integration details, see the Fortress module in the
 | VulcanReplay | Rolling-buffer inspection, replay saves, markers, clip queries, and replay lifecycle events. |
 | Fortress | Anticheat monitoring state, flag events, punish events, logs, punishments, sessions, and alt-match data. |
 | Opaque | Per-viewer player conceal and reveal events, including nametag ownership handoff. |
+| VulcanClicker | Armed and clicking state for the left, right and inventory clickers, arming control, per-player CPS overrides, whitelist checks, global enable switches, per-player blocks, and arm and hold events. |
 
 ## Event Systems
 
@@ -37,7 +38,7 @@ VulcanAPI uses two event systems depending on the module.
 
 Use Bukkit listeners for Bukkit events from VulcanEvents, VulcanStaff, VulcanEnchants, VulcanGenBlocks, and VulcanVoting.
 
-Use `VulcanListener` with `net.vulcandev.vulcanapi.event.EventHandler` for `VulcanEvent` based events from Fortress, VulcanTools, VulcanCrates, and Opaque.
+Use `VulcanListener` with `net.vulcandev.vulcanapi.event.EventHandler` for `VulcanEvent` based events from Fortress, VulcanTools, VulcanCrates, Opaque, and VulcanClicker.
 
 ```java
 public final class ToolListener implements net.vulcandev.vulcanapi.event.VulcanListener {
@@ -96,6 +97,7 @@ VulcanAPI is compiled and distributed through the Vulcan Loader in the client pa
 - VulcanVoting
 - Opaque
 - Fortress
+- VulcanClicker
 
 ## Support
 
