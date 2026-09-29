@@ -9,6 +9,8 @@ public final class ReplaySaveRequest {
     private final UUID playerId;
     private final String playerName;
     private final int lookbackSeconds;
+    private final long centerAt;
+    private final int afterSeconds;
     private final String source;
     private final String reason;
     private final UUID actorId;
@@ -19,6 +21,8 @@ public final class ReplaySaveRequest {
         this.playerId = builder.playerId;
         this.playerName = builder.playerName;
         this.lookbackSeconds = builder.lookbackSeconds;
+        this.centerAt = builder.centerAt;
+        this.afterSeconds = builder.afterSeconds;
         this.source = builder.source;
         this.reason = builder.reason;
         this.actorId = builder.actorId;
@@ -28,7 +32,17 @@ public final class ReplaySaveRequest {
 
     public UUID getPlayerId() { return playerId; }
     public String getPlayerName() { return playerName; }
+    /** Seconds recorded before {@link #getCenterAt()}, or before the request when no centre is set. */
     public int getLookbackSeconds() { return lookbackSeconds; }
+    /**
+     * Epoch millis the clip is built around, or 0 for a plain "last N seconds" save. A centred
+     * clip covers {@code [centerAt - lookback, centerAt + after]}, so the save completes only
+     * once the post-roll has been recorded.
+     */
+    public long getCenterAt() { return centerAt; }
+    /** Seconds recorded after {@link #getCenterAt()}; ignored when no centre is set. */
+    public int getAfterSeconds() { return afterSeconds; }
+    public boolean isCentered() { return centerAt > 0L; }
     public String getSource() { return source; }
     public String getReason() { return reason; }
     public UUID getActorId() { return actorId; }
@@ -41,6 +55,8 @@ public final class ReplaySaveRequest {
         private final UUID playerId;
         private String playerName;
         private int lookbackSeconds = 300;
+        private long centerAt;
+        private int afterSeconds;
         private String source = "api";
         private String reason = "API request";
         private UUID actorId;
@@ -53,6 +69,8 @@ public final class ReplaySaveRequest {
         }
 
         public Builder lookbackSeconds(int value) { this.lookbackSeconds = value; return this; }
+        public Builder centerAt(long epochMillis) { this.centerAt = Math.max(0L, epochMillis); return this; }
+        public Builder afterSeconds(int value) { this.afterSeconds = Math.max(0, value); return this; }
         public Builder playerName(String value) { this.playerName = value; return this; }
         public Builder source(String value) { this.source = value; return this; }
         public Builder reason(String value) { this.reason = value; return this; }

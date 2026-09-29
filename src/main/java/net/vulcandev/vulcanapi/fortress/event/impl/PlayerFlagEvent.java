@@ -19,6 +19,12 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
     private final int violationLevel;
     private final int maxViolationLevel;
     private final String releaseType;
+    /**
+     * Wall-clock time (epoch millis) of the behaviour that caused this flag. Checks that decide
+     * later than the offending packet (cloud analysis, buffered heuristics) report the evidence
+     * time here, so it can be earlier than the moment the event is fired.
+     */
+    private final long flaggedAt;
 
     @Setter
     private boolean cancelled = false;
@@ -28,6 +34,10 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
 
     @ApiStatus.Internal
     public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, String releaseType) {
+        this(player, checkName, checkType, checkTypeAdvanced, debugData, description, violationLevel, maxViolationLevel, releaseType, System.currentTimeMillis());
+    }
+
+    public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, String releaseType, long flaggedAt) {
         this.player = player;
         this.checkName = checkName;
         this.checkType = checkType;
@@ -37,6 +47,7 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
         this.violationLevel = violationLevel;
         this.maxViolationLevel = maxViolationLevel;
         this.releaseType = releaseType;
+        this.flaggedAt = flaggedAt > 0L ? flaggedAt : System.currentTimeMillis();
     }
 
     @Override

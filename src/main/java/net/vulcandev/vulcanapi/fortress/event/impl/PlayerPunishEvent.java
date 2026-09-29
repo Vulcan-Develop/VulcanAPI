@@ -18,6 +18,8 @@ public class PlayerPunishEvent extends VulcanEvent implements Cancellable {
     private final String description;
     private final int violationLevel;
     private final int maxViolationLevel;
+    /** Wall-clock time (epoch millis) of the violation that triggered the punishment. */
+    private final long flaggedAt;
 
     @Setter
     private boolean cancelled = false;
@@ -27,6 +29,10 @@ public class PlayerPunishEvent extends VulcanEvent implements Cancellable {
 
     @ApiStatus.Internal
     public PlayerPunishEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel) {
+        this(player, checkName, checkType, checkTypeAdvanced, debugData, description, violationLevel, maxViolationLevel, System.currentTimeMillis());
+    }
+
+    public PlayerPunishEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, long flaggedAt) {
         this.player = player;
         this.checkName = checkName;
         this.checkType = checkType;
@@ -35,6 +41,7 @@ public class PlayerPunishEvent extends VulcanEvent implements Cancellable {
         this.description = description;
         this.violationLevel = violationLevel;
         this.maxViolationLevel = maxViolationLevel;
+        this.flaggedAt = flaggedAt > 0L ? flaggedAt : System.currentTimeMillis();
     }
 
     @Override
