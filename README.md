@@ -29,7 +29,7 @@ For Fortress anticheat integration details, see the Fortress module in the
 | VulcanVoting | Voting availability and plugin access. |
 | VulcanReplay | Rolling-buffer inspection, replay saves, markers, clip queries, and replay lifecycle events. |
 | Fortress | Anticheat monitoring state, flag events, punish events, logs, punishments, sessions, and alt-match data. |
-| Opaque | Per-viewer player conceal and reveal events, including nametag ownership handoff. |
+| Opaque | Per-viewer player conceal and reveal events with nametag ownership handoff, who is hidden from whom, which blocks a player is being shown a replacement for, whether a player is inside a sealed base, visibility rules that keep allies visible, per-player exemptions, and statistics. |
 | VulcanClicker | Armed and clicking state for the left, right and inventory clickers, arming control, per-player CPS overrides, whitelist checks, global enable switches, per-player blocks, and arm and hold events. |
 
 ## Event Systems
@@ -56,6 +56,30 @@ handlers with `ignoreCancelled = true` are skipped. `MONITOR` is observation-onl
 `OpaquePlayerVisibilityEvent` is synchronous and may run on a player's network event loop. It uses
 UUIDs rather than Bukkit players. A nametag renderer that owns an independently tracked marker may
 call `retainNametag()` during `CONCEALED`; `VISIBLE` is notification-only.
+
+## Opaque
+
+`OpaqueAPI` is static and safe from any thread. While Opaque is not running, queries answer with
+nothing hidden and the statistics are all zero.
+
+```java
+// Party members always see each other, the way faction members do. Called off the server thread
+// for every pair Opaque checks, so it reads only state the plugin keeps itself.
+OpaqueAPI.registerVisibilityRule(plugin, (viewer, target) -> parties.sameParty(viewer, target));
+OpaqueAPI.reevaluate(player.getUniqueId()); // after the player joins or leaves a party
+
+// A staff member reviewing an x-ray report sees ores as they really are.
+OpaqueAPI.setExempt(plugin, staff.getUniqueId(), OpaqueFeature.ANTI_XRAY, true);
+
+// Was the player being sent stone where this diamond is when they started digging towards it?
+boolean hidden = OpaqueAPI.getBlockConcealment(player, block) == OpaqueBlockConcealment.ANTI_XRAY;
+
+// Is the player tracking someone Opaque is hiding from them? Done repeatedly, that points to ESP.
+boolean watchingHidden = OpaqueAPI.isConcealed(player, target);
+```
+
+Rules and exemptions are dropped when the plugin that registered them disables. A rule never shows a
+player that Bukkit or a vanish plugin hides.
 
 ## Safe Integration
 

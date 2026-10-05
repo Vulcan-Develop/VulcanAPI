@@ -2,6 +2,7 @@ package net.vulcandev.vulcanapi;
 
 import lombok.Getter;
 import net.vulcandev.vulcanapi.event.VulcanEventManager;
+import net.vulcandev.vulcanapi.opaque.OpaqueOwnerListener;
 import net.vulcandev.vulcanloader.loader.VulcanPlugin;
 import net.xantharddev.vulcanlib.Logger;
 import org.jetbrains.annotations.ApiStatus;
@@ -13,6 +14,7 @@ public final class VulcanAPI extends VulcanPlugin {
 
     public void onSecureEnable() {
         instance = this;
+        getServer().getPluginManager().registerEvents(new OpaqueOwnerListener(), this);
 
         Logger.log("&aVulcanAPI v" + getDescription().getVersion() + " enabled");
         Logger.log("&7Global event system initialized");
