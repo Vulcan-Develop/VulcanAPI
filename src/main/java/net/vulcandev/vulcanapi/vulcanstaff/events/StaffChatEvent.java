@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.vulcandev.staff.enums.Chats;
 import net.vulcandev.vulcanapi.wrapper.ChatsWrapper;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -23,6 +24,7 @@ public class StaffChatEvent extends Event implements Cancellable {
 
     @ApiStatus.Internal
     public StaffChatEvent(Player player, String message, Chats chatType) {
+        super(!Bukkit.isPrimaryThread());
         this.player = player;
         this.message = message;
         this.chatType = ChatsWrapper.fromVulcanChats(chatType);
