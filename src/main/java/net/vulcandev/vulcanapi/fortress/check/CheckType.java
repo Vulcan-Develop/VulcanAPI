@@ -46,6 +46,12 @@ public enum CheckType {
     BADPACKETS("Bad Packets", "Detects malformed or invalid packets", CheckCategory.PACKET),
     CRASHER("Crasher", "Detects server crash attempts", CheckCategory.PACKET),
     PROTOCOL("Protocol", "Detects protocol violations", CheckCategory.PACKET),
+    // MACHINE LEARNING, self-learning detections trained on each server's own players
+    CONNECTION_ML("Connection ML", "Self-learning detection of fake lag, blink, backtrack, ping spoof, lag range, knockback delay and timer", CheckCategory.PLAYER),
+    COMBAT_ML("Combat ML", "Self-learning detection of reach and hitbox set just inside the per-attack allowance", CheckCategory.COMBAT),
+    INVENTORY_ML("Inventory ML", "Self-learning detection of inventory, hotbar and offhand automation", CheckCategory.INVENTORY),
+    MOVEMENT_ML("Movement ML", "Self-learning detection of speed and glide hidden in the movement prediction's allowance", CheckCategory.MOVEMENT),
+    BUILDING_ML("Building ML", "Self-learning detection of scaffold and tower: hidden faces, snapped rotations and timed placement", CheckCategory.PLAYER),
     // MISC
     MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC);
 
