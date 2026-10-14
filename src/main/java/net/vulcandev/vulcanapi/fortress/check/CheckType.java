@@ -26,6 +26,8 @@ public enum CheckType {
     // COMBAT
     AIM("Aim", "Detects aim assistance and snapping", CheckCategory.COMBAT),
     ANALYSIS("Analysis", "Detects combat pattern anomalies", CheckCategory.COMBAT),
+    // Fortress builds released before Combat ML and Building ML still name it, so it stays until none are left.
+    @Deprecated
     MACHINE_LEARNING("Machine Learning", "Evaluates backend-hosted behavior models from sampled combat telemetry", CheckCategory.COMBAT),
     HITBOX("Hitbox", "Detects expanded hitbox modifications", CheckCategory.COMBAT),
     PIERCING("Piercing", "Detects hitting through blocks", CheckCategory.COMBAT),
@@ -46,12 +48,12 @@ public enum CheckType {
     BADPACKETS("Bad Packets", "Detects malformed or invalid packets", CheckCategory.PACKET),
     CRASHER("Crasher", "Detects server crash attempts", CheckCategory.PACKET),
     PROTOCOL("Protocol", "Detects protocol violations", CheckCategory.PACKET),
-    // MACHINE LEARNING, self-learning detections trained on each server's own players
+    // MACHINE LEARNING
     CONNECTION_ML("Connection ML", "Self-learning detection of fake lag, blink, backtrack, ping spoof, lag range, knockback delay and timer", CheckCategory.PLAYER),
-    COMBAT_ML("Combat ML", "Self-learning detection of reach and hitbox set just inside the per-attack allowance", CheckCategory.COMBAT),
+    COMBAT_ML("Combat ML", "Machine learning on fights: rotation texture, adaptive aim, reaction, rotation profile, combined evidence, left clicking, reach and hitbox", CheckCategory.COMBAT),
     INVENTORY_ML("Inventory ML", "Self-learning detection of inventory, hotbar and offhand automation", CheckCategory.INVENTORY),
     MOVEMENT_ML("Movement ML", "Self-learning detection of speed and glide hidden in the movement prediction's allowance", CheckCategory.MOVEMENT),
-    BUILDING_ML("Building ML", "Self-learning detection of scaffold and tower: hidden faces, snapped rotations and timed placement", CheckCategory.PLAYER),
+    BUILDING_ML("Building ML", "Machine learning on building: scaffold and tower from hidden faces, snapped rotations and timed placement, and right clicking", CheckCategory.PLAYER),
     // MISC
     MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC);
 

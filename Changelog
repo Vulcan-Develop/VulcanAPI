@@ -1,1 +1,2 @@
 Fixed staff chat and admin chat errors on Paper servers: StaffChatEvent now runs as an async event when it is sent from regular chat.
+Deprecated the Machine Learning check type: its checks are now Combat ML and Building ML, and both descriptions now say what they cover.
