@@ -27,7 +27,7 @@ For Fortress anticheat integration details, see the Fortress module in the
 | VulcanGenBlocks | GenBlocks availability, plugin access, and gen bucket events. |
 | VulcanStats | Player stats access when VulcanStats is loaded. |
 | VulcanVoting | Voting availability and plugin access. |
-| VulcanReplay | Rolling-buffer inspection, replay saves, markers, clip queries, and replay lifecycle events. |
+| VulcanReplay | Rolling-buffer inspection, replay saves, markers, structured evidence, clip queries, and replay lifecycle events. |
 | Fortress | Anticheat monitoring state, flag events, punish events, logs, punishments, sessions, and alt-match data. |
 | Opaque | Per-viewer player conceal and reveal events with nametag ownership handoff, who is hidden from whom, which blocks a player is being shown a replacement for, whether a player is inside a sealed base, visibility rules that keep allies visible, per-player exemptions, and statistics. |
 | VulcanClicker | Armed and clicking state for the left, right and inventory clickers, arming control, per-player CPS overrides, whitelist checks, global enable switches, per-player blocks, and arm and hold events. |

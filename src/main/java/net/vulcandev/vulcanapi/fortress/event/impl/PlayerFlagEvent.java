@@ -8,6 +8,8 @@ import net.vulcandev.vulcanapi.event.VulcanEvent;
 import net.vulcandev.vulcanapi.fortress.player.PlayerProfile;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.UUID;
+
 @Getter
 public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
     private final PlayerProfile player;
@@ -25,6 +27,11 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
      * time here, so it can be earlier than the moment the event is fired.
      */
     private final long flaggedAt;
+    /**
+     * Identifies this flag. Replay evidence and markers recorded for it carry the same id, so a
+     * viewer can join the flag to its evidence. Never null.
+     */
+    private final UUID flagId;
 
     @Setter
     private boolean cancelled = false;
@@ -38,6 +45,10 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
     }
 
     public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, String releaseType, long flaggedAt) {
+        this(player, checkName, checkType, checkTypeAdvanced, debugData, description, violationLevel, maxViolationLevel, releaseType, flaggedAt, null);
+    }
+
+    public PlayerFlagEvent(PlayerProfile player, CheckType checkName, String checkType, String checkTypeAdvanced, String debugData, String description, int violationLevel, int maxViolationLevel, String releaseType, long flaggedAt, UUID flagId) {
         this.player = player;
         this.checkName = checkName;
         this.checkType = checkType;
@@ -48,6 +59,7 @@ public class PlayerFlagEvent extends VulcanEvent implements Cancellable {
         this.maxViolationLevel = maxViolationLevel;
         this.releaseType = releaseType;
         this.flaggedAt = flaggedAt > 0L ? flaggedAt : System.currentTimeMillis();
+        this.flagId = flagId != null ? flagId : UUID.randomUUID();
     }
 
     @Override
