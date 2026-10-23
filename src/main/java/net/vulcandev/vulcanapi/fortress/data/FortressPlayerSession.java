@@ -17,6 +17,7 @@ public final class FortressPlayerSession {
     private final boolean lunarClient;
     private final int sensitivity;
     private final long lastSeen;
+    @Deprecated
     private final String ipAddress;
     private final String modsLoaded;
 }
