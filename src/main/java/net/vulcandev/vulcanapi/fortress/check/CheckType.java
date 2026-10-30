@@ -29,14 +29,19 @@ public enum CheckType {
     // Fortress builds released before Combat ML and Building ML still name it, so it stays until none are left.
     @Deprecated
     MACHINE_LEARNING("Machine Learning", "Evaluates backend-hosted behavior models from sampled combat telemetry", CheckCategory.COMBAT),
+    // Folded into Combat; builds released before it still name these, so they stay until none are left.
+    @Deprecated
     HITBOX("Hitbox", "Detects expanded hitbox modifications", CheckCategory.COMBAT),
     PIERCING("Piercing", "Detects hitting through blocks", CheckCategory.COMBAT),
+    @Deprecated
     REACH("Reach", "Detects hitting beyond normal distance", CheckCategory.COMBAT),
     ACTION_STATE("Action State", "Detects invalid sprint and sneak state transitions", CheckCategory.COMBAT),
     SPRINT_RESET("Sprint Reset", "Detects automated sprint reset patterns", CheckCategory.COMBAT),
     HEURISTIC("Heuristic", "Detects combat behavior patterns", CheckCategory.COMBAT),
     KEEPSPRINT("KeepSprint", "Detects sprint persistence during combat", CheckCategory.COMBAT),
+    @Deprecated
     KILLAURA("KillAura", "Detects kill aura during combat", CheckCategory.COMBAT),
+    COMBAT("Combat", "Detects hits the game would not allow: out of range, outside the target's hitbox, at a hidden bot, or from a forged hit position", CheckCategory.COMBAT),
     AUTOMACE("Auto Mace", "Detects automated mace swapping for smash and stun-slam attacks", CheckCategory.COMBAT),
     EXPLOSION_AURA("Explosion Aura", "Detects automated end crystal and respawn anchor combat", CheckCategory.COMBAT),
     // INVENTORY
