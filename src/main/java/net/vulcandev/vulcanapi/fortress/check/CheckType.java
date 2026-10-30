@@ -59,6 +59,8 @@ public enum CheckType {
     INVENTORY_ML("Inventory ML", "Self-learning detection of inventory, hotbar and offhand automation", CheckCategory.INVENTORY),
     MOVEMENT_ML("Movement ML", "Self-learning detection of speed and glide hidden in the movement prediction's allowance", CheckCategory.MOVEMENT),
     BUILDING_ML("Building ML", "Machine learning on building: scaffold and tower from hidden faces, snapped rotations and timed placement, and right clicking", CheckCategory.PLAYER),
+    // BEDROCK
+    BEDROCK("Bedrock", "Checks Bedrock players through Geyser: movement prediction, reach, timer and malformed input", CheckCategory.MISC),
     // MISC
     MISC("Misc", "Detects miscellaneous exploits", CheckCategory.MISC);
 
